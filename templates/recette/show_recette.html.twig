@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{recette.titre}}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-fluid">
+		<div class="container">
+			<div class="row">
+			
+				<div class="col-3 my-5">
+					<ul>
+						{% for ingredient in recette.posseders %}
+							<li>{{ingredient.ingredients.nom}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="col-6">
+					<div class="card" style="width: 18rem;">
+						<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">{{recette.id}}/{{recette.titre}}/{{recette.author.id}}</h5>
+							<p class="card-text">{{recette.intro}}</p>
+							<p class="card-text">{{recette.preparation}}</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-3 ">
+					{% if app.user %}
+						<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Maj recette</a>
+						<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); "><i class="fas fa-trash-alt"></i></a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<ul class="list-group">
+				{% for comment in comments %}
+					
+					<li class="list-group-item"><b>{{comment.author.pseudo}}/ </b>{{comment.commentaire}} <a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}"><i class="fas fa-trash-alt"></i></a></li>
+
+
+
+				{% endfor %}
+
+			</ul>
+
+		</div>
+		<div class="row">
+			{% if app.user %}
+				{{ form_start(form_comm) }}
+				{{form_row(form_comm.commentaire)}}
+				<button type="submit" class="btn btn-primary">Ajouter commentaire</button>
+				{{ form_end(form_comm) }}
+			{% endif %}
+
+		</div>
+
+	</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecettesController!
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			{% for recette in recettes %}
+				<div class="card" style="width: 18rem;">
+					<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">{{recette.id}}/{{recette.titre}}/{{recette.author.pseudo}}</h5>
+						<p class="card-text">{{recette.intro}}</p>
+						<a href="{{path('show_recette', {'id': recette.id})}}" class="btn btn-primary">Voir recette</a>
+
+						{% if app.user and is_granted('ROLE_ADMIN')  %}
+							<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Mettre a jour la recette</a>
+					
+							<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">Supprimer la recette</a>
+						{% endif %}
+
+
+					</div>
+				</div>
+			{% endfor %}
+
+		</div>
+	</div>
+{% endblock %}
