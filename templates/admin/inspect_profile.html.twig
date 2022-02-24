@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inspecter Profil
+{% endblock %}
+
+{% block body %}
+	{% if "ROLE_ADMIN" in  app.user.roles %}
+	<div class="container-fluid">
+		<div class="row">
+			<h1>Page profil de l'utilisateur
+				{{ user.pseudo }}! ✅</h1>
+			voici tes infos :
+			<ul>
+				<li>Pseudo :
+					{{ user.pseudo }}
+				</li>
+				<li>Email :
+					{{ user.email }}</li>
+				<li>Photo :
+					{{ user.photo ? user.photo : 'Pas de photo' }}</li>
+				<li>etat :
+					{{ user.etat == 0 ? 'Not Banned' : 'banned' }}</li>
+				{% if user.etat == 0 %}
+					<li>
+						<a href="{{ path('ban',{'id': user.id}) }}" class='btn btn-danger'>
+							<i class="fas fa-ban"></i>
+						</a>
+					</li>
+                {% else %}
+                    <li>
+						<a href="{{ path('unban',{'id': user.id}) }}" class='btn btn-success'>
+							<i class="fas fa-ban"></i>
+						</a>
+					</li>
+
+				{% endif %}
+
+
+			</ul>
+		</p>
+	</div>
+   
+    {% endif %}
+
+</div>{% endblock %}

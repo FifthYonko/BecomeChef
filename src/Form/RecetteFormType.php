@@ -7,6 +7,7 @@ use App\Entity\Recette;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -46,7 +47,7 @@ class RecetteFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 25,
-                        'minMessage' => 'Ce champ doit contenir minimum {{limit}} caracteres',
+                        'minMessage' => 'Ce champ doit contenir minimum {{ limit }} caracteres',
                     ])
                 ]
             ])
@@ -77,13 +78,15 @@ class RecetteFormType extends AbstractType
                 ]
             ])
           
-            ->add('ingredients', EntityType::class, [
+            ->add('posseders', CollectionType::class, [
                     'label' => 'Ingredients',
-                    'class' => Ingredient::class,
-                    'choice_label' => 'nom',
-                    'expanded' => true,
-                    'multiple' => true,
-                    'mapped'=>false,
+                    'entry_type' => PossederType::class,
+                    'allow_add'=> true,
+                    'allow_delete'=>true,
+                    
+                    // 'expanded' => true,
+                    // 'multiple' => true,
+                    // 'mapped'=>false,
 
                 ])
             ;

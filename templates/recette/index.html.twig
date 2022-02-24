@@ -10,7 +10,7 @@
 				<div class="card" style="width: 18rem;">
 					<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">{{recette.id}}/{{recette.titre}}/{{recette.author.pseudo}}</h5>
+						<h5 class="card-title">{{recette.id}}/{{recette.titre}}/<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a></h5>
 						<p class="card-text">{{recette.intro}}</p>
 						<a href="{{path('show_recette', {'id': recette.id})}}" class="btn btn-primary">Voir recette</a>
 
@@ -19,12 +19,15 @@
 					
 							<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">Supprimer la recette</a>
 						{% endif %}
-
-
 					</div>
 				</div>
 			{% endfor %}
-
+	
+		</div>
+		<div class="row flex-wrap">
+			{% for nb in range(1,total // 3) %}
+				<a href="{{path('recette',{'page': nb})}}">{{nb}}</a>
+			{% endfor %}
 		</div>
 	</div>
 {% endblock %}

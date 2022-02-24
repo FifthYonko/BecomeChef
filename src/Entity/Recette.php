@@ -35,7 +35,7 @@ class Recette
     #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Commentaire::class, orphanRemoval: true)]
     private $commentaires;
 
-    #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Posseder::class)]
+    #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Posseder::class,cascade:['persist','remove'])]
     private $posseders;
 
     public function __construct()

@@ -8,15 +8,10 @@
     {% form_theme form_pseudo 'bootstrap_5_layout.html.twig' %}
     {{ form_start(form_pseudo) }}
     {{ form_row(form_pseudo.pseudo)}}
-    {{ form_row(form_pseudo.password)}}
     {{ form_row(form_pseudo.photo)}}
 
-
-
-
-
     <button type="submit" class="btn btn-success">Ajouter</button>
-    {{ form_end(form_pseudo,{'render_rest': false}) }}
+    {{ form_end(form_pseudo) }}
 </div>
 
 {% endblock %}

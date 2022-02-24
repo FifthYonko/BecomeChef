@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FavorisController!{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% for favori in favoris %}
+
+        <div class="card" style="width: 18rem;">
+            <img src="{{ asset('uploads/'~ favori.favori.photo) }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{favori.favori.id}}/{{favori.favori.titre}}/{{favori.favori.author.pseudo}}</h5>
+                <p class="card-text">{{favori.favori.intro}}</p>
+                <a href="{{path('show_recette', {'id': favori.favori.id})}}" class="btn btn-primary">Voir recette</a>
+                <a href="{{path('remove_favoris', {'id': favori.favori.id})}}" class="btn btn-primary">Retirer des favoris</a>
+
+
+
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

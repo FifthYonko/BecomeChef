@@ -28,48 +28,59 @@ class RecetteController extends AbstractController
     {
     }
 
-    #[Route('/recette', name: 'recette')]
-    public function index(): Response
+    #[Route('/recette/{page}', name: 'recette')]
+    public function index(int $page): Response
     {
-
-        $recette = $this->recetteRepository->findAll();
+        $recette = $this->recetteRepository->findByPage($page-1,3);
+        $nbtotal = $this->recetteRepository->compter();
         return $this->render('recette/index.html.twig', [
             'recettes' => $recette,
+            'total' =>$nbtotal,
         ]);
     }
 
     #[Route('/new_recette', name: 'new_recette')]
-    public function ajout_recette(Request $request, FileUploader $fileUploader, RecetteHasIngredient $recetteHasIngredient): Response
+    public function ajout_recette(Request $request, FileUploader $fileUploader): Response
     {
+      
         if (!$this->isGranted('ROLE_USER')) {
             $this->addFlash('warning', 'Vous devez etre connecte pour acceder a cette page!');
             return $this->redirectToRoute('app_login');
         }
-        // $new_recette = new Recette();
+        
+        if($this->getUser()->getEtat() === true ){
+            $this->addFlash('danger','Vous etes banni et donc vous ne pouvez plus acceder a cette fonctionnalite');
+            return $this->redirectToRoute('home');
+        }
+
         $form_recette = $this->createForm(RecetteFormType::class);
         $form_recette->handleRequest($request);
         if ($form_recette->isSubmitted() && $form_recette->isValid()) {
 
             $new_recette = $form_recette->getData();
             $imgFile = $form_recette->get('photo')->getData();
+            
             if ($imgFile) {
                 $newFileName = $fileUploader->upload($imgFile);
                 $new_recette->setPhoto($newFileName);
             }
+           
             $new_recette->setAuthor($this->getUser());
-            $ingredients = $form_recette->get('ingredients')->getData();
+           
 
-            $this->entityManager->persist($new_recette);
-            $this->entityManager->flush();
+           
 
             // partie a modifier
+            
+            foreach ($form_recette->get('posseders')->getData() as $ingredient) {
 
-            foreach ($ingredients as $ingredient) {
-                $recetteHasIngredient->posseder($ingredient, $new_recette, 'comme tu veux');
+                $ingredient->setRecette($new_recette);
             }
+            $this->entityManager->persist($new_recette);
+            $this->entityManager->flush();
             // partie ou s'arrete la modification
             $this->addFlash('success', 'La recette a ete ajoute !');
-            return $this->redirectToRoute('recette');
+            return $this->redirectToRoute('recette',['page'=>1]);
         }
 
         return $this->render('recette/new_recette.html.twig', [
@@ -83,39 +94,49 @@ class RecetteController extends AbstractController
         $recette = $this->recetteRepository->findOneBy(['id' => $id]);
         $commentaires = $recette->getCommentaires();
 
-        // $ingre = $this->possederRepository->findBy(['recette'=>$id]);
-        // dd($ingre[0]->getIngredients()->getNom());
-        $form_comm = $this->createForm(CommentaireType::class);
-        $form_comm->handleRequest($request);
-
-        if ($form_comm->isSubmitted() && $form_comm->isValid()) {
-            $new_comm = $form_comm->getData();
-            $new_comm->setAuthor($this->getUser());
-            $new_comm->setRecette($recette);
-
-            $this->entityManager->persist($new_comm);
-            $this->entityManager->flush();
-
-            $this->addFlash('success', 'Le commentaire a ete ajoute');
-            return $this->redirectToRoute('show_recette', ['id' => $id]);
+        if ($this->getUser()!==null ) {
+            $form_comm = $this->createForm(CommentaireType::class);
+            $form_comm->handleRequest($request);
+    
+    
+            if ($form_comm->isSubmitted() && $form_comm->isValid()) {
+    
+                $new_comm = $form_comm->getData();
+                $new_comm->setAuthor($this->getUser());
+                $new_comm->setRecette($recette);
+    
+                $this->entityManager->persist($new_comm);
+                $this->entityManager->flush();
+    
+                $this->addFlash('success', 'Le commentaire a ete ajoute');
+                return $this->redirectToRoute('show_recette', ['id' => $id]);
+            }
+            return $this->renderForm('recette/show_recette.html.twig', [
+                'recette' => $recette,
+                'comments' => $commentaires,
+                'form_comm' => $form_comm,
+            ]);
         }
+      
 
         return $this->renderForm('recette/show_recette.html.twig', [
             'recette' => $recette,
             'comments' => $commentaires,
-            'form_comm' => $form_comm,
+            
         ]);
     }
 
     #[Route('/update_recette/{id}', name: 'update_recette')]
-    public function update_recette(Request $request, int $id, FileUploader $fileUploader, RecetteHasIngredient $recetteHasIngredient)
+    public function update_recette(Request $request, int $id, FileUploader $fileUploader )
     {
         // on recherche la recette dans la bdd grace a son id
         $recette_modifie = $this->recetteRepository->find($id);
+        
         if (!$recette_modifie) {
             // si elle existe pas, on met un warning 
             $this->addFlash('warning', 'Aucune recette trouve');
         }
+        $imageExistante = $recette_modifie->getPhoto();
         // si elle existe , on verifie que l'utilisateur est soit connecte et proprio de la recette, soit un admin
         if ($this->isGranted('ROLE_ADMIN') || $this->getUser()->getId() === $recette_modifie->getAuthor()->getId()) {
             // on cree le formulaire
@@ -125,11 +146,16 @@ class RecetteController extends AbstractController
             if ($update_recette->isSubmitted() && $update_recette->isValid()) {
                 // si le form a ete valide et soumis, on recupere les infos
                 $recette_modifie = $update_recette->getData();
-                $ingredients = $update_recette->get('ingredients')->getData();
+                foreach ($update_recette->get('posseders')->getData() as $ingredient) {
 
+                    $ingredient->setRecette($recette_modifie);
+                }
                 // on modifie le nom de la photo et on stocke dans uploads
                 $imgFile = $update_recette->get('photo')->getData();
                 if ($imgFile) {
+                    if($imageExistante){
+                        unlink('uploads/'.$imageExistante);
+                    }
                     $newFileName = $fileUploader->upload($imgFile);
                     $recette_modifie->setPhoto($newFileName);
                     // on modifie l'info dans la recette
@@ -139,17 +165,17 @@ class RecetteController extends AbstractController
                 $this->entityManager->persist($recette_modifie);
                 $this->entityManager->flush();
 
-                foreach ($ingredients as $ingredient) {
-                    $recetteHasIngredient->posseder($ingredient, $recette_modifie, 'comme tu veux');
-                }
-                $this->addFlash('success', "Le livre a bien ete modifie :)");
-                return $this->redirectToRoute('recette');
+                // foreach ($ingredients as $ingredient) {
+                //     $recetteHasIngredient->posseder($ingredient, $recette_modifie, 'comme tu veux');
+                // }
+                $this->addFlash('success', "La recette a bien ete modifie :)");
+                return $this->redirectToRoute('recette',['page'=>1]);
             }
         } else {
 
             if ($this->isGranted('ROLE_USER')) {
                 $this->addFlash("danger", "Vous devez etre Admin ou le proprietaire de la recette pour la modifier!");
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('recette',['page'=>1]);
             } else {
                 $this->addFlash("danger", "Vous devez etre soit connecte soit Admin ou le proprietaire de la recette pour la modifier!");
                 return $this->redirectToRoute('app_login');
@@ -174,13 +200,29 @@ class RecetteController extends AbstractController
             $this->addFlash('warning', 'Aucune recette trouve');
         }
         if ($this->isGranted('ROLE_ADMIN') || $user === $recette_aSupp->getAuthor()) {
+            $imgFile ='uploads/'.$recette_aSupp->getPhoto();
+            if($imgFile){
+                unlink($imgFile);
+            }
             $this->entityManager->remove($recette_aSupp);
             $this->entityManager->flush();
             $this->addFlash('success', "La recette a bien ete supprime!");
-            return $this->redirectToRoute('recette');
+            return $this->redirectToRoute('recette',['page'=>1]);
         } elseif ($user === $recette_aSupp->getAuthor() || !$this->isGranted("ROLE_ADMIN")) {
             $this->addFlash('warning', "Vous ne pouvez pas supprimer cette recette car vous n'etez ni admin, ni auteur");
-            return $this->redirectToRoute('recette');
+            return $this->redirectToRoute('recette',['page'=>1]);
         }
+    }
+
+    #[Route('/search', name: 'search')]
+
+    public function search(Request $request){
+        
+        $recettes = $this->recetteRepository->findByExampleField($request->query->get('search_value'));
+    
+        return $this->render('recette/index.html.twig', [
+            'recettes' => $recettes,
+        ]);
+        
     }
 }

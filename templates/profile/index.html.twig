@@ -1,53 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil{% endblock %}
+{% block title %}Profil
+{% endblock %}
 
 {% block body %}
 	<div class="container-fluid">
-    <div class="row">
-		<h1>Hello
-			{{ user.pseudo }}! ✅</h1>
-
-		<p>Ceci est ta page profil
-			<br>
-			voici tes infos :
-			<ul>
-				<li>Pseudo :
-					{{ user.pseudo }}
-				</li>
-				<li>Email :
-					{{ user.email }}</li>
-				<li>Photo :
-					{{ user.photo ? user.photo : 'Pas de photo' }}</li>
-				<li>
-					<a href="change_profil" class="btn btn-primary">Modifier son profil</a>
-				</li>
-
-			</ul>
-		</p>
-	</div>
-    <hr>
 		<div class="row">
+			<h1>Hello
+				{{ user.pseudo }}! ✅</h1>
 
+			<p>Ceci est ta page profil
+				<br>
+				voici tes infos :
+				<ul>
+					<li>Pseudo :
+						{{ user.pseudo }}
+					</li>
+					<li>Email :
+						{{ user.email }}</li>
+					<li>Photo :
+						{% if  user.photo %}
+							<img src='{{ asset('uploads/'~ user.photo ) }}' style="width:100px " alt='photo de profil'>								
+						{% endif %}
+
+					</li>
+					<li>
+						<a href="{{path('change_profil')}}" class="btn btn-primary">Modifier mon profil</a><br>
+						<a href="{{path('forgot_password')}}" class="text-warning">Modifier mon mot de passe</a><br>
+						<a href="{{path('delete_photo')}}" class="text-dark">Supp profile pic</a>
+					</li>
+
+				</ul>
+			</p>
+		</div>
+		<hr>
+		<div class="row">
+			<h2>Vos Recettes</h2>
 			{% for recette in recettes %}
 				<div class="card" style="width: 18rem;">
 					<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">{{recette.id}}/{{recette.titre}}/{{recette.author.pseudo}}</h5>
+						<h5 class="card-title">{{recette.id}}/{{recette.titre}}/<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a>
+						</h5>
 						<p class="card-text">{{recette.intro}}</p>
 						<a href="{{path('show_recette', {'id': recette.id})}}" class="btn btn-primary">Voir recette</a>
 						{% if app.user %}
 							<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Mettre a jour la recette</a>
-                            <a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">Supprimer la recette</a>
+							<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">Supprimer la recette</a>
 						{% endif %}
 
 
-						
 					</div>
 				</div>
 			{% endfor %}
 
 		</div>
+
+		{% if "ROLE_ADMIN" in app.user.roles %}
+			<hr>
+			<div class="row">
+				<h3>Banned Users</h3>
+				<ul>
+					{% for banned in bannedList %}
+						<li>
+							<b>
+								<a href="{{path('inspect_profil',{'id': banned.id})}}">{{banned.pseudo}}</a>
+							</b>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+
+
 	</div>
-	
+
 {% endblock %}

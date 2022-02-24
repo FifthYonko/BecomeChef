@@ -9,11 +9,13 @@
 	<div class="container-fluid">
 		<div class="container">
 			<div class="row">
-			
+
 				<div class="col-3 my-5">
 					<ul>
 						{% for ingredient in recette.posseders %}
-							<li>{{ingredient.ingredients.nom}}</li>
+							<li>{{ingredient.quantite}}
+								de
+								{{ingredient.ingredients.nom}}</li>
 						{% endfor %}
 					</ul>
 				</div>
@@ -21,7 +23,7 @@
 					<div class="card" style="width: 18rem;">
 						<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
 						<div class="card-body">
-							<h5 class="card-title">{{recette.id}}/{{recette.titre}}/{{recette.author.id}}</h5>
+							<h5 class="card-title">{{recette.id}}/{{recette.titre}}/<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a></h5>
 							<p class="card-text">{{recette.intro}}</p>
 							<p class="card-text">{{recette.preparation}}</p>
 						</div>
@@ -33,7 +35,10 @@
 				<div class="col-3 ">
 					{% if app.user %}
 						<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Maj recette</a>
-						<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); "><i class="fas fa-trash-alt"></i></a>
+						<a href="{{path('add_favori', {'id': recette.id})}}" class="btn btn-dark text-warning"><i class="fas fa-star"></i></a>
+						<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
+							<i class="fas fa-trash-alt"></i>
+						</a>
 					{% endif %}
 				</div>
 			</div>
@@ -42,9 +47,23 @@
 		<div class="row">
 			<ul class="list-group">
 				{% for comment in comments %}
-					
-					<li class="list-group-item"><b>{{comment.author.pseudo}}/ </b>{{comment.commentaire}} <a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}"><i class="fas fa-trash-alt"></i></a></li>
 
+
+					<li class="list-group-item">
+						{% if app.user and "ROLE_ADMIN" in  app.user.roles %}
+								<b><a href="{{path('inspect_profil',{'id': comment.author.id})}}">{{comment.author.pseudo}}</a></b>
+						{% else %}
+								<b>{{comment.author.pseudo}}</b>
+						{% endif %}
+						
+						
+						{{comment.commentaire}}
+						{% if app.user and  (app.user.id is same as (comment.author.id) or "ROLE_ADMIN" in  app.user.roles ) %}
+							<a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+						{% endif %}
+					</li>
 
 
 				{% endfor %}
@@ -53,7 +72,9 @@
 
 		</div>
 		<div class="row">
-			{% if app.user %}
+		
+		
+			{% if app.user and app.user.etat == 0 %}
 				{{ form_start(form_comm) }}
 				{{form_row(form_comm.commentaire)}}
 				<button type="submit" class="btn btn-primary">Ajouter commentaire</button>

@@ -1,26 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter une recette{% endblock %}
+{% block title %} Ajouter une recette {% endblock %}
+	{% block javascripts %}
+			<script src = "{{asset('js/recette.js')}}"></script>  
+		{% endblock %}
 
 {% block body %}
 <div class="container-fluid">
-    <h1> Form ajout recette</h1>
+    <h1>
+        Form ajout recette</h1>
     {% form_theme form_recette 'bootstrap_5_layout.html.twig' %}
     {{ form_start(form_recette) }}
     {{ form_row(form_recette.titre) }}
     {{ form_row(form_recette.intro) }}
     {{ form_row(form_recette.preparation) }}
     {{ form_row(form_recette.photo) }}
-    <div class="d-flex flex-wrap flex-row">
-        {{ form_row(form_recette.ingredients) }}
-        {# {{form_row(form_recette.quantite)}} #}
+    
+    {# si on veut rajouter juste un champ, on utilise .nom-champ apres prototype #}
+    <div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(form_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ form_recette.posseders|length }}" >
+        <button type="button" class="add-another-collection-widget" data-list-selector="#ingredient-fields-list" >Ajouter Ingredient</button>
+         <button type="button" class="remove-another-collection-widget" data-list-selector="#ingredient-fields-list" >SUpprimer Ingredient</button>
     </div>
-
-
 
 
     <button type="submit" class="btn btn-success">Ajouter</button>
     {{ form_end(form_recette) }}
 </div>
-
+  
 {% endblock %}
+

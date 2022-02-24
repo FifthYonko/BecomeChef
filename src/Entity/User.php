@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $pseudo;
 
     #[ORM\Column(type: 'boolean')]
-    private $etat = 0;
+    private $etat ;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $photo;
@@ -52,6 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->recettes = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->etat = 0;
     }
 
     public function getId(): ?int

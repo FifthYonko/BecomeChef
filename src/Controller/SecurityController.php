@@ -92,7 +92,7 @@ class SecurityController extends AbstractController
         }
         if($reset_form->isSubmitted() && $reset_form->isValid()){
             $nvMdp = $reset_form->get('password')->getData();
-            $user->setPasswordTokken('null');
+            $user->setPasswordTokken(NULL);
             $user->setPassword($passwordEncoder->hashPassword($user,$nvMdp));
             $entityManager->persist($user);
             $entityManager->flush();

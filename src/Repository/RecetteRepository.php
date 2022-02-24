@@ -18,6 +18,22 @@ class RecetteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Recette::class);
     }
+
+    public function findByPage($page,$nbrecettes){
+        return $this->createQueryBuilder('r')
+        ->orderBy('r.id','ASC')
+        ->setMaxResults($nbrecettes)
+        ->setFirstResult($page*$nbrecettes)
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function compter(){
+        return $this->createQueryBuilder('r')
+        ->select('count(r.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
     
     public function findLast(){
         return $this->createQueryBuilder('r')
@@ -25,6 +41,21 @@ class RecetteRepository extends ServiceEntityRepository
         ->setMaxResults(3)
         ->getQuery()
         ->getResult();
+    }
+
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.titre LIKE :val')
+            ->orWhere('i.nom like :val')
+            ->innerJoin('r.posseders','p')
+            ->innerJoin('p.ingredients','i')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**
