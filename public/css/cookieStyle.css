@@ -1,0 +1,27 @@
+.banniere{
+    border:solid 2px black;
+    background-color: green;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color:white;
+    display: flex;
+    justify-content: space-around;
+    padding: 30px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.banniere p{
+    font-size: large;
+}
+
+.banniere a{
+    padding-top: 15px;
+    border:solid 2px pink;
+    padding: 10px;
+    background:red;
+    border-radius: 7px;
+    color: white;
+    text-decoration: none;
+}

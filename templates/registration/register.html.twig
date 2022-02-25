@@ -11,8 +11,9 @@
         {{ form_row(registrationForm.password, {
             label: 'Password'
         }) }}
+         {{ form_row(registrationForm.photo) }}
         {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn btn-success">Register</button>
+        <p>En cliquant sur inscription, vous acceptez les <a href="{{path('cgu')}}" target="_blank">Conditions Generales d'Utilisation</a> </p>
+        <button type="submit" class="btn btn-success">Inscription</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

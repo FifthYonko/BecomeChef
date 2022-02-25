@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une recette
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<h1>Form maj recette pour Admin</h1>
+
+		{% form_theme update_recette 'bootstrap_5_layout.html.twig' %}
+		{{ form_start(update_recette) }}
+		{{ form_row(update_recette.titre) }}
+		{{ form_row(update_recette.preparation) }}
+		{{ form_row(update_recette.photo) }}
+		{{ form_row(update_recette.intro) }}
+		
+		<div class="d-flex flex-wrap flex-row">
+			   <div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(update_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ update_recette.posseders|length }}" >
+		<button type="button" class="add-another-collection-widget" data-list-selector="#ingredient-fields-list" >Ajouter Ingredient</button>
+        <button type="button" class="remove-another-collection-widget" data-list-selector="#ingredient-fields-list" >SUpprimer Ingredient</button>
+    </div>
+		</div>
+
+
+		<button type="submit" class="btn btn-success">Modifier</button>
+		{{ form_end(update_recette) }}
+	</div>
+
+{% endblock %}
+	{% block javascripts %}
+			<script src = "{{asset('js/recette.js')}}"></script>  
+		{% endblock %}
+

@@ -40,4 +40,8 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+    #[Route('/register_cgu', name: 'cgu')]
+    public function cgu(){
+        return $this->render('conditionsUtilisation/conditionUtilisation.html.twig');
+    }
 }

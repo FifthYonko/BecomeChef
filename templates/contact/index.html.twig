@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContactController!{% endblock %}
+
+{% block body %}
+   {% form_theme contact 'bootstrap_5_layout.html.twig' %}
+    {{ form_start(contact) }}
+    {{ form_row(contact.email) }}
+    {{ form_row(contact.subject) }}
+    {{ form_row(contact.message) }}
+
+    <button type="submit" class="btn btn-success">Envoyer</button>
+    {{ form_end(contact) }}
+{% endblock %}

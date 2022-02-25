@@ -8,7 +8,6 @@ jQuery(document).ready(function () {
         var newWidget = list.attr('data-prototype');
 
         newWidget = newWidget.replace(/__name__/g, counter);
-        console.log
         counter++;
 
         list.data('widget-counter', counter);

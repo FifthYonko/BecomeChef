@@ -1,0 +1,23 @@
+<div class="card" style="width: 18rem;">
+	<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
+	<div class="card-body">
+		<h5 class="card-title">{{recette.id}}/{{recette.titre}}/
+			{% if app.user and "ROLE_ADMIN" in  app.user.roles %}
+				<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a>
+			{% endif %}
+		</h5>
+		<p class="card-text">{{recette.intro}}</p>
+		<p class="card-text">{{recette.preparation}}</p>
+	</div>
+	<div>
+		{% if app.user %}
+			<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning">Maj recette</a>
+			<a href="{{path('add_favori', {'id': recette.id})}}" class="btn btn-dark text-warning">
+				<i class="fas fa-star"></i>
+			</a>
+			<a href="{{path('delete_recette_admin', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
+				<i class="fas fa-trash-alt"></i>
+			</a>
+		{% endif %}
+	</div>
+</div>

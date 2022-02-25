@@ -21,39 +21,45 @@
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li>
-							<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
+							{% if app.user and "ROLE_ADMIN" in app.user.roles %}
+								<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
+
+							{% else %}
+								<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
+							{% endif %}
 						</li>
 						{% if app.user %}
-							<li>
-								<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
+							{% if "ROLE_ADMIN" in app.user.roles %}
+								<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
 							</li>
-							<li>
-								<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
-							</li>
+
+						{% else %}
+							<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
 						{% endif %}
-					</ul>
+					</li>
 				</li>
-				{% if app.user %}
-					<li>
-						<a href="{{path('app_logout')}}" class="btn btn-outline-danger mx-2">deconexion</a>
-					</li>
+				<li>
+					<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
+				</li>
+			{% endif %}
+		</li>
+	</ul>
+</li>
+<li class="nav-item">
+	<a class="nav-link " href="{{path('contact')}}">Contact</a>
+</li>
+{% if app.user %}
+	<li>
+		<a href="{{path('app_logout')}}" class="btn btn-outline-danger mx-2">deconexion</a>
+	</li>
 
-				{% else %}
-					<li>
-						<a href="{{path('app_register')}}" class="btn btn-outline-danger ">Register</a>
-					</li>
-					<li>
-						<a href="{{path('app_login')}}" class="btn btn-outline-warning mx-2">Login</a>
-					</li>
-				{% endif %}
-
-			</ul>
-
-			<form class="d-flex" action="{{path('search')}}">
-				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_value">
-				<button class="btn btn-outline-success" type="submit">Search</button>
-			</form>
-			
-		</div>
-	</div>
-</nav>
+{% else %}
+	<li>
+		<a href="{{path('app_register')}}" class="btn btn-outline-danger ">Register</a>
+	</li>
+	<li>
+		<a href="{{path('app_login')}}" class="btn btn-outline-warning mx-2">Login</a>
+	</li>
+{% endif %}</ul><form class="d-flex" action="{{path('search')}}">
+<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_value">
+<button class="btn btn-outline-success" type="submit">Search</button></form></div></div></nav>

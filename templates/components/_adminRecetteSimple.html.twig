@@ -1,0 +1,24 @@
+
+{# J'ai cree un component recette  car ca permet de reduire le code , au lieu de copier le meme bout dans chaque fichier recette. #}
+
+<div class="card" style="width: 18rem;">
+	<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
+	<div class="card-body">
+		<h5 class="card-title">{{recette.id}}/{{recette.titre}}/
+			{% if app.user and is_granted('ROLE_ADMIN') %}
+				<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a>
+
+			{% else %}
+				<b>{{recette.author.pseudo}}</b>
+			{% endif %}
+		</h5>
+		<p class="card-text">{{recette.intro}}</p>
+		<a href="{{path('show_recette_admin', {'id': recette.id})}}" class="btn btn-primary">Voir recette</a>
+
+		{% if app.user and is_granted('ROLE_ADMIN')  %}
+			<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning">Mettre a jour la recette</a>
+
+			<a href="{{path('delete_recette_admin', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">Supprimer la recette</a>
+		{% endif %}
+	</div>
+</div>

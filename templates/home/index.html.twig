@@ -16,33 +16,17 @@
 {% endif %}
 
 
-  
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/EDD/Desktop/dossierProjet/become_chef/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/EDD/Desktop/dossierProjet/become_chef/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
 </div>
 <div class="container-fluid">
     <div class="container">
         <div class="row">
             {% for recette in last %}
-				<div class="card" style="width: 18rem;">
-					<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">{{recette.id}}/{{recette.titre}}/<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a></h5>
-						<p class="card-text">{{recette.intro}}</p>
-						<a href="{{path('show_recette', {'id': recette.id})}}" class="btn btn-primary">Voir recette</a>
-						{% if app.user %}
-							<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Mettre a jour la recette</a>
-                            <a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">Supprimer la recette</a>
-						{% endif %}
 
-
-						
-					</div>
-				</div>
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    {% include "components/_adminRecetteSimple.html.twig" %}
+                {% else %}
+                    {% include "components/_userRecetteSimple.html.twig" %}
+                {% endif %}
 			{% endfor %}
         </div>
 

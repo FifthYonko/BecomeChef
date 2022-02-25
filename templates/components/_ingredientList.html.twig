@@ -1,0 +1,25 @@
+<div class="col-6 my-5">
+	<ul>
+		{% for ingredient in recette.posseders %}
+			<li>
+				{{ingredient.quantite}}
+				{{ingredient.ingredients.nom}}
+			</li>
+
+			{% if app.user and is_granted('ROLE_ADMIN') %}
+					<a href="{{path('delete_ingredient_admin',{'id': ingredient.id})}}">
+						<i class="fas fa-trash-alt"></i>
+					</a>
+
+			{% endif %}
+
+			{% if app.user and app.user.id == recette.author.id %}
+				<a href="{{path('delete_ingredient',{'id': ingredient.id})}}">
+						<i class="fas fa-trash-alt"></i>
+					</a>
+			{% endif %}
+
+
+		{% endfor %}
+	</ul>
+</div>

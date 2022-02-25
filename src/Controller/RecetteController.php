@@ -66,11 +66,6 @@ class RecetteController extends AbstractController
             }
            
             $new_recette->setAuthor($this->getUser());
-           
-
-           
-
-            // partie a modifier
             
             foreach ($form_recette->get('posseders')->getData() as $ingredient) {
 
@@ -78,7 +73,7 @@ class RecetteController extends AbstractController
             }
             $this->entityManager->persist($new_recette);
             $this->entityManager->flush();
-            // partie ou s'arrete la modification
+
             $this->addFlash('success', 'La recette a ete ajoute !');
             return $this->redirectToRoute('recette',['page'=>1]);
         }
@@ -223,6 +218,40 @@ class RecetteController extends AbstractController
         return $this->render('recette/index.html.twig', [
             'recettes' => $recettes,
         ]);
+        
+    }
+    /* fonction qui supprime un ingredient de la liste d'ingredients d'une recette.
+        accessible a partir de la page d'affichage d'une recette
+        prend en parametre un entier qui represente l'id de l'enregistrement a supprimer
+        Cette fonction redirige vers la vue d'une recette
+    */
+    #[Route('/delete_ingredient/{id}', name: 'delete_ingredient')]
+
+    public function delete_ingredient(int $id){
+        // on verifie si l'utilisateur est connecte
+        if(!$this->IsGranted('ROLE_USER')){
+            $this->addFlash('danger','vous devez vous connecter pour acceder a cette fonctionnalite');
+            return $this->redirectToRoute('app_login');
+        }
+        // on cherche la relation dans la base grace a l'id
+        $relationaSupp = $this->possederRepository->find($id);
+        // on cherche le proprietaire de la recette pour faire des verifications plus tard
+        $proprietaire = $relationaSupp->getRecette()->getAuthor()->getId();
+    
+        // on verifie que l'utilisateur est bien le proprio de la recette pour pouvoir la modifier 
+        if(!$this->getUser()->getId() != $proprietaire ){
+            // si il ne l'est pas, on redirige avec un message
+            $this->addFlash('warning','vous devez etre admin ou proprietaire de la recette pour effectuer cette tache');
+            return $this->redirectToRoute('show_recette',['id'=>$relationaSupp->getRecette()->getId()]);
+        }
+        // si oui, on retire la ligne de la bdd
+        $this->entityManager->remove($relationaSupp);
+        $this->entityManager->flush();
+
+        // on redirige vers la page ou l'utilisateur etait avant
+        $this->addFlash('success','Ingredient retire');
+        return $this->redirectToRoute('show_recette',['id'=>$relationaSupp->getRecette()->getId()]);
+       
         
     }
 }
