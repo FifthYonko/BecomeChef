@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
-
+{# Vue pour le contact d'un admin par un utilisateur #}
 {% block title %}Hello ContactController!{% endblock %}
 
 {% block body %}
+{# on utilise le formulaire Contacttype qui se trouve dans src/Form #}
    {% form_theme contact 'bootstrap_5_layout.html.twig' %}
     {{ form_start(contact) }}
     {{ form_row(contact.email) }}

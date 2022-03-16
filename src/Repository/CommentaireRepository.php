@@ -7,11 +7,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * classe de lecture de donnes de la table Commentaires
  * @method Commentaire|null find($id, $lockMode = null, $lockVersion = null)
  * @method Commentaire|null findOneBy(array $criteria, array $orderBy = null)
  * @method Commentaire[]    findAll()
  * @method Commentaire[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
 class CommentaireRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

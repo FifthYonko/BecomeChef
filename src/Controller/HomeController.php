@@ -18,13 +18,20 @@ class HomeController extends AbstractController
     {
         
     }
+    /* methode qui permet d'afficher la landing page
+        on recupere le composant symfony Request
+    */
     #[Route('/', name: 'home')]
     public function index(Request $request): Response
     {
+        // on defini le cookie
         $cookie = new Cookie('reponse', 0, strtotime('tomorrow'), '/', 
    'becomeChef.fr', true, true);
+        // on recupere les informations de l'utilisateur
         $user = $this->getUser();
+        // on recupere les dernieres recettes ajoutes au site
         $lasts = $this->recetteRepository->findLast();
+        // on redirige vers le template acueil
         return $this->render('home/index.html.twig', [
             'user' => $user,
             'last' =>$lasts,

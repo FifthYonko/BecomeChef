@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{# vue Pour l'inscription d'un utilisateur sur notre application #}
 {% block title %}Register{% endblock %}
 
 {% block body %}
     <h1>Register</h1>
+    {# affichage du formulaire #}
     {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
@@ -13,6 +14,7 @@
         }) }}
          {{ form_row(registrationForm.photo) }}
         {{ form_row(registrationForm.agreeTerms) }}
+        {# petit message avec la possibilite d'acces aux conditions generales d'utilisation #}
         <p>En cliquant sur inscription, vous acceptez les <a href="{{path('cgu')}}" target="_blank">Conditions Generales d'Utilisation</a> </p>
         <button type="submit" class="btn btn-success">Inscription</button>
     {{ form_end(registrationForm) }}

@@ -5,19 +5,26 @@
 {% endblock %}
 
 {% block body %}
+	{# Template d'affichage d'une recette pour un Admin #}
+	{# on verifie qu'il est bien admin #}
+	{% if "ROLE_ADMIN" in  app.user.roles %}
 
-	<div class="container-fluid">
-		<div class="row">
-			{% include "components/_ingredientList.html.twig" %}
-			<div class="col-6">
-				{% include "components/_AdminRecetteDetaille.html.twig" %}
+		<div class="container-fluid">
+			<div class="row">
+			{# on fait appel au composant d'ingredients #}
+				{% include "components/_ingredientList.html.twig" %}
+				<div class="col-6">
+				{# on fait aussi appel au composant de recette detailler pour un admin #}
+					{% include "components/_AdminRecetteDetaille.html.twig" %}
+				</div>
+
 			</div>
+			<div class="row justify-content-center"></div>
+
+			<hr>
+			{# et pour finir on fait appel au composant d'affichage de commentaires #}
+			{% include "components/_commentaires.html.twig" %}
 
 		</div>
-		<div class="row justify-content-center"></div>
-
-		<hr>
-		{% include "components/_commentaires.html.twig" %}
-
-	</div>
+	{% endif %}
 {% endblock %}

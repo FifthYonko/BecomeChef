@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inspecter Profil
-{% endblock %}
+{% block title %}Inspecter Profil{% endblock %}
+{# Template d'inspection de profil par un administrateur, Un administrateur a le droit d'inspecter les profils des autres utilisateurs #}
 
 {% block body %}
+{# Petite verification twig pour voir si l'utilisateur possede bien le role d'admin #}
 	{% if "ROLE_ADMIN" in  app.user.roles %}
 	<div class="container-fluid">
 		<div class="row">
+		{# on affiche les infos de l'utilisateur #}
 			<h1>Page profil de l'utilisateur
 				{{ user.pseudo }}! ✅</h1>
 			voici tes infos :
@@ -18,14 +20,18 @@
 					{{ user.email }}</li>
 				<li>Photo :
 					{{ user.photo ? user.photo : 'Pas de photo' }}</li>
+					{# etat  ===> si il est ban ou pas #}
 				<li>etat :
 					{{ user.etat == 0 ? 'Not Banned' : 'banned' }}</li>
+					{# on verifie si le champ etat de cet utilisateur est a false (ou 0) #}
 				{% if user.etat == 0 %}
 					<li>
+					{# si oui, on affiche un icone de ban #}
 						<a href="{{ path('ban',{'id': user.id}) }}" class='btn btn-danger'>
 							<i class="fas fa-ban"></i>
 						</a>
 					</li>
+					{# sinon on affiche un icone de unban (la couleur change) #}
                 {% else %}
                     <li>
 						<a href="{{ path('unban',{'id': user.id}) }}" class='btn btn-success'>

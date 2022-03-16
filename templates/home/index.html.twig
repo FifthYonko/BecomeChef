@@ -1,18 +1,17 @@
 {% extends 'base.html.twig' %}
-
+{# Page d'accueil de l'application web #}
 {% block title %}Home{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+
 
 <div class="example-wrapper">
+{# on verifie qu'un utilisateur est connecte pour afficher un message d'accueil contenant son pseudo #}
 {% if app.user %}
-  <h1>Hello {{ user.pseudo }}! ✅</h1>
+  <h1>Hello {{ user.pseudo }}! </h1>
   {% else %}
-      <h1>Hello Stranger! ✅</h1>
+  {# sinon on affiche stranger #}
+      <h1>Hello Stranger! </h1>
 {% endif %}
 
 
@@ -21,10 +20,12 @@
     <div class="container">
         <div class="row">
             {% for recette in last %}
-
+        {# on affiche les dernieres recettes ajoutes au site #}
                 {% if app.user and is_granted('ROLE_ADMIN') %}
+                {# si c'est un admin , on utilise le composant admin #}
                     {% include "components/_adminRecetteSimple.html.twig" %}
                 {% else %}
+                {# sinon on utilise le composant recette user #}
                     {% include "components/_userRecetteSimple.html.twig" %}
                 {% endif %}
 			{% endfor %}

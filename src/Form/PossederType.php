@@ -13,20 +13,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PossederType extends AbstractType
 {
+    // formulaire d'ajout dans la table Posseder
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        // champ ou on ajoute la quantite
             ->add('quantite',TypeTextType::class)
-            // ->add('recette')
+        //   champ ou on choisi l'ingredient a ajouter
+        // de type Entity, ce qui nous permet d'ajouter les infos existants dans une autre table
             ->add('ingredients',EntityType::class,[
+                // on donne la classe a laquelle ce champ est relie
                 'class'=>Ingredient::class,
+                // on donne le champ de la classe qu'on veut
                 'choice_label'=>'nom',
+                // on donne l'etiquete qu'on veut afficher au champ
                 'label'=>'Ingredients',
 
             ])
         ;
     }
-
+// formulaire lie a la table Posseder
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

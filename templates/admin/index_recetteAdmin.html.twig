@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Catalogue
-{% endblock %}
+{% block title %} Catalogue Admin {% endblock %}
 
 {% block body %}
 
 	<div class="container-fluid">
 		<h1>Hello admin. Page catalogue de l'admin</h1>
 		<div class="row">
+		{# on affiche les recettees grace a une boucle for #}
 			{% for recette in recettes %}
+			{# on utilise le composant recette #}
 				{% include "components/_adminRecetteSimple.html.twig" %}
 			{% endfor %}
 
 		</div>
 		<div class="row flex-wrap">
+		{# on affiche le nombre de pages #}
 			{% for nb in range(1,total // 3) %}
 				<a href="{{path('recette_admin',{'page': nb})}}">{{nb}}</a>
 			{% endfor %}

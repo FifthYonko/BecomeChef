@@ -1,3 +1,7 @@
+{# COMPOSANT NAVBAR
+Ce fichier contient le code necessaire a l'affichage de la navbar
+ #}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="#">Navbar</a>
@@ -5,7 +9,9 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<ul
+				class="navbar-nav me-auto mb-2 mb-lg-0">
+				{# on verifie que l'utilisateur est bien connecte pour afficher l'onglet Profil dans la navbar #}
 				{% if app.user %}
 					<li class="nav-item">
 						<a class="nav-link " href="{{path('profile')}}">Profil</a>
@@ -21,18 +27,21 @@
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li>
+							{# on verifie que l'utilsiateur est bien admin pour afficher le catalogue admin #}
 							{% if app.user and "ROLE_ADMIN" in app.user.roles %}
 								<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
-
+								{# si il ne l'est pas, on affiche le catalogue  #}
 							{% else %}
 								<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
 							{% endif %}
 						</li>
+						{# on verifie que l;utilisateur est bien connecte pour afficher ces onglets #}
 						{% if app.user %}
+							{# s'il est connecte et qu'il est admin , on affiche les onglets admin #}
 							{% if "ROLE_ADMIN" in app.user.roles %}
 								<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
 							</li>
-
+							{# sinon l'onglet user #}
 						{% else %}
 							<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
 						{% endif %}
@@ -48,11 +57,12 @@
 <li class="nav-item">
 	<a class="nav-link " href="{{path('contact')}}">Contact</a>
 </li>
+{# on verifie que l'utilisateur est connecte pour afficher le bouton de decc #}
 {% if app.user %}
 	<li>
 		<a href="{{path('app_logout')}}" class="btn btn-outline-danger mx-2">deconexion</a>
 	</li>
-
+	{# sinon on affiche l'inscription ou la connexion #}
 {% else %}
 	<li>
 		<a href="{{path('app_register')}}" class="btn btn-outline-danger ">Register</a>

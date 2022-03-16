@@ -1,3 +1,8 @@
+{# 
+COMPOSANT DE RECETTE SIMPLE POUR UN USER
+Ce fichier contient le code necessaire a l'affichage d'une recette simple dans la page catalogue d'un utilisateur connecte ou pas
+
+ #}
 <div class="card" style="width: 18rem;">
 	<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
 	<div class="card-body">
@@ -5,7 +10,7 @@
 		</h5>
 		<p class="card-text">{{recette.intro}}</p>
 		<a href="{{path('show_recette', {'id': recette.id})}}" class="btn btn-primary">Voir recette</a>
-
+	{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
 		{% if app.user and app.user.id is same as (recette.author.id)  %}
 			<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Mettre a jour la recette</a>
 

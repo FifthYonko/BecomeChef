@@ -1,8 +1,15 @@
+{#
+ COMPOSANT RECETTE DETAILLE 
+ dans ce fichier on trouve l'affichage d'une recette pour un admin
+ #}
+
 <div class="card" style="width: 18rem;">
 	<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
 	<div class="card-body">
 		<h5 class="card-title">{{recette.id}}/{{recette.titre}}/
+		{# on verifie bien qu'il est admin  #}
 			{% if app.user and "ROLE_ADMIN" in  app.user.roles %}
+			{# si il l'est, le nom de l'auteur de la recette est clickable pour pouvoir acceder a l'inspection du profil #}
 				<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a>
 			{% endif %}
 		</h5>
@@ -10,7 +17,7 @@
 		<p class="card-text">{{recette.preparation}}</p>
 	</div>
 	<div>
-		{% if app.user %}
+		{% if app.user and "ROLE_ADMIN" in  app.user.roles %}
 			<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning">Maj recette</a>
 			<a href="{{path('add_favori', {'id': recette.id})}}" class="btn btn-dark text-warning">
 				<i class="fas fa-star"></i>

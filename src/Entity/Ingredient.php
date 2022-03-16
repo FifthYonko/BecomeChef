@@ -6,7 +6,9 @@ use App\Repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+/**
+ * Entite ingredient
+ */
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
 {

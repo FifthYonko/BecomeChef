@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ *  * classe de lecture de donnes de la table Ingredients
  * @method Ingredient|null find($id, $lockMode = null, $lockVersion = null)
  * @method Ingredient|null findOneBy(array $criteria, array $orderBy = null)
  * @method Ingredient[]    findAll()

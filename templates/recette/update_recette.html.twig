@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{# Vue pour la modification d'une recette elle se base sur le meme systeme que celui de l'ajout d'une nouvelle recette
+	sauf qu'en initialisant le formulaire , on complete les champs avec les informations deja presentes dans notre base
+ #}
 {% block title %}Modifier une recette
 {% endblock %}
 
@@ -7,7 +9,7 @@
 	<div class="container-fluid">
 		<h1>
 			Form ajout recette</h1>
-
+{# on affiche le formulaire  #}
 		{% form_theme update_recette 'bootstrap_5_layout.html.twig' %}
 		{{ form_start(update_recette) }}
 		{{ form_row(update_recette.titre) }}
@@ -15,6 +17,7 @@
 		{{ form_row(update_recette.photo) }}
 		{{ form_row(update_recette.intro) }}
 
+{# les buttons d'ajout et de suppresion d'un ingredient #}
 		<div class="d-flex flex-wrap flex-row">
 			<div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(update_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ update_recette.posseders|length }}">
 				<button type="button" class="add-another-collection-widget" data-list-selector="#ingredient-fields-list">Ajouter Ingredient</button>
@@ -29,5 +32,6 @@
 
 {% endblock %}
 {% block javascripts %}
+{# importation du code js pour les ingredients #}
 	<script src="{{asset('js/recette.js')}}"></script>
 {% endblock %}
