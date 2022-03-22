@@ -21,13 +21,16 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request): Response
     {
-        $cookie = new Cookie('reponse', 0, strtotime('tomorrow'), '/', 
-   'becomeChef.fr', true, true);
+        
+     
+      
         $user = $this->getUser();
         $lasts = $this->recetteRepository->findLast();
+    
         return $this->render('home/index.html.twig', [
             'user' => $user,
             'last' =>$lasts,
         ]);
+
     }
 }
