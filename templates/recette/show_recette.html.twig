@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{# Vue pour une recette en particulier #}
 {% block title %}
 	{{recette.titre}}
 {% endblock %}
@@ -7,7 +7,7 @@
 {% block body %}
 
 	<div class="container-fluid">
-
+{# en utilisant les composants de liste d'ingredients et celui des recettes detailles pour un utilisateur, on affiche le contenu de la page #}
 		<div class="row">
 			{% include "components/_ingredientList.html.twig" %}
 			<div class="col-6">
@@ -17,6 +17,7 @@
 
 
 		<hr>
+		{# on affiche aussi les commentaires de la recette en question #}
 		{% include "components/_commentaires.html.twig" %}
 
 	</div>

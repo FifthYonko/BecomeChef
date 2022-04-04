@@ -1,3 +1,4 @@
+<!-- COMPOSANT BANIERE COOKIE -->
 <div class="banniere">
     <div class="text-banniere">
         <p>Notre site utilise des cookies pour une meilleure experience</p>

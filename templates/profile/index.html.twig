@@ -2,13 +2,12 @@
 
 {% block title %}Profil
 {% endblock %}
-
+{# Page profile d'un utilisateur #}
 {% block body %}
-	<div class="container-fluid">
+	<div class="container-fluid w-50 d-flex flex-column flex-md-row">
 		<div class="row">
-			<h1>Hello
-				{{ user.pseudo }}! ✅</h1>
-
+			<h1>Hello {{ user.pseudo }}! </h1>
+	{# on affiche les informations de l'utilsateur #}
 			<p>Ceci est ta page profil
 				<br>
 				voici tes infos :
@@ -25,8 +24,11 @@
 
 					</li>
 					<li>
+					{# les boutons pour la modification du profil et du mdp #}
 						<a href="{{path('change_profil')}}" class="btn btn-primary">Modifier mon profil</a><br>
+						{# pour le mot de passe on utilise la meme logique que celle du l'oubli du mot de passe. Ca nous permet de verifier l'identite de l'utilisateur #}
 						<a href="{{path('forgot_password')}}" class="text-warning">Modifier mon mot de passe</a><br>
+						{# on supprime la photo #}
 						<a href="{{path('delete_photo')}}" class="text-dark">Supp profile pic</a>
 					</li>
 
@@ -35,6 +37,7 @@
 		</div>
 		<hr>
 		<div class="row">
+		{# on affiche les recettes ajoutes par l'utilisateur connecte #}
 			<h2>Vos Recettes</h2>
 			{% for recette in recettes %}
 				{% if app.user and is_granted('ROLE_ADMIN') %}
@@ -47,7 +50,7 @@
 			{% endfor %}
 
 		</div>
-
+{# si c'est un admin , on affiche aussi les utilisateurs bannis #}
 		{% if "ROLE_ADMIN" in app.user.roles %}
 			<hr>
 			<div class="row">
@@ -56,6 +59,7 @@
 					{% for banned in bannedList %}
 						<li>
 							<b>
+							{# avec la possibilite d'inspecter le profil de l'utilisateur pour eventuellement le unban #}
 								<a href="{{path('inspect_profil',{'id': banned.id})}}">{{banned.pseudo}}</a>
 							</b>
 						</li>

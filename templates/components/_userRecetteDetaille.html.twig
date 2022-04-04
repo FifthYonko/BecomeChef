@@ -1,3 +1,7 @@
+{# 
+COMPOSANT DE RECETTE DETAILLE POUR UN USER
+ #}
+
 <div class="card" style="width: 18rem;">
 	<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top" alt="...">
 	<div class="card-body">
@@ -6,15 +10,21 @@
 		<p class="card-text">{{recette.intro}}</p>
 		<p class="card-text">{{recette.preparation}}</p>
 	</div>
-	<div >
-		{% if app.user and  app.user.id == recette.author.id %}
-			<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Maj recette</a>
+	<div>
+		{# on verifie que l'utilisateur est bien connecte pour qu'il puisse voir le bouton d'ajout aux favoris #}
+		{% if app.user   %}
 			<a href="{{path('add_favori', {'id': recette.id})}}" class="btn btn-dark text-warning">
 				<i class="fas fa-star"></i>
 			</a>
-			<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
-				<i class="fas fa-trash-alt"></i>
-			</a>
+			{# On verifie que l'utilisateur est bien l'auteur de la recette pour qu'il puisse voir le bouton de modification de suppression #}
+			{% if app.user.id == recette.author.id  %}
+				<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">Maj recette</a>
+				<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
+					<i class="fas fa-trash-alt"></i>
+				</a>
+			{% endif %}
+
+
 		{% endif %}
 	</div>
 </div>

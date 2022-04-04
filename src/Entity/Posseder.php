@@ -4,13 +4,16 @@ namespace App\Entity;
 
 use App\Repository\PossederRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+/**
+ * Entite posseder, c'est une table qui fait le lien entre les recettes et les ingredients qu'ils possedent
+ */
 #[ORM\Entity(repositoryClass: PossederRepository::class)]
 class Posseder
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    // colonne id 
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Recette::class, inversedBy: 'posseders')]

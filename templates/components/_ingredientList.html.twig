@@ -1,3 +1,6 @@
+{# COMPOSANT DE LISTE D'INGREDIENTS
+	Ce fichier contient le code necessaire a l'affichage de la liste d'ingredients
+ #}
 <div class="col-6 my-5">
 	<ul>
 		{% for ingredient in recette.posseders %}
@@ -5,13 +8,14 @@
 				{{ingredient.quantite}}
 				{{ingredient.ingredients.nom}}
 			</li>
-
+	{# on verifie que l'utilisateur est admin pour qu'il puisse afficher le buton de suppression d'un ingredient #}
 			{% if app.user and is_granted('ROLE_ADMIN') %}
 					<a href="{{path('delete_ingredient_admin',{'id': ingredient.id})}}">
 						<i class="fas fa-trash-alt"></i>
 					</a>
 
 			{% endif %}
+	{# on verifie que l'utilisateur est le proprio de la recette pour qu'il puisse afficher le buton de suppression d'un ingredient #}
 
 			{% if app.user and app.user.id == recette.author.id %}
 				<a href="{{path('delete_ingredient',{'id': ingredient.id})}}">

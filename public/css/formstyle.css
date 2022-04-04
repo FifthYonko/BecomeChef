@@ -1,0 +1,35 @@
+.container{
+    width: 40%;
+    margin-top: 50px;
+    padding:50px 0px 50px 0px;
+}
+h1{
+    text-align: center;
+}
+
+#connexion{
+    margin: 5px;
+    
+    background-color: #442014;
+    color: #FFFBF3;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+}
+#connexion:hover{
+    background-color:#71C72B ;
+}
+
+nav a img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    border:solid  #71C72B 1px;
+}
+
+#nomApp{
+    width: 100px;
+    height: 100px;
+}

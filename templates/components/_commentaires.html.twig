@@ -1,22 +1,31 @@
+{# 
+COMPOSANT COMMENTAIRE
+Ce fichier contient le code pour l'affichage des commentaires d'une recette ainsi que le formulaire d'ajout de nouveau commentaire 
+ #}
 <div class="row">
 	<ul class="list-group">
 		{% for comment in comments %}
 			<li class="list-group-item">
+			{# on verifie que l'utilisateur est bien admin pour pouvoir afficher un nom d'autheur clickable  #}
 				{% if app.user and is_granted('ROLE_ADMIN')  %}
 					<b>
 						<a href="{{path('inspect_profil',{'id': comment.author.id})}}">
 							{{comment.author.pseudo}}
 						</a>
 					</b>
+					{# sinon on affiche un nom normal #}
 				{% else %}
 					<b>{{comment.author.pseudo}}</b>
 				{% endif %}
 				{{comment.commentaire}}
+				{# on verifie que l'utilisateur est bien l'autheur du commentaire pour pouvoir afficher le bouton de suppression de commentaire #}
 				{% if app.user and ( app.user.id is same as (comment.author.id) ) %}
 					<a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}">
 						<i class="fas fa-trash-alt"></i>
 					</a>
 				{% endif %}
+				{# on verifie que l'utilisateur est bien un admin  pour pouvoir afficher le bouton de suppression de commentaire #}
+				
 				{% if app.user and is_granted('ROLE_ADMIN')  %}
 					<a href="{{path('delete_commentaire_admin',{'id': comment.id, 'idR': recette.id} )}}">
 						<i class="fas fa-trash-alt"></i>
@@ -32,6 +41,7 @@
 
 </div>
 <div class="row">
+{# on verifie que l'utilisateur est connecte et qu'il n'as pas ete banni car un utilisateur banni n'as pas le droit de poster des commentaires #}
 	{% if app.user and app.user.etat == 0 %}
 		{{ form_start(form_comm) }}
 		{{form_row(form_comm.commentaire)}}

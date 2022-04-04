@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{# Vue destine a l'affichage des recettes favorites d'un utilisateur #}
 {% block title %}Hello FavorisController!
 {% endblock %}
 
@@ -9,6 +9,7 @@
 		<div class="row">
 			{% for recettes in favoris %}
 				{% for recette in recettes %}
+				{# on fait appel au composant recetteSimple car on affiche pas la recette en detail #}
 					{% include "components/_AdminRecetteSimple.html.twig" %}
 				{% endfor %}
 			{% endfor %}

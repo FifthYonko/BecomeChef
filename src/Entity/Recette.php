@@ -6,7 +6,9 @@ use App\Repository\RecetteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+/**
+ * Entite Recette
+ */
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 class Recette
 {

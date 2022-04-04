@@ -172,6 +172,9 @@ class AdminController extends AbstractController
                 // on modifie le nom de la photo dans la recette car le nouveau nom a ete modifie de telle sorte a etre safe pour notre application
                 $new_recette->setPhoto($newFileName);
             }
+            else{
+                $new_recette->setPhoto('BecomeChefLogo.png');
+            }
             //on complete aussi l'autheur de la recette en recuperant les donnes du compte connecte     
             $new_recette->setAuthor($this->getUser());
             // on recupere les informations du champ ingredient pour completer la relation entre les tables
@@ -279,7 +282,7 @@ class AdminController extends AbstractController
                 // on verifie si elle existe, cad si la variable contient qq chose different de null 
                 if ($imgFile) {
                     // si on a une nouvelle image on verifie si il y avait une autre image avant
-                    if($imageExistante){
+                    if($imageExistante && $imageExistante != "BecomeChefLogo.png"){
                         // si oui, on efface l'image precendante grace a la methode unlink qui prend en parametre un string contenant le chemin vers l'image
                         unlink('uploads/'.$imageExistante);
                     }

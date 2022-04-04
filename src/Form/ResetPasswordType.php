@@ -9,11 +9,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * Formulaire de changement de mdp
+ * Lie a aucune entite
+ * Comporte les champs : password
+ */
 class ResetPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        // champ password
             ->add('password',PasswordType::class,[
                 'mapped' => false,
                 'constraints' => [

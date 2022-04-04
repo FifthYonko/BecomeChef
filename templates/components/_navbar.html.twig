@@ -1,65 +1,94 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Navbar</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				{% if app.user %}
-					<li class="nav-item">
-						<a class="nav-link " href="{{path('profile')}}">Profil</a>
-					</li>
-				{% endif %}
+{# COMPOSANT NAVBAR
+	Ce fichier contient le code necessaire a l'affichage de la navbar
+	 #}
 
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Recettes
-					</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li>
-							{% if app.user and "ROLE_ADMIN" in app.user.roles %}
-								<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
+<header>
 
-							{% else %}
-								<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
+	<nav class="navbar navbar-expand-lg  ">
+		<div class="container-fluid">
+			<div class="row w-100">
+				<div class="col-4 d-flex flex-wrap">
+					<a class="navbar-brand mb-0 h1" href="#"><img src="{{asset('img/BecomeChefLogo.png')}}" width="70px" height="70px" class="rounded-circle" alt="logo"></a>
+					<button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							{% if app.user %}
+								<li class="nav-item">
+									<a class="nav-link " href="{{path('profile')}}">Profil</a>
+								</li>
 							{% endif %}
-						</li>
-						{% if app.user %}
-							{% if "ROLE_ADMIN" in app.user.roles %}
-								<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
+
+							<li class="nav-item active">
+								<a class="nav-link active" href="{{path('home')}}">Home</a>
 							</li>
 
-						{% else %}
-							<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
-						{% endif %}
-					</li>
-				</li>
-				<li>
-					<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
-				</li>
-			{% endif %}
-		</li>
-	</ul>
-</li>
-<li class="nav-item">
-	<a class="nav-link " href="{{path('contact')}}">Contact</a>
-</li>
-{% if app.user %}
-	<li>
-		<a href="{{path('app_logout')}}" class="btn btn-outline-danger mx-2">deconexion</a>
-	</li>
+							<li class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Recettes</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li>
+										{# on verifie que l'utilsiateur est bien admin pour afficher le catalogue admin #}
+										{% if app.user and "ROLE_ADMIN" in app.user.roles %}
+											<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue
+																						Admin</a>
+											{# si il ne l'est pas, on affiche le catalogue  #}
+										{% else %}
+											<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
+										{% endif %}
+									</li>
+									{% if app.user %}
+										<li>
 
-{% else %}
-	<li>
-		<a href="{{path('app_register')}}" class="btn btn-outline-danger ">Register</a>
-	</li>
-	<li>
-		<a href="{{path('app_login')}}" class="btn btn-outline-warning mx-2">Login</a>
-	</li>
-{% endif %}</ul><form class="d-flex" action="{{path('search')}}">
-<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_value">
-<button class="btn btn-outline-success" type="submit">Search</button></form></div></div></nav>
+											{# s'il est connecte et qu'il est admin , on affiche les onglets admin #}
+											{% if "ROLE_ADMIN" in app.user.roles %}
+												<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
+
+												{# sinon l'onglet user #}
+											{% else %}
+												<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
+											{% endif %}
+										</li>
+										<li>
+											<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
+										</li>
+									{% endif %}
+								</ul>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link " href="{{path('contact')}}">Contact</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-4 align-self-center ">
+					<form class="d-flex" action="{{path('search')}}">
+						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_value">
+						<button class="btn butonsNav" type="submit">Search</button>
+					</form>
+				</div>
+				<div class="col-4 text-end align-self-center">
+					{% if app.user %}
+
+						<a href="{{path('app_logout')}}" class="btn butonsNav">deconexion</a>
+
+						{# sinon on affiche l'inscription ou la connexion #}
+					{% else %}
+
+						<a href="{{path('app_register')}}" class="btn  butonsNav ">Register</a>
+
+
+						<a href="{{path('app_login')}}" class="btn  mx-2 butonsNav">Login</a>
+
+
+					{% endif %}
+
+				</div>
+			</div>
+
+		</div>
+	</nav>
+
+</header>

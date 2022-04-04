@@ -1,18 +1,19 @@
 {% extends 'base.html.twig' %}
-
+{# Vue pour l'affichage de la liste de recettes acces a partir de l'onglet catalogue pour un utilisateur lambda #}
 
 {% block title %}Catalogue{% endblock %}
 
 {% block body %}
-
+	{#  #}
 	<div class="container-fluid">
 		<h1>Hello . Page catalogue de l'utilisateur lambda</h1>
 		<div class="row">
+		{# l'affichage  des recettes grace au composant recetteSimpleUtilisateur#}
 			{% for recette in recettes %}
 				{% include "components/_userRecetteSimple.html.twig" %}
 			{% endfor %}
 		</div>
-
+{# affichage de la navigation par page #}
 		<div class="row flex-wrap">
 			{% for nb in range(1,total // 3) %}
 				<a href="{{path('recette',{'page': nb})}}">{{nb}}</a>

@@ -11,15 +11,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContactType extends AbstractType
 {
+    // formulaire de contact admin
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
+        // champ adresse email
             ->add('email',EmailType::class)
+            // champ sujet du mail
             ->add('subject',TextType::class)
+        // champ message a envoyer
             ->add('message',TextareaType::class)
         ;
     }
 
+    // ce formulaire n'est relie a aucune table
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
