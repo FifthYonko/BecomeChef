@@ -173,7 +173,7 @@ class AdminController extends AbstractController
                 $new_recette->setPhoto($newFileName);
             }
             else{
-                $new_recette->setPhoto('BecomeChefLogo.png');
+                $new_recette->setPhoto('DefaultPhotoDark.png');
             }
             //on complete aussi l'autheur de la recette en recuperant les donnes du compte connecte     
             $new_recette->setAuthor($this->getUser());
@@ -282,7 +282,7 @@ class AdminController extends AbstractController
                 // on verifie si elle existe, cad si la variable contient qq chose different de null 
                 if ($imgFile) {
                     // si on a une nouvelle image on verifie si il y avait une autre image avant
-                    if($imageExistante && $imageExistante != "BecomeChefLogo.png"){
+                    if($imageExistante && $imageExistante != "DefaultPhotoDark.png"){
                         // si oui, on efface l'image precendante grace a la methode unlink qui prend en parametre un string contenant le chemin vers l'image
                         unlink('uploads/'.$imageExistante);
                     }

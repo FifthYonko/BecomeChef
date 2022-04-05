@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 {# VUe pour l'affichage du formulaire d'ajout de recette pour un utilisateur lambda #}
 {% block title %} Ajouter une recette {% endblock %}
-	{% block javascripts %}
-			<script src = "{{asset('js/recette.js')}}"></script>  
-		{% endblock %}
+	
 
 {% block body %}
+	<script src = "{{asset('js/recette.js')}}"></script>  
 {# l'affichage du formulaire #}
 <div class="container-fluid">
     <h1> Form ajout recette pour utilisateur</h1>
@@ -20,7 +19,7 @@
     {# buttons pour l'ajout/suppression d'un ingredient #}
     <div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(form_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ form_recette.posseders|length }}" >
         <button type="button" class="add-another-collection-widget" data-list-selector="#ingredient-fields-list" >Ajouter Ingredient</button>
-         <button type="button" class="remove-another-collection-widget" data-list-selector="#ingredient-fields-list" >SUpprimer Ingredient</button>
+         <button type="button" class="remove-another-collection-widget" data-list-selector="#ingredient-fields-list" >Supprimer Ingredient</button>
     </div>
 
 

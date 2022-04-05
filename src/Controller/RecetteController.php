@@ -73,6 +73,9 @@ class RecetteController extends AbstractController
 
             // on recupere les informations
             $new_recette = $form_recette->getData();
+            $new_recette->setTitre(ucfirst($form_recette->get('titre')->getData()));
+            $new_recette->setIntro(ucfirst($form_recette->get('intro')->getData()));
+            $new_recette->setPreparation(ucfirst($form_recette->get('preparation')->getData()));
             // on recupere les infos du champs photo du formulaire
             $imgFile = $form_recette->get('photo')->getData();
             // on verifie qu'elle existe
@@ -83,7 +86,7 @@ class RecetteController extends AbstractController
                 $new_recette->setPhoto($newFileName);
             }
             else{
-                $new_recette->setPhoto('BecomeChefLogo.png');
+                $new_recette->setPhoto('DefaultPhotoDark.png');
             }
             // si l'utilisateur n'as pas ajoute de recette on met par default le logo du site
           
@@ -185,6 +188,9 @@ class RecetteController extends AbstractController
             if ($update_recette->isSubmitted() && $update_recette->isValid()) {
                 // si le form a ete valide et soumis, on recupere les infos
                 $recette_modifie = $update_recette->getData();
+                $recette_modifie->setTitre(ucfirst($update_recette->get('titre')->getData()));
+                $recette_modifie->setIntro(ucfirst($update_recette->get('intro')->getData()));
+                $recette_modifie->setPreparation(ucfirst($update_recette->get('preparation')->getData()));
                 foreach ($update_recette->get('posseders')->getData() as $ingredient) {
 
                     $ingredient->setRecette($recette_modifie);
@@ -194,7 +200,7 @@ class RecetteController extends AbstractController
                 
                 if ($imgFile) {
                    
-                    if ($imageExistante && $imageExistante != "BecomeChefLogo.png") {
+                    if ($imageExistante && $imageExistante != "DefaultPhotoDark.png") {
                         unlink('uploads/' . $imageExistante);
                     }
                     $newFileName = $fileUploader->upload($imgFile);

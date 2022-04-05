@@ -6,21 +6,10 @@
 {% block body %}
 
 
-	<div
-		class="example-wrapper">
-		{# on verifie qu'un utilisateur est connecte pour afficher un message d'accueil contenant son pseudo #}
-		{% if app.user %}
-			<h1>Hello
-				{{ user.pseudo }}!
-			</h1>
-		{% else %}
-			{# sinon on affiche stranger #}
-			<h1>Hello Stranger!</h1>
-		{% endif %}
-
-
+	<div class="en-tete">
+		<img src="{{asset('img/en-tete.png')}}" alt="en-tete">
 	</div>
-	<div class="container-fluid w-50 d-flex flex-column flex-md-row  ">
+	<div class="container-fluid w-50 d-flex flex-column flex-md-row mt-5 flex-wrap ">
 
 		{% for recette in last %}
 			{# on affiche les dernieres recettes ajoutes au site #}

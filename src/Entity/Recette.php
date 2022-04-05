@@ -40,6 +40,10 @@ class Recette
     #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Posseder::class,cascade:['persist','remove'])]
     private $posseders;
 
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $date;
+
+
     public function __construct()
     {
 
@@ -173,4 +177,18 @@ class Recette
 
         return $this;
     }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+
 }
