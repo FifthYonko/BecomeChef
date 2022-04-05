@@ -3,19 +3,83 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-    {# affichage du formulaire #}
-    {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.password, {
-            label: 'Password'
-        }) }}
-         {{ form_row(registrationForm.photo) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-        {# petit message avec la possibilite d'acces aux conditions generales d'utilisation #}
-        <p>En cliquant sur inscription, vous acceptez les <a href="{{path('cgu')}}" target="_blank">Conditions Generales d'Utilisation</a> </p>
-        <button type="submit" class="btn btn-success">Inscription</button>
-    {{ form_end(registrationForm) }}
+<link rel="stylesheet" href="{{asset('css/inscription.css')}}">
+<div class="containerDiv">
+    <header>Register</header>
+    <div class="step-row">
+        <div class="progress"></div>
+        <div class="step-col"><small></small></div>
+        <div class="step-col"><small></small></div>
+        <div class="step-col"><small></small></div>
+        <div class="step-col"><small></small></div>
+        <div class="step-col"><small></small></div>
+
+    </div>
+    <div class="form-outer">
+        {# affichage du formulaire #}
+        {{ form_start(registrationForm) }}
+        <!-- page 1 -->
+        <div class="page first-page">
+            <div class="title">Quelle est votre adresse mail ?</div>
+            <div class="field">
+                {{ form_row(registrationForm.email) }}
+            </div>
+
+            <div class="field">
+                <button class="firstNext next">Next</button>
+            </div>
+
+        </div>
+        <!-- page 2 -->
+        <div class="page">
+            <div class="title">Veuillez choisir un pseudo</div>
+            <div class="field">
+                {{ form_row(registrationForm.pseudo) }}
+            </div>
+            <div class="field btns">
+                <button class="prev-1 prev">Previous</button>
+                <button class="next-1 next">Next</button>
+
+            </div>
+        </div>
+        <!-- page 3 -->
+        <div class="page">
+            <div class="title">Veuillez choisir un mot de passe</div>
+            <div class="field">
+                {{ form_row(registrationForm.password, {
+                    label: 'Password'
+                }) }}
+            </div>
+            <div class="field btns">
+                <button class="prev-2 prev">Previous</button>
+                <button class="next-2 next">Next</button>
+
+            </div>
+        </div>
+        <!-- page 4 -->
+        <div class="page">
+            <div class="title">Voulez vous ajouter une photo ?</div>
+            <div class="field">
+                {{ form_row(registrationForm.photo) }}
+            </div>
+            <div class="field btns">
+                {{ form_row(registrationForm.agreeTerms) }}
+                {# petit message avec la possibilite d'acces aux conditions generales d'utilisation #}
+                <p>En cliquant sur inscription, vous acceptez les <a href="{{path('cgu')}}" target="_blank">Conditions
+                        Generales
+                        d'Utilisation</a> </p>
+                <button class="prev-3 prev">Previous</button>
+
+                <button type="submit" class="btn btn-success">Inscription</button>
+            </div>
+        </div>
+
+
+
+
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+    <script src="{{asset('js/inscription.js')}}"></script>
+
 {% endblock %}
