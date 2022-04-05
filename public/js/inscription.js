@@ -9,11 +9,12 @@ const nextBtnThird = document.querySelector(".next-2");
 const prevBtnFourth = document.querySelector(".prev-3");
 
 const submitBtn = document.querySelector(".submit");
-var progress = document.getElementById('progress');
+var progress = document.querySelector('#progress');
 
 var colWidth = document.querySelector('.step-col').clientWidth;
+console.log(colWidth);
 
-let max = 4;
+
 let current = 1;
 
 

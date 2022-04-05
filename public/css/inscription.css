@@ -5,37 +5,35 @@
 
 }
 
-body {
-    min-height: 100vh;
-    background: -webkit-linear-gradient(bottom, #ff105f, #ffad06);
-}
-
-/* FAIT */
 .containerDiv {
+    
     width: 80%;
     height: auto;
     margin: 20px auto;
-    background: #fff;
+    background: #FFF8EB;
+    border: solid #FFF1D6 3px;
     border-radius: 5px;
     text-align: center;
     padding: 50px 35px 10px 35px;
 
+    
+    
+
 }
 
-/* PAS BESOIN */
 .containerDiv header {
     font-size: 35px;
     font-weight: 600;
     margin: 0 0 30px 0;
+    color: #442014;
 }
 
-/* pAS BESOIN */
+
 .containerDiv .form-outer {
     width: 100%;
     overflow: hidden;
 }
 
-/* FAIT */
 .form-outer form {
     display: flex;
     flex-direction: row;
@@ -43,7 +41,6 @@ body {
     width: 500%;
 }
 
-/* FAIT */
 .form-outer form .page {
     width: 25%;
     margin: 0px;
@@ -53,11 +50,6 @@ body {
 
 
 
-.form-outer form .slidepage {
-    margin-left: 50px;
-}
-
-/* FAIT */
 .form-outer form .page .title {
     text-align: left;
     font-size: 25px;
@@ -68,7 +60,6 @@ body {
 
 
 
-/* PAS BESOIN */
 .form-outer form .page .field {
     height: 45px;
     width: 100%;
@@ -77,12 +68,12 @@ body {
     position: relative;
 }
 
-/* FAIT */
+
 .form-outer form .page .field .label {
     display: none;
 }
 
-/* PAS BESOIN */
+
 .form-outer form .page .field input {
     height: 100%;
     width: 80%;
@@ -94,17 +85,17 @@ body {
 
 }
 
-.form-outer form .page .btns {
+.form-outer form .page .field .photo-field{
+    border: none;
+}
+
+.form-outer form .page .btns  {
 
     width: 80%;
     justify-content: space-between;
 }
 
 
-/* FAIT */
-
-
-/* FAIT */
 .form-outer form .page .field .submit {
     display: block;
     width: 100%;
@@ -122,12 +113,6 @@ body {
     transition: 0.3s ease;
 }
 
-.form-outer form .page .field button:hover {
-    background: #ff105f;
-
-}
-
-/* PAS BESOIN */
 .form-outer form .page .btns button {
     margin-top: -20px !important;
     margin-left: 10px;
@@ -140,10 +125,10 @@ body {
     width: 100%;
     height: calc(100% + 5px);
     margin-top: -20px;
-    border: none;
+    border:solid #442014;
     border-radius: 5px;
-    background: #ffad06;
-    color: #fff;
+    background: #FFFBF3;
+    color:black;
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 1px;
@@ -153,12 +138,17 @@ body {
 
 }
 
+.form-outer form .page .field button:hover {
+    border: none;
+    background: #71C72B ;
+    transition: 0.3s ease;
 
+}
 
 .step-row {
     display: inline;
     width: 100%;
-    /* plus 240px*/
+
     height: 40px;
     margin: 0 auto;
     display: flex;
@@ -171,8 +161,8 @@ body {
 
 
 .step-col {
-    width: 20%;
-    /* plus 80px*/
+    width: 25%;
+ 
     text-align: center;
     color: #333;
     position: relative;
@@ -182,9 +172,8 @@ body {
 #progress {
     position: absolute;
     height: 100%;
-    width: 15%;
-    /* plus 80px*/
-    background: linear-gradient(to right, #ff105f, #ffad06);
+    width: 20%;
+    background: linear-gradient(to right, #FFFBF3, #71C72B );
     transition: 1s;
 }
 
@@ -199,14 +188,9 @@ body {
     position: absolute;
     right: -20px;
     top: 0;
-    border-left: 20px solid #ffad06;
+    border-left: 20px solid #71C72B ;
 }
 
-#prenom {
-    margin-left: 30px;
-    display: flex;
-    align-self: center;
-}
 
 @media (min-width:1350px) {
     
