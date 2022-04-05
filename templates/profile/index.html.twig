@@ -4,10 +4,10 @@
 {% endblock %}
 {# Page profile d'un utilisateur #}
 {% block body %}
-	<div class="container-fluid">
+	<div class="container-fluid w-50 d-flex flex-column flex-md-row flex-wrap">
 		<div class="row">
 			<h1>Hello {{ user.pseudo }}! </h1>
-	{# on affiche les informations de l'utilsateur #}
+			{# on affiche les informations de l'utilsateur #}
 			<p>Ceci est ta page profil
 				<br>
 				voici tes infos :
@@ -36,7 +36,7 @@
 			</p>
 		</div>
 		<hr>
-		<div class="row">
+		<div class="row ">
 		{# on affiche les recettes ajoutes par l'utilisateur connecte #}
 			<h2>Vos Recettes</h2>
 			{% for recette in recettes %}

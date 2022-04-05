@@ -73,6 +73,9 @@ class RecetteController extends AbstractController
 
             // on recupere les informations
             $new_recette = $form_recette->getData();
+            $new_recette->setTitre(ucfirst($form_recette->get('titre')->getData()));
+            $new_recette->setIntro(ucfirst($form_recette->get('intro')->getData()));
+            $new_recette->setPreparation(ucfirst($form_recette->get('preparation')->getData()));
             // on recupere les infos du champs photo du formulaire
             $imgFile = $form_recette->get('photo')->getData();
             // on verifie qu'elle existe
@@ -82,6 +85,11 @@ class RecetteController extends AbstractController
                 // on remplace le contenu du champs photo
                 $new_recette->setPhoto($newFileName);
             }
+            else{
+                $new_recette->setPhoto('DefaultPhotoDark.png');
+            }
+            // si l'utilisateur n'as pas ajoute de recette on met par default le logo du site
+          
             // on defini l'auteur avec les informations de l'auteur authentifie
             $new_recette->setAuthor($this->getUser());
             // on fait une boucle car le champs ingredients du formulaire est de type array
@@ -180,14 +188,19 @@ class RecetteController extends AbstractController
             if ($update_recette->isSubmitted() && $update_recette->isValid()) {
                 // si le form a ete valide et soumis, on recupere les infos
                 $recette_modifie = $update_recette->getData();
+                $recette_modifie->setTitre(ucfirst($update_recette->get('titre')->getData()));
+                $recette_modifie->setIntro(ucfirst($update_recette->get('intro')->getData()));
+                $recette_modifie->setPreparation(ucfirst($update_recette->get('preparation')->getData()));
                 foreach ($update_recette->get('posseders')->getData() as $ingredient) {
 
                     $ingredient->setRecette($recette_modifie);
                 }
                 // on modifie le nom de la photo et on stocke dans uploads
                 $imgFile = $update_recette->get('photo')->getData();
+                
                 if ($imgFile) {
-                    if ($imageExistante) {
+                   
+                    if ($imageExistante && $imageExistante != "DefaultPhotoDark.png") {
                         unlink('uploads/' . $imageExistante);
                     }
                     $newFileName = $fileUploader->upload($imgFile);

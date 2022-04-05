@@ -64,7 +64,7 @@ class RecetteRepository extends ServiceEntityRepository
         // On veut que le resultat soit ordonnee par id de recette de maniere decroissante
         ->orderBy('r.id','DESC')
         // on met le nb maximal de recettes a 3
-        ->setMaxResults(3)
+        ->setMaxResults(5)
         // on execute et on recupere les donnes
         ->getQuery()
         ->getResult();

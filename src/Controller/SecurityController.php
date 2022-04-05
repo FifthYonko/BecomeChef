@@ -15,6 +15,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Form\ForgotPassType;
 use App\Form\ResetPasswordType;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
@@ -140,4 +141,25 @@ class SecurityController extends AbstractController
             ]);
         }
     }
+
+    #[Route('/accepte/cookie', name: 'accepte_cookie')]
+    public function accept_cookie(Request $request){
+        $response = new Response();
+        $expires = time()+(365*24*60*60);
+        $cookie = Cookie::create('accept_cookies',true,$expires);
+        $response->headers->setCookie($cookie);
+        $response->send();
+        
+        return $this->redirectToRoute('home');
+    }
+    #[Route('/delete/cookie', name: 'delete_cookie')]
+    public function delete_cookie(Request $request){
+        $response = new Response();
+        
+        $response->headers->clearCookie('accept_cookies');
+        $response->send();
+    
+       return $this->redirectToRoute('home');
+    }
+    
 }
