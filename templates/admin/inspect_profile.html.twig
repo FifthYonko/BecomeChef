@@ -1,51 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inspecter Profil{% endblock %}
+{% block title %}Inspecter Profil
+{% endblock %}
 {# Template d'inspection de profil par un administrateur, Un administrateur a le droit d'inspecter les profils des autres utilisateurs #}
 
 {% block body %}
 {# Petite verification twig pour voir si l'utilisateur possede bien le role d'admin #}
-	{% if "ROLE_ADMIN" in  app.user.roles %}
-	<div class="container-fluid">
-		<div class="row">
-		{# on affiche les infos de l'utilisateur #}
-			<h1>Page profil de l'utilisateur
-				{{ user.pseudo }}! ✅</h1>
-			voici tes infos :
-			<ul>
-				<li>Pseudo :
-					{{ user.pseudo }}
-				</li>
-				<li>Email :
-					{{ user.email }}</li>
-				<li>Photo :
-					{{ user.photo ? user.photo : 'Pas de photo' }}</li>
-					{# etat  ===> si il est ban ou pas #}
-				<li>etat :
-					{{ user.etat == 0 ? 'Not Banned' : 'banned' }}</li>
-					{# on verifie si le champ etat de cet utilisateur est a false (ou 0) #}
-				{% if user.etat == 0 %}
-					<li>
-					{# si oui, on affiche un icone de ban #}
-						<a href="{{ path('ban',{'id': user.id}) }}" class='btn btn-danger'>
-							<i class="fas fa-ban"></i>
-						</a>
-					</li>
-					{# sinon on affiche un icone de unban (la couleur change) #}
-                {% else %}
-                    <li>
-						<a href="{{ path('unban',{'id': user.id}) }}" class='btn btn-success'>
-							<i class="fas fa-ban"></i>
-						</a>
-					</li>
+{% if "ROLE_ADMIN" in  app.user.roles %}
+<div class="container-fluid conteneur w-50 my-5 justify-content-center">
+	<div class="row w-75 justify-content-center m-auto mt-5 ">
+		<div class="col-6 text-center">
+			{% if  utilisateur.photo %}
+			<div class="w-100">
+				<img src='{{ asset('uploads/'~ utilisateur.photo ) }}' alt='photo de profil'
+					class="rounded-circle w-25 ">
+			</div>
+			{% else %}
+			<div class="w-100">
+				<img src='{{ asset('uploads/BecomeChefLogo.png' ) }}' alt='photo de profil'
+					class="rounded-circle w-50 ">
+			</div>
+			{% endif %}
+			<h4 class="titres pt-2">Profil de l'utilisateur
+				<br>
+				<hr>
+			</h4>
+			<h4 class=" titres">Pseudo: {{ utilisateur.pseudo }}</h4>
+			<h4 class=" titres">Email : {{ utilisateur.email }}</h4>
+			<h4 class=" titres">Etat : {{ utilisateur.etat == 0 ? 'Not Banned' : 'banned' }}</h4>
+			<h4 class=" titres">Action: {% if utilisateur.etat == 0 %}
+
+				{# si oui, on affiche un icone de ban #}
+				<a href="{{ path('ban',{'id': utilisateur.id}) }}" class='btn btn-danger '>
+					<i class="fas fa-ban"></i>
+				</a>
+
+				{# sinon on affiche un icone de unban (la couleur change) #}
+				{% else %}
+				<a href="{{ path('unban',{'id': utilisateur.id}) }}" class='btn btn-success'>
+					<i class="fas fa-ban"></i>
+				</a>
 
 				{% endif %}
 
+			</h4>
 
-			</ul>
-		</p>
+		</div>
 	</div>
-   
-    {% endif %}
+</div>
+{% endif %}
 
-</div>{% endblock %}
+
+{% endblock %}

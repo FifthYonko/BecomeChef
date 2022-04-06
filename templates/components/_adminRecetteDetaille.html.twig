@@ -10,7 +10,7 @@
 		{# on verifie bien qu'il est admin  #}
 			{% if app.user and "ROLE_ADMIN" in  app.user.roles %}
 			{# si il l'est, le nom de l'auteur de la recette est clickable pour pouvoir acceder a l'inspection du profil #}
-				<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a>
+				<a href="{{path('inspect_profil',{'id': recette.author.id})}}" class="anchorStyle coloredText ">{{recette.author.pseudo}}</a>
 			{% endif %}
 		</h5>
 		<p class="card-text">{{recette.intro}}</p>

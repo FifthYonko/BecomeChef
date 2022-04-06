@@ -14,7 +14,10 @@ class ForgotPassType extends AbstractType
     {
         // champ email auquel envoyer le mail
         $builder
-            ->add('email',EmailType::class)
+            ->add('email',EmailType::class,[
+                'label'=>'Un mail vous sera adressé pour réinitialiser votre mot de passe',
+                'label_attr'=>['class'=>'titres fs-5'],
+            ])
         ;
     }
 

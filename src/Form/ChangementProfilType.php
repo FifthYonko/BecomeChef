@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -56,6 +58,15 @@ class ChangementProfilType extends AbstractType
                         'mimeTypesMessage' => 'Veuillez uploader une image!',
                     ])
                 ],
+            ])
+            ->add('adresse',TextType::class,[
+                'required'=>false,
+            ])
+            ->add('codePostal',NumberType::class,[
+                'required'=> false,
+            ])
+            ->add('ville',TextType::class,[
+                'required'=>false,
             ])
         ;
     }

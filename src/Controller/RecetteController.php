@@ -37,7 +37,7 @@ class RecetteController extends AbstractController
     {
         // on recupere les recettes qui se trouvent dans notre base de donnees grace a une la fonction findByPage (cf RecetteRepository.php dans Repository)
         // et on stocke les informations dans la variable recette 
-        $recette = $this->recetteRepository->findByPage($page - 1, 3);
+        $recette = $this->recetteRepository->findByPage($page - 1, 5);
         // grace a la fonction (Aussi definie dans RecetteRepository) on compte le nombre total de recettes presentes sur notre site
         $nbtotal = $this->recetteRepository->compter();
         // On redirige vers la page d'affichage des recettes

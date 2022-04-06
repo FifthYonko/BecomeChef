@@ -64,6 +64,7 @@ class SecurityController extends AbstractController
         if ($forget_pass->isSubmitted() && $forget_pass->isValid()) {
             // on recupere l'email
             $email = $forget_pass->get('email')->getData();
+           
             // on cherche dans la bdd , un utilisateur qui possede ce mail
             $user = $userRepository->findOneBy(['email' => $email]);
             // on verifie qu'il existe bien un utilisateur avec ce mail
@@ -72,6 +73,8 @@ class SecurityController extends AbstractController
                 $this->addFlash('warning', 'Cette adresse n\'est lie a aucun compte.');
                 return $this->redirectToRoute('app_login');
             }
+            
+
             // on cree une chaine de caracteres unique qui nous permetera de confirmer l'identite de l'utilisateur
             $token = $tokenGenerator->generateToken();
             // on essaie de remplir le champ PasswordToken dans la bdd avec ce tokken
@@ -79,6 +82,7 @@ class SecurityController extends AbstractController
                 $user->setPasswordTokken($token);
                 $entityManager->persist($user);
                 $entityManager->flush();
+
                 // si il y a une erreur, on previent l'utilisateur et on redirige
             } catch (FileException $e) {
                 $this->addFlash('danger', 'Une erreur est survenue : ' . $e->getMessage());
@@ -88,10 +92,19 @@ class SecurityController extends AbstractController
             // dans ce lien on ajoute la route, et le token cree plutot
             $url = $this->generateUrl('app_reset_password', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
             // on envoie le mail
-            $sendEmail->send('BecomeChef@super-site.com', $email, 'Changement de Mot de passe', $url);
+            $sendEmail->send('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url);
             // on affiche un message et on redirige vers la page de connexion
             $this->addFlash('success', 'Un email vous a ete envoye, cliquez sur le lien pour changer votre mdp');
-            return $this->redirectToRoute('app_login');
+            if(!$user){
+                $this->addFlash('success', 'Un email vous a ete envoye, cliquez sur le lien pour changer votre mdp');
+                return $this->redirectToRoute('app_login');
+
+            }
+            else {
+                $this->addFlash('success', 'Un email vous a ete envoye, cliquez sur le lien pour changer votre mdp');
+                return $this->redirectToRoute('profile');
+
+            }
         }
         // sinon on affiche le formulaire de demande de changement 
         return $this->renderForm('security/forgotPassword.html.twig', [
@@ -116,10 +129,11 @@ class SecurityController extends AbstractController
         if (!$user) {
             // s'il n'existe pas on affiche un message et on redirige vers la connexion
             $this->addFlash('danger', 'Aucun utilisateur trouve');
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('home');
         }
         // on verifie si le formulaire est corectement rempli
         if ($reset_form->isSubmitted() && $reset_form->isValid()) {
+      
             // on recupere le champs du mdp rempli par l'utilisateur
             $nvMdp = $reset_form->get('password')->getData();
             // on met a NULL le champ PasswordToken de l'utilisateur dans la bdd
@@ -132,8 +146,11 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // on affiche un message et on redirige vers la connexion
-            $this->addFlash('success', 'MDP change avec success');
-            return $this->redirectToRoute('app_login');
+          
+                $this->addFlash('success', 'Le mot de passe a ete change avec success');
+                return $this->redirectToRoute('app_home');
+
+            
         } else {
             // sinon on affiche le formulaire de changement de mdp
             return $this->renderForm('security/reset_password.html.twig', [

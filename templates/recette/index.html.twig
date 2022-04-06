@@ -4,20 +4,23 @@
 {% block title %}Catalogue{% endblock %}
 
 {% block body %}
-	{#  #}
-	<div class="container-fluid">
-		<h1>Hello . Page catalogue de l'utilisateur lambda</h1>
-		<div class="row">
+{#  #}
+<div class="container-fluid">
+	<h1 class="titres coloredText text-center">Catalogue</h1>
+	<div class="row m-auto justify-content-center">
 		{# l'affichage  des recettes grace au composant recetteSimpleUtilisateur#}
-			{% for recette in recettes %}
-				{% include "components/_userRecetteSimple.html.twig" %}
-			{% endfor %}
-		</div>
-{# affichage de la navigation par page #}
-		<div class="row flex-wrap">
-			{% for nb in range(1,total // 3) %}
-				<a href="{{path('recette',{'page': nb})}}">{{nb}}</a>
-			{% endfor %}
-		</div>
+		{% for recette in recettes %}
+		{% include "components/_userRecetteSimple.html.twig" %}
+		{% endfor %}
 	</div>
+	{# affichage de la navigation par page #}
+	<div class="row w-25 m-auto">
+		{% for nb in range(1,total // 3) %}
+		<div class="col">
+			<a href="{{path('recette',{'page': nb})}}" class=" ">{{nb}}</a>
+
+		</div>
+		{% endfor %}
+	</div>
+</div>
 {% endblock %}

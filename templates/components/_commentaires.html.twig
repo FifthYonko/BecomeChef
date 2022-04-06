@@ -2,50 +2,59 @@
 COMPOSANT COMMENTAIRE
 Ce fichier contient le code pour l'affichage des commentaires d'une recette ainsi que le formulaire d'ajout de nouveau commentaire 
  #}
-<div class="row">
-	<ul class="list-group">
-		{% for comment in comments %}
-			<li class="list-group-item">
-			{# on verifie que l'utilisateur est bien admin pour pouvoir afficher un nom d'autheur clickable  #}
-				{% if app.user and is_granted('ROLE_ADMIN')  %}
-					<b>
-						<a href="{{path('inspect_profil',{'id': comment.author.id})}}">
-							{{comment.author.pseudo}}
-						</a>
-					</b>
-					{# sinon on affiche un nom normal #}
-				{% else %}
-					<b>{{comment.author.pseudo}}</b>
-				{% endif %}
-				{{comment.commentaire}}
-				{# on verifie que l'utilisateur est bien l'autheur du commentaire pour pouvoir afficher le bouton de suppression de commentaire #}
-				{% if app.user and ( app.user.id is same as (comment.author.id) ) %}
-					<a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}">
-						<i class="fas fa-trash-alt"></i>
+
+<div class="row w-75 d-flex flex-wrap m-auto collapse">
+	{% for comment in comments %}
+		<div class="col text-center">
+			<div class="imgContainer w-100">
+				{% if  comment.author.photo %}
+				<img src='{{ asset('uploads/'~ comment.author.photo ) }}' style="width:100px " alt='photo de profil' class="rounded-circle ">
+			{% else %}
+				<img src='{{ asset('uploads/BecomeChefLogo.png' ) }}' style="width:100px;  " alt='photo de profil' class="rounded-circle  coloredBorder">
+			{% endif %}
+			</div>
+			{% if app.user and is_granted('ROLE_ADMIN')  %}
+				<b>
+					<a href="{{path('inspect_profil',{'id': comment.author.id})}}">
+						{{comment.author.pseudo}}
 					</a>
-				{% endif %}
-				{# on verifie que l'utilisateur est bien un admin  pour pouvoir afficher le bouton de suppression de commentaire #}
-				
-				{% if app.user and is_granted('ROLE_ADMIN')  %}
-					<a href="{{path('delete_commentaire_admin',{'id': comment.id, 'idR': recette.id} )}}">
-						<i class="fas fa-trash-alt"></i>
-					</a>
-				{% endif %}
+				</b>
+				{# sinon on affiche un nom normal #}
+			{% else %}
+				<b>{{comment.author.pseudo}}</b>
+			{% endif %}
+			{{comment.commentaire}}
+			{# on verifie que l'utilisateur est bien l'autheur du commentaire pour pouvoir afficher le bouton de suppression de commentaire #}
+			{% if app.user and ( app.user.id is same as (comment.author.id) ) %}
+				<a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}">
+					<i class="fas fa-trash-alt"></i>
+				</a>
+			{% endif %}
+			{# on verifie que l'utilisateur est bien un admin  pour pouvoir afficher le bouton de suppression de commentaire #}
 
-			</li>
+			{% if app.user and is_granted('ROLE_ADMIN')  %}
+				<a href="{{path('delete_commentaire_admin',{'id': comment.id, 'idR': recette.id} )}}">
+					<i class="fas fa-trash-alt"></i>
+				</a>
+				{% endif %}	
+		</div>
 
 
-		{% endfor %}
+	{% endfor %}
 
-	</ul>
 
 </div>
-<div class="row">
-{# on verifie que l'utilisateur est connecte et qu'il n'as pas ete banni car un utilisateur banni n'as pas le droit de poster des commentaires #}
+<div
+	class="row mt-4">
+	{# on verifie que l'utilisateur est connecte et qu'il n'as pas ete banni car un utilisateur banni n'as pas le droit de poster des commentaires #}
 	{% if app.user and app.user.etat == 0 %}
 		{{ form_start(form_comm) }}
-		{{form_row(form_comm.commentaire)}}
-		<button type="submit" class="btn btn-primary">Ajouter commentaire</button>
+		<div class="col-6 m-auto text-center">
+
+			{{form_widget(form_comm.commentaire,{'attr': {'class': 'formInput'}})}}
+			<button type="submit" class="btn btn-primary btn FormSub w-50 text-dark fs-5 m-auto">Ajouter commentaire</button>
+		</div>
+
 		{{ form_end(form_comm) }}
 	{% endif %}
 

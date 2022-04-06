@@ -51,6 +51,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $passwordTokken;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $adresse;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $codePostal;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $ville;
+
     public function __construct()
     {
         $this->recettes = new ArrayCollection();
@@ -232,6 +241,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPasswordTokken(?string $passwordTokken): self
     {
         $this->passwordTokken = $passwordTokken;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?int $codePostal): self
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

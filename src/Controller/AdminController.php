@@ -108,7 +108,7 @@ class AdminController extends AbstractController
         // sinon , on cherche l'id dans la base de donnees et on affiche le profil de l'utilisateur
         $user = $this->userRepository->find($id);
         return $this->render('admin/inspect_profile.html.twig', [
-            'user' => $user,
+            'utilisateur' => $user,
 
         ]);
     }
