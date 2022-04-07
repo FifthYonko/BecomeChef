@@ -9,7 +9,25 @@ nav{
 }
 .titres{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
 }
+
+.titreRecette{
+    /* font-size: 1.5vw; */
+    font-family: 'Lobster', cursive;
+    text-align: center;
+}
+
+.intro{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.preparations {
+    font-family: Helvetica;
+}
+
 .nav-link,.dropdown-item{
     text-decoration: none;
     color: #442014;
@@ -31,10 +49,12 @@ nav{
 html,body{
     height: 100%;
     background-color:#FFFBF3;
+    
 }
 body{
     display: flex;
     flex-direction: column;
+    
 }
 .card,.container,.conteneur{
     background-color: #FFF8EB;
@@ -54,20 +74,15 @@ body{
 }
 main{
     flex: 1 0 auto;
-    overflow: auto;
+   
+    
 }
-.titreRecette{
-    font-family: 'Lobster', cursive;
-    text-align: center;
-}
+
+
 .img{
     width: 95%;
 }
-.intro{
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-}
+
 
 
 .btns a:hover, .FormSub:hover{
@@ -102,6 +117,16 @@ main{
    
 
 }
+
+.selector{
+    background-color: #FFF1D6;
+    border: solid #71C72B 2px;
+    color: #442014 ;
+    text-align: center;
+
+}
+
+
 
 .anchorStyle{
     text-decoration: none;

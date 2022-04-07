@@ -1,48 +1,44 @@
 {# 
 COMPOSANT DE RECETTE DETAILLE POUR UN USER
  #}
-<div class="card mx-2 m-2 shadow  " style="width: 18rem; ">
-	<div class="infos d-flex justify-content-around">
-		<p>
+
+<div class="container w-50">
+	<span>
+		<h3 class="titreRecette coloredText text-center bold">{{recette.titre}}</h3>
+	</span>
+	<div class="infos d-none d-md-flex align-items-center  justify-content-around my-3 shadow rounded w-75 m-auto ">
+		<span class=" m-0 h-50">
 			<i class="fas fa-calendar-alt "></i>
-			{{recette.date|date("d/m/Y")}}</p>
-		<p>Par
+			{{recette.date|date("d/m/Y")}}</span>
+		<span>Par
 			<b>{{recette.author.pseudo}}</b>
-		</p>
+		</span>
 	</div>
-	<div class="card-title ">
-		<h4 class="card-title titreRecette">{{recette.titre}}</h4>
+	<div class="img m-auto">
+		<img src="{{ asset('uploads/'~ recette.photo) }}" class=" img m-auto rounded  align-center "
+			alt="{{recette.titre}}">
 	</div>
-
-	<div class="img m-auto d-flex justify-content-center align-items-center">
-
-		<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top rounded-3 h-50  align-center " alt="{{recette.titre}}">
+	<div class="intro">
+		<i class="fas fa-clock"></i>
+		{{recette.intro}}
 	</div>
-	<div class="card-body d-flex flex-column ">
+	<div class="btns text-center mt-auto ">
+		{% if app.user   %}
+		<a href="{{path('add_favori', {'id': recette.id})}}" class="btn btn-dark text-warning">
+			<i class="fas fa-star"></i>
+		</a>
+		{% endif %}
+		{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
+		{% if app.user and app.user.id is same as (recette.author.id)  %}
+		<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">
+			<i class="fas fa-edit text-light"></i>
+		</a>
 
-		<div class="text w-100">
-			<p class="card-text intro">
-				<i class="fas fa-clock"></i>
-				{{recette.intro}}</p>
-			
-		</div>
-
-		<div class="btns text-center mt-auto ">
-			{% if app.user   %}
-				<a href="{{path('add_favori', {'id': recette.id})}}" class="btn btn-dark text-warning">
-					<i class="fas fa-star"></i>
-				</a>
-			{% endif %}
-			{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
-			{% if app.user and app.user.id is same as (recette.author.id)  %}
-				<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">
-					<i class="fas fa-edit text-light"></i>
-				</a>
-
-				<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
-					<i class="fas fa-trash-alt"></i>
-				</a>
-			{% endif %}
-		</div>
+		<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger"
+			onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
+			<i class="fas fa-trash-alt"></i>
+		</a>
+		{% endif %}
 	</div>
+	
 </div>

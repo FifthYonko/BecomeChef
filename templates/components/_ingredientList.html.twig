@@ -2,28 +2,38 @@
 	Ce fichier contient le code necessaire a l'affichage de la liste d'ingredients
  #}
 
-	<ul>
+<div class="container">
+	<div class="row shadow rounded w-75 m-auto my-2 ">
+		<h3 class="titreRecette coloredText ">Ingredients</h3>
+	</div>
+	<div class="row flex-lg-row flex-column justify-content-around">
 		{% for ingredient in recette.posseders %}
-			<li>
-				{{ingredient.quantite}}
-				{{ingredient.ingredients.nom}}
-			</li>
-	{# on verifie que l'utilisateur est admin pour qu'il puisse afficher le buton de suppression d'un ingredient #}
+		<div class="col-lg-4  p-0 my-2 m-lg-2 rounded shadow text-center">
+			<p class="titres coloredText "><b>{{ingredient.ingredients.nom}}</b></p>
+			{{ingredient.quantite}}
+			
+
+			{# on verifie que l'utilisateur est admin pour qu'il puisse afficher le buton de suppression d'un ingredient #}
 			{% if app.user and is_granted('ROLE_ADMIN') %}
-					<a href="{{path('delete_ingredient_admin',{'id': ingredient.id})}}">
-						<i class="fas fa-trash-alt"></i>
-					</a>
+			<a href="{{path('delete_ingredient_admin',{'id': ingredient.id})}}">
+				<i class="fas fa-trash-alt"></i>
+			</a>
 
 			{% endif %}
-	{# on verifie que l'utilisateur est le proprio de la recette pour qu'il puisse afficher le buton de suppression d'un ingredient #}
+			{# on verifie que l'utilisateur est le proprio de la recette pour qu'il puisse afficher le buton de suppression d'un ingredient #}
 
 			{% if app.user and app.user.id == recette.author.id %}
-				<a href="{{path('delete_ingredient',{'id': ingredient.id})}}">
-						<i class="fas fa-trash-alt"></i>
-					</a>
+			<a href="{{path('delete_ingredient',{'id': ingredient.id})}}">
+				<i class="fas fa-trash-alt"></i>
+			</a>
 			{% endif %}
+		</div>
+
 
 
 		{% endfor %}
-	</ul>
 
+	</div>
+
+
+</div>

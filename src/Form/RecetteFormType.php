@@ -31,12 +31,15 @@ class RecetteFormType extends AbstractType
                 // les attributs du champ
                 'attr' => [
                     'placeholder' => 'Le titre de la recette',
+                  
                 ],
+                'label_attr'=>['class'=>'titres'],
                 // les contraintes
                 'constraints' => [
                     // pas vide
                     new NotBlank([
                         'message' => 'Veuillez completer ce champ',
+                        
                     ]),
                     // une taille minimale
                     new Length([
@@ -50,7 +53,9 @@ class RecetteFormType extends AbstractType
                 // l'attribut
                 'attr' => [
                     'placeholder' => 'Nombre de personnes, temps de preparation',
+                  
                 ],
+                'label_attr'=>['class'=>'titres'],
                 // les contraintes
                 'constraints' => [
                     new NotBlank([
@@ -66,7 +71,9 @@ class RecetteFormType extends AbstractType
             ->add('preparation', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Veuillez bien detailler le processus de preparation de la recette',
+                   
                 ],
+                'label_attr'=>['class'=>'titres'],
                 // contraintes
                 'constraints' => [
                     new NotBlank(['message' => 'Veuillez completer ce champ',]),
@@ -80,6 +87,7 @@ class RecetteFormType extends AbstractType
             // champ correspondant a la photo de la recette
             ->add('photo', FileType::class, [
                 'label' => 'Photo',
+                'label_attr'=>['class'=>'titres'],
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
