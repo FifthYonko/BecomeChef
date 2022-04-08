@@ -171,16 +171,22 @@ class RecetteController extends AbstractController
     #[Route('/update_recette/{id}', name: 'update_recette')]
     public function update_recette(Request $request, int $id, FileUploader $fileUploader)
     {
+        $user = $this->getUser();
+        if(!$user){
+            $this->addFlash('warning','Vous devez être connecté pour accéder à cette fonctionnalité');
+            return $this->redirectToRoute('app_login');
+        }
         // on recherche la recette dans la bdd grace a son id
         $recette_modifie = $this->recetteRepository->find($id);
 
         if (!$recette_modifie) {
             // si elle existe pas, on met un warning 
             $this->addFlash('warning', 'Aucune recette trouve');
+            return $this->redirectToRoute('recette', ['page' => 1]);
         }
         $imageExistante = $recette_modifie->getPhoto();
         // si elle existe , on verifie que l'utilisateur est soit connecte et proprio de la recette, soit un admin
-        if ($this->getUser()->getId() === $recette_modifie->getAuthor()->getId()) {
+        if ($user->getId() === $recette_modifie->getAuthor()->getId()) {
             // on cree le formulaire
             $update_recette = $this->createForm(RecetteFormType::class, $recette_modifie);
             $update_recette->handleRequest($request);
@@ -192,21 +198,18 @@ class RecetteController extends AbstractController
                 $recette_modifie->setIntro(ucfirst($update_recette->get('intro')->getData()));
                 $recette_modifie->setPreparation(ucfirst($update_recette->get('preparation')->getData()));
                 foreach ($update_recette->get('posseders')->getData() as $ingredient) {
-
                     $ingredient->setRecette($recette_modifie);
                 }
                 // on modifie le nom de la photo et on stocke dans uploads
                 $imgFile = $update_recette->get('photo')->getData();
                 
                 if ($imgFile) {
-                   
                     if ($imageExistante && $imageExistante != "DefaultPhotoDark.png") {
                         unlink('uploads/' . $imageExistante);
                     }
+                    // on modifie l'info dans la recette
                     $newFileName = $fileUploader->upload($imgFile);
                     $recette_modifie->setPhoto($newFileName);
-                    // on modifie l'info dans la recette
-
                 }
                 // on envoie les donnees dans la base et on redirect vers le catalogue
                 $this->entityManager->persist($recette_modifie);
@@ -222,11 +225,7 @@ class RecetteController extends AbstractController
                 // si oui, on lui affiche un meessage et on redirige vers la page catalogue recettes de l'utilisateur
                 $this->addFlash("danger", "Vous devez etre Admin ou le proprietaire de la recette pour la modifier!");
                 return $this->redirectToRoute('recette', ['page' => 1]);
-            } else {
-                // si il n'est pas connecte , on affiche un message et on redirige vers le formulaire de connexion
-                $this->addFlash("danger", "Vous devez etre soit connecte soit Admin ou le proprietaire de la recette pour la modifier!");
-                return $this->redirectToRoute('app_login');
-            }
+            } 
         }
         // sinon on redirige vers la page d'ajout de recette
         return $this->render('recette/update_recette.html.twig', [
