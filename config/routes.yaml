@@ -5,3 +5,11 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+oauth_check:
+    path: /oauth/check
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController 
+
+connect_google_check:
+  path: /connect/google/check
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

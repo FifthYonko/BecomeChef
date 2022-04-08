@@ -1,49 +1,49 @@
 {% extends 'base.html.twig' %}
-{# VUe pour l'affichage du formulaire d'ajout de recette pour un utilisateur lambda #}
-{% block title %} Ajouter une recette {% endblock %}
+{# VUe pour l'affichage du formulaire d'ajout de recette pour un utilisateur  #}
+{% block title %}
+	Ajouter une recette
+{% endblock %}
 
 
 {% block body %}
-<script src="{{asset('js/recette.js')}}"></script>
-{# l'affichage du formulaire #}
-{{ form_start(form_recette,{'attr': {'class': 'container w-50 m-auto p-3'}}) }}
-<div class="row">
-    <h1 class="w-100 text-center titres fs-2"> Ajoutez une recette</h1>
 
-</div>
-<div class="row my-2">
-    {{ form_label(form_recette.titre) }}
-    {{ form_widget(form_recette.titre, {'attr': {'class':'formInput' }}) }}
-</div>
-<div class="row my-2">
-    {{ form_label(form_recette.intro) }}
-    {{ form_widget(form_recette.intro, {'attr': {'class': 'formInput'}}) }}
-</div>
-<div class="row my-2">
-    {{ form_label(form_recette.preparation) }}
-    {{ form_widget(form_recette.preparation, {'attr': {'class': 'formInput '}}) }}
-</div>
-<div class="row my-2">
-    {{ form_label(form_recette.photo) }}
-    {{ form_widget(form_recette.photo) }}
-</div>
+	{# l'affichage du formulaire #}
+	{{ form_start(form_recette,{'attr': {'class': 'container w-50 m-auto p-3'}}) }}
+	<div class="row">
+		<h1 class="w-100 text-center titres fs-2">
+			Ajoutez une recette</h1>
+
+	</div>
+	<div class="row my-2">
+		{{ form_label(form_recette.titre) }}
+		{{ form_widget(form_recette.titre, {'attr': {'class':'formInput' }}) }}
+	</div>
+	<div class="row my-2">
+		{{ form_label(form_recette.intro) }}
+		{{ form_widget(form_recette.intro, {'attr': {'class': 'formInput'}}) }}
+	</div>
+	<div class="row my-2">
+		{{ form_label(form_recette.preparation) }}
+		{{ form_widget(form_recette.preparation, {'attr': {'class': 'formInput '}}) }}
+	</div>
+	<div class="row my-2">
+		{{ form_label(form_recette.photo) }}
+		{{ form_widget(form_recette.photo) }}
+	</div>
 
 
-{# si on veut rajouter juste un champ, on utilise .nom-champ apres prototype #}
-{# buttons pour l'ajout/suppression d'un ingredient #}
-<div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(form_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ form_recette.posseders|length }}">
-  
-</div>
 
-<div class="row my-2 w-50 m-auto">
-    <button type="button" class="add-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2" data-list-selector="#ingredient-fields-list">Ajouter
-        Ingredient</button>
-    <button type="button" class="remove-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2"
-        data-list-selector="#ingredient-fields-list">Supprimer Ingredient</button>
-    
-</div>
+	{# boutons pour l'ajout/suppression d'un ingredient dans le formulaire #}
+	<div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(form_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ form_recette.posseders|length }}"></div>
 
-<button type="submit" class="btn btn-success">Ajouter</button>
-{{ form_end(form_recette,{'render_rest': false}) }}
+	<div class="row my-2 w-50 m-auto">
+		<button type="button" class="add-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2" data-list-selector="#ingredient-fields-list">Ajouter
+			        Ingredient</button>
+		<button type="button" class="remove-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2" data-list-selector="#ingredient-fields-list">Supprimer Ingredient</button>
+
+	</div>
+
+	<button type="submit" class="btn btn-success">Ajouter</button>
+	{{ form_end(form_recette,{'render_rest': false}) }}
 
 {% endblock %}

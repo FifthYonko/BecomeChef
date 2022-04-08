@@ -5,8 +5,8 @@
 
 {% block body %}
 	<link rel="stylesheet" href="{{asset('css/inscription.css')}}">
-	<div class="containerDiv">
-		<header>Inscription</header>
+	<div class="conteneur containerDiv">
+		<header class="titres coloredText">Inscription</header>
 		<div class="step-row">
 			<div id="progress"></div>
 			<div class="step-col">
@@ -22,60 +22,60 @@
 				<small>Step 4</small>
 			</div>
 		</div>
-		<div
-			class="form-outer">
+		<div class="formulaire">
 			{# affichage du formulaire #}
 			{{ form_start(registrationForm) }}
 			<!-- page 1 -->
 			<div class="page first-page">
-				<div class="title">Quelle est votre adresse mail ?</div>
-				<div class="field">
-					{{ form_widget(registrationForm.email) }}
+				<div class="titres fs-3 text-start">Quelle est votre adresse mail ?</div>
+				<div class="champs">
+					{{ form_widget(registrationForm.email,{'attr': {'class': 'formInput'}}) }}
+					
 				</div>
 
-				<div class="field btns">
-					<button class="firstNext next">Next</button>
+				<div class="champs btns">
+					<button class="firstNext next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
 				</div>
 
 			</div>
 			<!-- page 2 -->
 			<div class="page">
-				<div class="title">Veuillez choisir un pseudo</div>
-				<div class="field">
-					{{ form_widget(registrationForm.pseudo) }}
+				<div class="titres fs-3 text-start">Veuillez choisir un pseudo</div>
+				<div class="champs">
+					{{ form_widget(registrationForm.pseudo,{'attr': {'class': 'formInput'}}) }}
 				</div>
-				<div class="field btns">
-					<button class="prev-1 prev">Previous</button>
-					<button class="next-1 next">Next</button>
+				<div class="champs btns">
+					<button class="prev-1 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
+					<button class="next-1 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
 
 				</div>
 			</div>
 			<!-- page 3 -->
 			<div class="page">
-				<div class="title">Voulez vous ajouter une photo ?</div>
-				<div class="field ">
-					{{ form_widget(registrationForm.photo,{'attr': {'class': 'photo-field'}}) }}
+				<div class="titres fs-3 text-start">Voulez vous ajouter une photo ?</div>
+				<div class="champs ">
+					{{ form_widget(registrationForm.photo) }}
 				</div>
 
-				<div class="field btns">
-					<button class="prev-2 prev">Previous</button>
-					<button class="next-2 next">Next</button>
+				<div class="champs btns">
+					<button class="prev-2 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
+					<button class="next-2 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
 
 				</div>
 			</div>
 			<!-- page 4 -->
 			<div class="page">
-				<div class="title">Veuillez choisir un mot de passe</div>
-				<div class="field">
-					{{ form_widget(registrationForm.password, {
-                    label: 'Password'
-                }) }}
+				<div class="titres fs-3 text-start">Veuillez choisir un mot de passe</div>
+				<div class="champs">
+					{{ form_widget(registrationForm.password, 
+                    {'attr': {'class': 'formInput'}}
+                ) }}
 				</div>
-				<div class="field btns">
+				<div class="champs btns">
 
-					<button class="prev-3 prev">Previous</button>
+					<button class="prev-3 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
 
-					<button type="submit" class="btn btn-success">Inscription</button>
+					<button type="submit" class="FormSub btn w-100 text-dark fs-5 mb-2">Inscription</button>
 				</div>
 			</div>
 
@@ -86,7 +86,4 @@
 	<script src="{{asset('js/inscription.js')}}"></script>
 
 {% endblock %}
-{% block javascript %}
-	<script src="{{asset('js/inscription.js')}}"></script>
 
-{% endblock %}

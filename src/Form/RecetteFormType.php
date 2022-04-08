@@ -44,7 +44,7 @@ class RecetteFormType extends AbstractType
                     // une taille minimale
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Le titre doit contenir minumum {{limit}} caracteres',
+                        'minMessage' => 'Le titre doit contenir minumum {{ limit }} caracteres',
                     ])
                 ]
             ])

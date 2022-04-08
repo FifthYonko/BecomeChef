@@ -40,9 +40,9 @@ Dans ce fichier on trouve l'affichage d'une recette simple sur la page catalogue
 			<a href="{{path('show_recette', {'id': recette.id})}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
 		{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
 		{% if app.user and is_granted('ROLE_ADMIN')  %}
-		<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+		<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
 
-		<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger"
+		<a href="{{path('delete_recette_admin', {'id': recette.id})}}" class="btn btn-danger"
 			onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); "><i class="fas fa-trash-alt"></i></a>
 		{% endif %}
 		</div>

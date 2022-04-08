@@ -20,9 +20,13 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\UserAuthenticator
+            custom_authenticators: 
+                - App\Security\UserAuthenticator
+                - App\Security\GithubAuthenticator
+                - App\Security\GoogleAuthenticator
             logout:
                 path: app_logout
+            custom_authenticator: App\Security\LoginTestAuthenticator
                 # where to redirect after logout
                 # target: app_any_route
 

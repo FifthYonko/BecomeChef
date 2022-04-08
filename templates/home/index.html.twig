@@ -4,16 +4,15 @@
 {% endblock %}
 
 {% block body %}
-<div class="row">
-	<div class="en-tete">
-		<img src="{{asset('img/en-tete.png')}}" alt="en-tete">
-	</div>
-</div>
-<div class="container-fluid conteneur w-50 my-5 justify-content-center">
 
-	<div class="row  ">
+<div class="container-fluid  ">
+<div class="row en-tete " >
+	<img src="{{ asset('img/en-tete2.png') }}" class=" align-center w-100 "alt="en-tete">
+</div>
+		<h2 class="titres text-center w-75 m-auto coloredText pb-3 fs-2">Dernieres recettes ajoutes</h2>
+
+	<div class="row m-auto justify-content-center  ">
 		{# on affiche les recettes ajoutes par l'utilisateur connecte #}
-		<h2 class="titres text-center w-75 m-auto coloredText pb-3">Vos Recettes</h2>
 		{% for recette in last  %}
 		{% if app.user and is_granted('ROLE_ADMIN') %}
 		{% include "components/_AdminRecetteSimple.html.twig" %}

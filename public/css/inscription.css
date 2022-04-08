@@ -1,47 +1,34 @@
-* {
-    margin: 0;
-    padding: 0;
-    outline: none;
 
-}
 
 .containerDiv {
     
     width: 80%;
     height: auto;
     margin: 20px auto;
-    background: #FFF8EB;
-    border: solid #FFF1D6 3px;
-    border-radius: 5px;
     text-align: center;
     padding: 50px 35px 10px 35px;
-
-    
-    
-
 }
 
 .containerDiv header {
     font-size: 35px;
     font-weight: 600;
     margin: 0 0 30px 0;
-    color: #442014;
 }
 
 
-.containerDiv .form-outer {
+.containerDiv .formulaire {
     width: 100%;
     overflow: hidden;
 }
 
-.form-outer form {
+.formulaire form {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 500%;
 }
 
-.form-outer form .page {
+.formulaire form .page {
     width: 25%;
     margin: 0px;
     transition: margin-left 0.3s ease-in-out;
@@ -49,18 +36,7 @@
 }
 
 
-
-.form-outer form .page .title {
-    text-align: left;
-    font-size: 25px;
-    font-weight: 500;
-}
-
-
-
-
-
-.form-outer form .page .field {
+.formulaire form .page .champs {
     height: 45px;
     width: 100%;
     margin: 45px 0;
@@ -68,82 +44,26 @@
     position: relative;
 }
 
-
-.form-outer form .page .field .label {
-    display: none;
+.formulaire form .page .champs input {
+    width: 75%;
+    margin-left: 3px;
 }
 
-
-.form-outer form .page .field input {
-    height: 100%;
-    width: 80%;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-    font-size: 18px;
-    margin: 0;
-
-
-}
-
-.form-outer form .page .field .photo-field{
-    border: none;
-}
-
-.form-outer form .page .btns  {
+.formulaire form .page .btns  {
 
     width: 80%;
     justify-content: space-between;
 }
 
 
-.form-outer form .page .field .submit {
-    display: block;
-    width: 100%;
-    height: calc(100% + 5px);
-    margin-top: -20px;
-    border: none;
-    border-radius: 5px;
-    background: #ffad06;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
 
-.form-outer form .page .btns button {
+.formulaire form .page .btns button {
     margin-top: -20px !important;
     margin-left: 10px;
     margin-right: 10px;
 
 }
 
-.form-outer form .page .field button {
-    display: block;
-    width: 100%;
-    height: calc(100% + 5px);
-    margin-top: -20px;
-    border:solid #442014;
-    border-radius: 5px;
-    background: #FFFBF3;
-    color:black;
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s ease;
-
-}
-
-.form-outer form .page .field button:hover {
-    border: none;
-    background: #71C72B ;
-    transition: 0.3s ease;
-
-}
 
 .step-row {
     display: inline;

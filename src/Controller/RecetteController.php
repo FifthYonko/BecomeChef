@@ -212,9 +212,6 @@ class RecetteController extends AbstractController
                 $this->entityManager->persist($recette_modifie);
                 $this->entityManager->flush();
 
-                // foreach ($ingredients as $ingredient) {
-                //     $recetteHasIngredient->posseder($ingredient, $recette_modifie, 'comme tu veux');
-                // }
                 $this->addFlash('success', "La recette a bien ete modifie :)");
                 return $this->redirectToRoute('recette', ['page' => 1]);
             }

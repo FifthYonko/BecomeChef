@@ -34,7 +34,12 @@ nav{
     font-size: 20px;
 }
 
-
+hr{
+    border: none;
+    height: 12px;
+    color: #71C72B;
+  
+}
 .butonsNav{
     background-color: rgba(68, 32, 20, 0) ;
     color: #442014;
@@ -47,8 +52,9 @@ nav{
 }
 
 html,body{
-    height: 100%;
+    height: 100vh;
     background-color:#FFFBF3;
+    
     
 }
 body{
@@ -58,24 +64,23 @@ body{
 }
 .card,.container,.conteneur{
     background-color: #FFF8EB;
-    border: solid #FFF1D6 2px;
+    border: solid #FFF1D6 3px;
     padding: 5px;
     border-radius: 15px;
 }
 .en-tete{
-    margin-top: 5px;
-    height: 20%;
-    align-content: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 15px;
+    height: 240px;
+    
 }
 .en-tete img{
-    width: 100%;
-    height: 60%;
-    margin: auto;
+    height: 90%;
 }
+
 main{
     flex: 1 0 auto;
-   
-    
 }
 
 
@@ -83,11 +88,10 @@ main{
     width: 95%;
 }
 
-
-
 .btns a:hover, .FormSub:hover{
     background-color: #71C72B;
     border: none;
+    transition: 0.3s ease;
 }
 .FormSub{
     border:solid #442014;
@@ -109,12 +113,12 @@ main{
     flex-wrap: wrap;
 }
 .formInput{
-    height: 50%;
+    height: 100%;
     width: 95%;
-    border: 1px solid #71C72B;
+    border: 2px solid #FFF1D6;
     border-radius: 5px;
     font-size: 18px;
-   
+    margin: 0;
 
 }
 
@@ -135,6 +139,28 @@ main{
 .anchorStyle:hover{
     color: #442014;
 }
+
+.banniere{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    color: #442014 ;
+    border:solid 2px #71C72B;
+    background-color: #FFF1D6;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    font-family: 'Courier New', Courier, monospace;
+
+}
+
+.banniere p{
+    font-size: large;
+}
+
+
+
 footer{
     
     flex-shrink: 0;

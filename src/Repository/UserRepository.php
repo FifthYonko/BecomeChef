@@ -8,6 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+
 
 /**
  *  * classe de lecture de donnes de la table User
@@ -58,6 +60,53 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findorCreateFromOauth(ResourceOwnerInterface $owner)
+    {
+        $user = $this->createQueryBuilder('u')
+            ->where('u.githubId = :githubId')
+            ->setParameters([
+                'githubId' => $owner->getId()
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+        if ($user) {
+            return $user;
+        }
+        $user = (new User())
+            ->setRoles(['ROLE_USER'])
+            ->setGithubId($owner->getId())
+            ->setEmail($owner->getEmail())
+            ->setPseudo($owner->getNickname());
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
+    }
+    public function findOrCreateGoogleAuth($owner)
+    {
+        $user = $this->createQueryBuilder('u')
+            ->where('u.googleId = :googleId')
+            ->setParameters([
+                'googleId' => $owner->getId()
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+        if ($user) {
+            return $user;
+        }
+        $user = (new User())
+            ->setRoles(['ROLE_USER'])
+            ->setGoogleId($owner->getId())
+            ->setEmail($owner->getEmail())
+            ->setPseudo($owner->getFirstName());
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
     }
 
     // /**

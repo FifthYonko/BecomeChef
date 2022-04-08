@@ -178,5 +178,10 @@ class SecurityController extends AbstractController
     
        return $this->redirectToRoute('home');
     }
+
+    #[Route('/politique_de_conf', name: 'pdc')]
+    public function pdc(){
+        return $this->render('politiqueDC/pDC.html.twig');
+    }
     
 }

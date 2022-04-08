@@ -39,10 +39,18 @@
 			</div>
 		</div>
 		<div class="col-6">
+	
+		{% if app.user.githubId is null and app.user.googleId is null %}
 			<div class="field my-2">
-				
 				<a href="{{path('forgot_password')}}" class="coloredText  titres fs-5 anchorStyle">Modifier mon mot de passe</a>
 			</div>
+			{% else %}
+				<div class="field my-2">
+				
+			</div>
+		{% endif %}
+		
+		
 			<div class="field my-2">
 				{{ form_label(form_pseudo.codePostal)}}
 				{{ form_widget(form_pseudo.codePostal,{'attr': {'class':'formInput'}})}}
