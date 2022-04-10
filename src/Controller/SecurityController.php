@@ -190,8 +190,20 @@ class SecurityController extends AbstractController
     public function accept_cookie(Request $request){
         $response = new Response();
         $expires = time()+(365*24*60*60);
-        $cookie = Cookie::create('accept_cookies',true,$expires);
+        $cookie = Cookie::create('accept_cookies',1,$expires);
         $response->headers->setCookie($cookie);
+        $response->send();
+        
+        return $this->redirectToRoute('home');
+    }
+    #[Route('/refuse/cookie', name: 'refuse_cookie')]
+    public function refuse_cookie(Request $request){
+        $response = new Response();
+        $expires = time()+(365*24*60*60);
+        $cookie = Cookie::create('accept_cookies',0,$expires);
+       
+        $response->headers->setCookie($cookie);
+      
         $response->send();
         
         return $this->redirectToRoute('home');
