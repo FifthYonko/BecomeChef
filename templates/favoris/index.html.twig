@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 {# Vue destine a l'affichage des recettes favorites d'un utilisateur #}
-{% block title %}Hello FavorisController!
-{% endblock %}
+{% block title %}BecomeChef - Vos recettes favorites{% endblock %}
 
 {% block body %}
 
 	<div class="container-fluid">
+	<div class="row">
+		<h1 class="titres coloredText text-center fs-1">Vos recettes favorites</h1>
+	</div>
 		<div class="row w-75 m-auto">
 			{% for recettes in favoris %}
 				{% for recette in recettes %}

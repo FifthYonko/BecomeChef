@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Catalogue Admin {% endblock %}
+{% block title %} BecomeChef-Catalogue Recettes Admin {% endblock %}
 
 {% block body %}
 
 	<div class="container-fluid">
-	<h1 class="titres coloredText text-center">Catalogue</h1>
+	<h1 class="titres coloredText text-center fs-1">Nos recettes de cuisine</h1>
 	<div class="row m-auto justify-content-center">
 		{# on affiche les recettees grace a une boucle for #}
 			{% for recette in recettes %}
@@ -14,11 +14,26 @@
 			{% endfor %}
 
 		</div>
-		<div class="row flex-wrap">
-		{# on affiche le nombre de pages #}
-			{% for nb in range(1,total // 3) %}
-				<a href="{{path('recette_admin',{'page': nb})}}">{{nb}}</a>
-			{% endfor %}
+		<div class="row navRow" >
+	{# total//3 car on affiche 3 recette par page  #}
+	{# faire un formulaire dynamique #}
+
+		{% if total > 3 %}
+		{% for nb in range(1,total // 3) %}
+		<div class="col text-center ">
+			<a href="{{path('recette',{'page': nb})}}" class="anchorStyle fs-4 ">{{nb}}</a>
+
 		</div>
+		{% endfor %}
+		{% else %}
+			
+		<div class="col-2 navCol ">
+			<a href="{{path('recette',{'page': 1})}}" class="anchorStyle fs-4 ">1</a>
+
+		</div>
+	
+		{% endif %}
+		
+	</div>
 	</div>
 {% endblock %}

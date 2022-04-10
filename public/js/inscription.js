@@ -7,6 +7,10 @@ const prevBtnThird = document.querySelector(".prev-2");
 const nextBtnThird = document.querySelector(".next-2");
 
 const prevBtnFourth = document.querySelector(".prev-3");
+const nextBtnFourth = document.querySelector(".next-3");
+
+const prevBtnFifth = document.querySelector(".prev-4");
+
 
 const submitBtn = document.querySelector(".submit");
 var progress = document.querySelector('#progress');
@@ -41,26 +45,13 @@ nextBtnThird.addEventListener("click",function(event){
     console.log(progress.style.width);
     current+=1;
 })
-// nextBtnFourth.addEventListener("click",function(event){
-//   event.preventDefault();
-// slidePage.style.marginLeft = "-100%";
-// progress.style.width = (colWidth*5).toString()+ "px";
-// console.log(progress.style.width);
-// current+=1;
-// })
-// submitBtn.addEventListener("click",function(event){
-//       event.preventDefault();
-//     bullet[current -1].classList.add("active");
-//     progressText[current -1].classList.add("active");
-//     progressCheck[current-1].classList.add("active");
-//     current+=1;
-//     setTimeout(function() {
-//         alert("You are successfully Signed In");
-//         location.reload();
-//     },800);
-// });
-
-// prev
+nextBtnFourth.addEventListener("click",function(event){
+  event.preventDefault();
+slidePage.style.marginLeft = "-100%";
+progress.style.width = (colWidth*5).toString()+ "px";
+console.log(progress.style.width);
+current+=1;
+})
 
 prevBtnSec.addEventListener("click",function(event){
       event.preventDefault();
@@ -86,11 +77,11 @@ prevBtnFourth.addEventListener("click",function(event){
     current-= 1;
     
 });
-// prevBtnFifth.addEventListener("click",function(event){
-//       event.preventDefault();
-//     slidePage.style.marginLeft = "-75%";
-//     progress.style.width = (progress.clientWidth - colWidth).toString()+ "px";
-//     console.log(progress.style.width);
-//     current-= 1;
-    
-// });
+prevBtnFifth.addEventListener("click",function(event){
+  event.preventDefault();
+slidePage.style.marginLeft = "-75%";
+progress.style.width = (progress.clientWidth - colWidth).toString()+ "px";
+console.log(progress.style.width);
+current-= 1;
+
+});

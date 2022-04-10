@@ -91,17 +91,18 @@ class SecurityController extends AbstractController
             // on cree un lien sur laquelle l'utilisateur pourra cliquer pour acceder au formulaire de changement de mdp
             // dans ce lien on ajoute la route, et le token cree plutot
             $url = $this->generateUrl('app_reset_password', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
+            $urlCancel = $this->generateUrl('app_cancel_reset', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
             // on envoie le mail
-            $sendEmail->send('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url);
+            $sendEmail->send('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url,'emails/passwordchange.html.twig',$urlCancel);
             // on affiche un message et on redirige vers la page de connexion
             $this->addFlash('success', 'Un email vous a ete envoye, cliquez sur le lien pour changer votre mdp');
             if(!$user){
-                $this->addFlash('success', 'Un email vous a ete envoye, cliquez sur le lien pour changer votre mdp');
+               
                 return $this->redirectToRoute('app_login');
 
             }
             else {
-                $this->addFlash('success', 'Un email vous a ete envoye, cliquez sur le lien pour changer votre mdp');
+                
                 return $this->redirectToRoute('profile');
 
             }
@@ -148,7 +149,7 @@ class SecurityController extends AbstractController
             // on affiche un message et on redirige vers la connexion
           
                 $this->addFlash('success', 'Le mot de passe a ete change avec success');
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('home');
 
             
         } else {
@@ -157,6 +158,32 @@ class SecurityController extends AbstractController
                 'form_reset' => $reset_form,
             ]);
         }
+    }
+    #[Route('/cancel_reset/{token_password}', name: 'app_cancel_reset')]
+    /**
+     * Methode qui permet a l'utilisateur d'annuler la demande de changement de mdp par 
+     * la suppression du token dans la base de donnees. 
+     * Cette methode est accessible uniquement grace au lien qu'on envoi dans le mail
+     */
+    public function cancel_reset($token_password, Request $request,UserRepository $userRepository, EntityManagerInterface $entityManager)
+    {
+        // on verifie qu'il existe un utilisateur avec le token recu en argument de fonction 
+        $user = $userRepository->findOneBy(['passwordTokken' => $token_password]);
+        
+        if (!$user) {
+            // s'il n'existe pas on affiche un message et on redirige vers la connexion
+            $this->addFlash('danger', 'Aucun utilisateur trouve');
+            return $this->redirectToRoute('home');
+        }
+       
+            // on met a NULL le champ PasswordToken de l'utilisateur dans la bdd
+            $user->setPasswordTokken(NULL);
+            // on fait les modifications necessaires dans la bdd
+            $entityManager->persist($user);
+            $entityManager->flush();
+            // on affiche un message et on redirige vers la connexion
+          
+            return $this->redirectToRoute('home');
     }
 
     #[Route('/accepte/cookie', name: 'accepte_cookie')]

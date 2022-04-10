@@ -1,30 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{recette.titre}}
+BecomeChef -
+{{recette.titre}}
 {% endblock %}
 
 {% block body %}
-	{# Template d'affichage d'une recette pour un Admin #}
-	{# on verifie qu'il est bien admin #}
-	{% if "ROLE_ADMIN" in  app.user.roles %}
+{# Template d'affichage d'une recette pour un Admin #}
+{# on verifie qu'il est bien admin #}
+{% if "ROLE_ADMIN" in  app.user.roles %}
 
-		<div class="container-fluid">
-			<div class="row">
-			{# on fait appel au composant d'ingredients #}
-				{% include "components/_ingredientList.html.twig" %}
-				<div class="col-6">
-				{# on fait aussi appel au composant de recette detailler pour un admin #}
-					{% include "components/_AdminRecetteDetaille.html.twig" %}
-				</div>
-
-			</div>
-			<div class="row justify-content-center"></div>
-
-			<hr>
-			{# et pour finir on fait appel au composant d'affichage de commentaires #}
-			{% include "components/_commentaires.html.twig" %}
-
+<div class="container-fluid">
+	<div class="row">
+		<h1 class="titres coloredText text-center fs-1">{{recette.titre}}</h1>
+	</div>
+	<div class="row  w-75 m-auto my-5">
+		<div class="col-md-3 ">
+			{% include "components/_ingredientList.html.twig" %}
 		</div>
-	{% endif %}
+		<div class="col-md-9">
+			{% include "components/_adminRecetteDetaille.html.twig" %}
+		</div>
+
+	</div>
+	<div class="row w-75 fs-5  m-auto">
+		<div class="col-12 shadow rounded w-75 m-auto my-2 ">
+			<h3 class="titreRecette coloredText text-center bold">Preparation</h3>
+		</div>
+		<p class="preparations">{{recette.preparation}}</p>
+	</div>
+
+	<hr>
+	{# on affiche aussi les commentaires de la recette en question #}
+	{% include "components/_commentaires.html.twig" %}
+
+</div>
+{% endif %}
 {% endblock %}

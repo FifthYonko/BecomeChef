@@ -1,32 +1,37 @@
 {% extends 'base.html.twig' %}
 {# Vue pour une recette en particulier #}
 {% block title %}
-{{recette.titre}}
+	BecomeChef -
+	{{recette.titre}}
 {% endblock %}
 
 {% block body %}
 
-<div class="container-fluid ">
-	{# en utilisant les composants de liste d'ingredients et celui des recettes detailles pour un utilisateur, on affiche le contenu de la page #}
-	<div class="row  w-75 m-auto my-5">
-		<div class="col-md-3 ">
-			{% include "components/_ingredientList.html.twig" %}
+	<div
+		class="container-fluid ">
+		{# en utilisant les composants de liste d'ingredients et celui des recettes detailles pour un utilisateur, on affiche le contenu de la page #}
+		<div class="row">
+			<h1 class="titres coloredText text-center fs-1">{{recette.titre}}</h1>
 		</div>
-		<div class="col-md-9">
-			{% include "components/_userRecetteDetaille.html.twig" %}
-		</div>
-	
-	</div>
-	<div class="row w-75 fs-5  m-auto">
-		<div class="col-12 shadow rounded w-75 m-auto my-2 ">
-			<h3 class="titreRecette coloredText text-center bold">Preparation</h3>
-		</div>
-		<p  class="preparations">{{recette.preparation}}</p>
-	</div>
+		<div class="row  w-75 m-auto my-5">
+			<div class="col-md-3 ">
+				{% include "components/_ingredientList.html.twig" %}
+			</div>
+			<div class="col-md-9">
+				{% include "components/_userRecetteDetaille.html.twig" %}
+			</div>
 
-<hr>
-	{# on affiche aussi les commentaires de la recette en question #}
-	{% include "components/_commentaires.html.twig" %}
+		</div>
+		<div class="row w-75 fs-5  m-auto">
+			<div class="col-12 shadow rounded w-75 m-auto my-2 ">
+				<h3 class="titreRecette coloredText text-center bold">Preparation</h3>
+			</div>
+			<p class="preparations">{{recette.preparation}}</p>
+		</div>
 
-</div>
+		<hr>
+		{# on affiche aussi les commentaires de la recette en question #}
+		{% include "components/_commentaires.html.twig" %}
+
+	</div>
 {% endblock %}

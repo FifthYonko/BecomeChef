@@ -37,7 +37,7 @@ Dans ce fichier on trouve l'affichage d'une recette simple sur la page catalogue
 			<p class="card-text intro"><i class="fas fa-clock"></i> {{recette.intro}}</p>
 		</div>
 		<div class="btns text-center  mt-auto ">
-			<a href="{{path('show_recette', {'id': recette.id})}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+			<a href="{{path('show_recette_admin', {'id': recette.id})}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
 		{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
 		{% if app.user and is_granted('ROLE_ADMIN')  %}
 		<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning"><i class="fas fa-edit"></i></a>

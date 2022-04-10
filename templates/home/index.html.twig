@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 {# Page d'accueil de l'application web #}
-{% block title %}Home
-{% endblock %}
+{% block title %}BecomeChef - Page d'accueil{% endblock %}
 
 {% block body %}
 
 <div class="container-fluid  ">
+
 <div class="row en-tete " >
-	<img src="{{ asset('img/en-tete2.png') }}" class=" align-center w-100 "alt="en-tete">
+	<img src="{{ asset('img/en-tete2.png') }}" class=" align-center w-100 "alt="BecomeChef-entete">
 </div>
-		<h2 class="titres text-center w-75 m-auto coloredText pb-3 fs-2">Dernieres recettes ajoutes</h2>
+		<h1 class="titres text-center w-75 m-auto coloredText pb-3 fs-2">Dernieres recettes ajoutes</h1>
 
 	<div class="row m-auto justify-content-center  ">
 		{# on affiche les recettes ajoutes par l'utilisateur connecte #}

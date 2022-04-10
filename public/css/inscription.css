@@ -49,6 +49,19 @@
     margin-left: 3px;
 }
 
+.formulaire form .page .champs ul li{
+
+    font-size: 19px;
+    color: #71C72B;
+    list-style-type: none;
+    margin-bottom: 3px;
+    
+}
+.formulaire form .first-page .champs input{
+    width: 85%;
+    margin-left: 15px;
+}
+
 .formulaire form .page .btns  {
 
     width: 80%;
@@ -63,7 +76,10 @@
     margin-right: 10px;
 
 }
-
+.formulaire form .first-page .btns {
+    width: 90%;
+    margin-left: 10px;
+}
 
 .step-row {
     display: inline;

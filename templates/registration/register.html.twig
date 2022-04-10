@@ -1,89 +1,115 @@
 {% extends 'base.html.twig' %}
 {# vue Pour l'inscription d'un utilisateur sur notre application #}
-{% block title %}Register
-{% endblock %}
+{% block title %}BecomeChef - Inscription{% endblock %}
 
 {% block body %}
-	<link rel="stylesheet" href="{{asset('css/inscription.css')}}">
-	<div class="conteneur containerDiv">
-		<header class="titres coloredText">Inscription</header>
-		<div class="step-row">
-			<div id="progress"></div>
-			<div class="step-col">
-				<small>Step 1</small>
-			</div>
-			<div class="step-col">
-				<small>Step 2</small>
-			</div>
-			<div class="step-col">
-				<small>Step 3</small>
-			</div>
-			<div class="step-col">
-				<small>Step 4</small>
-			</div>
+
+<link rel="stylesheet" href="{{asset('css/inscription.css')}}">
+<div class="conteneur containerDiv">
+	<header class="titres coloredText"><h1>Inscription</h1></header>
+	<div class="step-row">
+		<div id="progress"></div>
+		<div class="step-col">
+			<small>Step 1</small>
 		</div>
-		<div class="formulaire">
-			{# affichage du formulaire #}
-			{{ form_start(registrationForm) }}
-			<!-- page 1 -->
-			<div class="page first-page">
-				<div class="titres fs-3 text-start">Quelle est votre adresse mail ?</div>
-				<div class="champs">
-					{{ form_widget(registrationForm.email,{'attr': {'class': 'formInput'}}) }}
-					
-				</div>
-
-				<div class="champs btns">
-					<button class="firstNext next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
-				</div>
-
-			</div>
-			<!-- page 2 -->
-			<div class="page">
-				<div class="titres fs-3 text-start">Veuillez choisir un pseudo</div>
-				<div class="champs">
-					{{ form_widget(registrationForm.pseudo,{'attr': {'class': 'formInput'}}) }}
-				</div>
-				<div class="champs btns">
-					<button class="prev-1 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
-					<button class="next-1 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
-
-				</div>
-			</div>
-			<!-- page 3 -->
-			<div class="page">
-				<div class="titres fs-3 text-start">Voulez vous ajouter une photo ?</div>
-				<div class="champs ">
-					{{ form_widget(registrationForm.photo) }}
-				</div>
-
-				<div class="champs btns">
-					<button class="prev-2 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
-					<button class="next-2 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
-
-				</div>
-			</div>
-			<!-- page 4 -->
-			<div class="page">
-				<div class="titres fs-3 text-start">Veuillez choisir un mot de passe</div>
-				<div class="champs">
-					{{ form_widget(registrationForm.password, 
-                    {'attr': {'class': 'formInput'}}
-                ) }}
-				</div>
-				<div class="champs btns">
-
-					<button class="prev-3 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
-
-					<button type="submit" class="FormSub btn w-100 text-dark fs-5 mb-2">Inscription</button>
-				</div>
-			</div>
-
-
-			{{ form_end(registrationForm, {render_rest: false}) }}
+		<div class="step-col">
+			<small>Step 2</small>
+		</div>
+		<div class="step-col">
+			<small>Step 3</small>
+		</div>
+		<div class="step-col">
+			<small>Step 4</small>
+		</div>
+		<div class="step-col">
+			<small>Step 5</small>
 		</div>
 	</div>
-	<script src="{{asset('js/inscription.js')}}"></script>
+	<div class="formulaire">
+		{# affichage du formulaire #}
+
+		{{ form_start(registrationForm) }}
+
+		<!-- page 1 -->
+		<div class="page first-page">
+			{{form_errors(registrationForm)}}
+			<div class="titres fs-3 text-start">Quelle est votre adresse mail ?</div>
+			<div class="champs d-flex flex-wrap">
+				{{ form_widget(registrationForm.email,{'attr': {'class': 'formInput'}}) }}
+				{{form_errors(registrationForm.email)}}
+
+
+			</div>
+
+			<div class="champs btns">
+				<button class="firstNext next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+			</div>
+
+		</div>
+		<!-- page 2 -->
+		<div class="page">
+			<div class="titres fs-3 text-start">Veuillez choisir un pseudo</div>
+			<div class="champs d-flex flex-wrap">
+				{{ form_widget(registrationForm.pseudo,{'attr': {'class': 'formInput'}}) }}
+				{{form_errors(registrationForm.pseudo)}}
+			</div>
+			<div class="champs btns">
+				<button class="prev-1 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
+				<button class="next-1 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+
+			</div>
+		</div>
+		<!-- page 3 -->
+		<div class="page">
+			<div class="titres fs-3 text-start">Voulez vous ajouter une photo ?</div>
+			<div class="champs d-flex flex-wrap">
+				{{ form_widget(registrationForm.photo) }}
+				{{form_errors(registrationForm.photo)}}
+
+			</div>
+
+			<div class="champs btns">
+				<button class="prev-2 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
+				<button class="next-2 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+
+			</div>
+		</div>
+		<!-- page 4 -->
+		<div class="page">
+			<div class="titres fs-3 text-start">Veuillez choisir un mot de passe</div>
+			<div class="champs d-flex flex-wrap">
+				{{ form_widget(registrationForm.password, 
+                    {'attr': {'class': 'formInput'}}
+				) }}
+				{{form_errors(registrationForm.password)}}
+			</div>
+			<div class="champs btns">
+
+				<button class="prev-3 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
+				<button class=" next-3 FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+			</div>
+		</div>
+		<!-- page 5 -->
+		<div class="page">
+			<div class="titres fs-5 text-start w-75 ">
+				<p>En cochant cette case vous acceptez les <a href="{{path('cgu')}}" class="anchorStyle   ">Conditions generales d'utilisation</a> et la
+					<a href="{{path('pdc')}}" class="anchorStyle ">Politique de confidentialité</a></p>
+			</div>
+			<div class="champs">
+				{{ form_widget(registrationForm.agreeTerms) }}
+				{{ form_errors(registrationForm.agreeTerms) }}
+			</div>
+			<div class="champs btns">
+				<button class="prev-4 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
+
+				<button type="submit" class="FormSub btn w-100 text-dark fs-5 mb-2">Inscription</button>
+			</div>
+		</div>
+
+
+		{{ form_end(registrationForm) }}
+	</div>
+</div>
+<script src="{{asset('js/inscription.js')}}"></script>
 
 {% endblock %}
-

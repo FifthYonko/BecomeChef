@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -40,13 +42,14 @@ class RegistrationFormType extends AbstractType
             // champ pseudo
             ->add('pseudo', TextType::class,[
                 'attr'=>[
-                    'placeholder'=>'Votre Pseudo'
+                    'placeholder'=>'Votre Pseudo',
                 ],
                 'constraints'=>[
                     new NotBlank(['message'=>'Entrez un pseudo valide']),
                     new Length([
                         'min'=>3,
                         'minMessage' => 'Votre Pseudo doit contenir minumum {{ limit }} characteres',
+                       
                     ])
                 ]
             ])
@@ -66,15 +69,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             // champ accepter les terms
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    // contrainte d'obligation d'accepter
-                    new IsTrue([
-                        'message' => 'Vous devez accepter les termes.',
-                    ]),
-                ],
-            ])
+           
             // champ password
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -93,6 +88,15 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Votre mot de passe doit contenir minumum {{ limit }} characteres',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
+                    ]),
+                ],
+            ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    // contrainte d'obligation d'accepter
+                    new IsTrue([
+                        'message' => 'Vous devez accepter les termes.',
                     ]),
                 ],
             ])

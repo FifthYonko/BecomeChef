@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {# Vue pour le contact d'un admin par un utilisateur #}
-{% block title %}Hello ContactController!{% endblock %}
+{% block title %}BecomeChef-Contact{% endblock %}
 
 {% block body %}
 {# on utilise le formulaire Contacttype qui se trouve dans src/Form #}
@@ -8,8 +8,8 @@
 <div class="container w-25 h-75 d-flex justify-content-center m-auto mt-2 align-items-center " style="height: 50%;">
     
     {{ form_start(contact,{'attr': {'class': 'w-75'}}) }}
-    <h1 class="w-100 text-center titres fs-2">Nous contacter</h1>
-    <div class="row my-2  " > 
+    <h1 class="titres coloredText text-center fs-1">Nous contacter</h1>
+    <div class="row my-2" > 
         {{form_label(contact.email)}}
         {{ form_widget(contact.email, {'attr': {'class':'formInput ' }}) }}
     </div>

@@ -22,7 +22,7 @@
 			{% endif %}
 			{# on verifie que l'utilisateur est le proprio de la recette pour qu'il puisse afficher le buton de suppression d'un ingredient #}
 
-			{% if app.user and app.user.id == recette.author.id %}
+			{% if app.user and app.user.id == recette.author.id and is_granted('ROLE_ADMIN')==false %}
 			<a href="{{path('delete_ingredient',{'id': ingredient.id})}}">
 				<i class="fas fa-trash-alt"></i>
 			</a>
