@@ -104,7 +104,7 @@ class RecetteFormType extends AbstractType
         // type collectionType
             ->add('posseders', CollectionType::class, [
                 // l'etiquette du champ
-                    'label' => 'Ingredients',
+                    'label' => false,
                     // les valeurs qu'on peut choisir
                     'entry_type' => PossederType::class,
                     // on autorise les ajouts et les suppressions

@@ -8,7 +8,7 @@
 {% block body %}
 
 	{# l'affichage du formulaire #}
-	{{ form_start(form_recette,{'attr': {'class': 'container w-50 m-auto p-3 mt-3'}}) }}
+	{{ form_start(form_recette,{'attr': {'class': 'container w-50 m-auto p-3 my-5'}}) }}
 	<div class="row ">
 		<h1 class="w-100 text-center titres fs-2">
 			Ajoutez une recette</h1>
@@ -16,15 +16,15 @@
 	</div>
 	<div class="row my-2">
 		{{ form_label(form_recette.titre) }}
-		{{ form_widget(form_recette.titre, {'attr': {'class':'formInput' }}) }}
+		{{ form_widget(form_recette.titre, {'attr': {'class':'formInput m-auto' }}) }}
 	</div>
 	<div class="row my-2">
 		{{ form_label(form_recette.intro) }}
-		{{ form_widget(form_recette.intro, {'attr': {'class': 'formInput'}}) }}
+		{{ form_widget(form_recette.intro, {'attr': {'class': 'formInput m-auto'}}) }}
 	</div>
 	<div class="row my-2">
 		{{ form_label(form_recette.preparation) }}
-		{{ form_widget(form_recette.preparation, {'attr': {'class': 'formInput '}}) }}
+		{{ form_widget(form_recette.preparation, {'attr': {'class': 'formInput m-auto'}}) }}
 	</div>
 	<div class="row my-2">
 		{{ form_label(form_recette.photo) }}

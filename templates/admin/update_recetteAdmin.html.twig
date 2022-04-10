@@ -1,27 +1,28 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}BecomeChef-Modifier une recette de cuisine{% endblock %}
+{# Vue pour la modification d'une recette elle se base sur le meme systeme que celui de l'ajout d'une nouvelle recette
+	sauf qu'en initialisant le formulaire , on complete les champs avec les informations deja presentes dans notre base
+ #}
+{% block title %}BecomeChef-Modifier une recette{% endblock %}
 
 {% block body %}
-	{# Template de modification de recettes par un admin #}
-	<script src="{{asset('js/recette.js')}}"></script>
+<script src="{{asset('js/recette.js')}}"></script>
 {# l'affichage du formulaire #}
-{{ form_start(update_recette,{'attr': {'class': 'container w-50 m-auto p-3'}}) }}
+{{ form_start(update_recette,{'attr': {'class': 'container w-50 m-auto my-5 p-3'}}) }}
 <div class="row">
-    <h1 class="text-center titres fs-2 coloredText">Modifier une recette</h1>
+    <h1 class="w-100 text-center titres fs-1 coloredText">Modifier une recette</h1>
 
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.titre) }}
-    {{ form_widget(update_recette.titre, {'attr': {'class':'formInput' }}) }}
+    {{ form_widget(update_recette.titre, {'attr': {'class':'formInput m-auto' }}) }}
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.intro) }}
-    {{ form_widget(update_recette.intro, {'attr': {'class': 'formInput'}}) }}
+    {{ form_widget(update_recette.intro, {'attr': {'class': 'formInput m-auto'}}) }}
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.preparation) }}
-    {{ form_widget(update_recette.preparation, {'attr': {'class': 'formInput '}}) }}
+    {{ form_widget(update_recette.preparation, {'attr': {'class': 'formInput m-auto'}}) }}
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.photo) }}
@@ -44,10 +45,8 @@
 </div>
 
 <button type="submit" class="btn btn-success">Modifier</button>
-{{ form_end(update_recette,{'render_rest': false}) }}
+{{ form_end(update_recette) }}
 
-{% endblock %}
-{# le code js pour l'ajout d'ingredients #}
-{% block javascripts %}
-	<script src="{{asset('js/recette.js')}}"></script>
+{# a supprimer  #}
+
 {% endblock %}

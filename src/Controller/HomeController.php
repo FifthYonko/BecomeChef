@@ -26,14 +26,14 @@ class HomeController extends AbstractController
     {
         
         // on recupere les informations de l'utilisateur
-        $user = $this->getUser();
+       
         // on recupere les dernieres recettes ajoutes au site
         $lasts = $this->recetteRepository->findLast();
 
         // on redirige vers le template acueil
 
         return $this->render('home/index.html.twig', [
-            'user' => $user,
+
             'last' =>$lasts,
         ]);
 

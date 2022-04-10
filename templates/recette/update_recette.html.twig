@@ -7,22 +7,22 @@
 {% block body %}
 <script src="{{asset('js/recette.js')}}"></script>
 {# l'affichage du formulaire #}
-{{ form_start(update_recette,{'attr': {'class': 'container w-50 m-auto p-3'}}) }}
+{{ form_start(update_recette,{'attr': {'class': 'container w-50 m-auto my-5 p-3 '}}) }}
 <div class="row">
     <h1 class="w-100 text-center titres fs-2">Modifier une recette</h1>
 
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.titre) }}
-    {{ form_widget(update_recette.titre, {'attr': {'class':'formInput' }}) }}
+    {{ form_widget(update_recette.titre, {'attr': {'class':'formInput m-auto' }}) }}
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.intro) }}
-    {{ form_widget(update_recette.intro, {'attr': {'class': 'formInput'}}) }}
+    {{ form_widget(update_recette.intro, {'attr': {'class': 'formInput m-auto'}}) }}
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.preparation) }}
-    {{ form_widget(update_recette.preparation, {'attr': {'class': 'formInput '}}) }}
+    {{ form_widget(update_recette.preparation, {'attr': {'class': 'formInput m-auto'}}) }}
 </div>
 <div class="row my-2">
     {{ form_label(update_recette.photo) }}
@@ -45,7 +45,7 @@
 </div>
 
 <button type="submit" class="btn btn-success">Modifier</button>
-{{ form_end(update_recette,{'render_rest': false}) }}
+{{ form_end(update_recette) }}
 
 {# a supprimer  #}
 
