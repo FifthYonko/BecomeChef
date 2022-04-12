@@ -8,6 +8,7 @@ use App\Repository\CommentaireRepository;
 use App\Repository\RecetteRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -178,6 +179,9 @@ class AdminController extends AbstractController
             else{
                 $new_recette->setPhoto('DefaultPhotoDark.png');
             }
+
+            $date = new DateTime();
+            $new_recette->setDate($date);
             //on complete aussi l'autheur de la recette en recuperant les donnes du compte connecte     
             $new_recette->setAuthor($this->getUser());
             // on recupere les informations du champ ingredient pour completer la relation entre les tables

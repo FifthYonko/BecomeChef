@@ -7,7 +7,6 @@
 {% block body %}
 {# on verifie qu'il est bien admin #}
 	{% if "ROLE_ADMIN" in  app.user.roles %}
-		<script src="{{asset('js/recette.js')}}"></script>
 {# l'affichage du formulaire #}
 {{ form_start(form_recette,{'attr': {'class': 'container w-50 m-auto my-5 p-3 '}}) }}
 <div class="row">
@@ -47,7 +46,7 @@
 </div>
 
 <button type="submit" class="btn btn-success">Ajouter</button>
-{{ form_end(form_recette,{'render_rest': false}) }}
+{{ form_end(form_recette) }}
 
 	{% endif %}
 

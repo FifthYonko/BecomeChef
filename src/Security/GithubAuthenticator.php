@@ -38,15 +38,24 @@ class GithubAuthenticator extends OAuth2Authenticator
     {
         return new RedirectResponse($this->router->generate('app_login'));
     }
-
+    
+    /**
+     * Si la route correspond à celle attendue, alors on déclenche cet authentication
+    **/
     public function supports(Request $request): ?bool
     {
-        // continue ONLY if the current ROUTE matches the check ROUTE
-        return $request->attributes->get('_route') === 'oauth_check';
+        return $request->attributes->get('_route') === 'github_check';
     }
 
+    /***
+     * Methode d'authentification via gitHub
+     */
     public function authenticate(Request $request): Passport
     {
+    /**
+     * Récupère l'utilisateur à partir du AccessToken
+     * 
+     */
         $client = $this->clientRegistry->getClient('github');
         $accessToken = $this->fetchAccessToken($client);
         
@@ -61,7 +70,6 @@ class GithubAuthenticator extends OAuth2Authenticator
 
                 // on recupere l'email  de l'utilisateur
 
-
                 $respose = HttpClient::create()->request(
                     'GET',
                     'https://api.github.com/user/emails',
@@ -74,35 +82,43 @@ class GithubAuthenticator extends OAuth2Authenticator
                 );
                 
                 $emails = json_decode($respose->getContent(), true);
-              
+            //   avec github on peut creer des public emails pour des raisons de securite ou donnees prives.
+            // donc on va verifier les emails du compte afin de recuperer celui qui a servi a la creation de compte
                 foreach ($emails as $email) {
+                    // donc on verifie qu'il est primaire mais aussi que l'utilisateur a bien verifié son email 
+                    // car ca empeche un utilisateur de se connecter a notre application avec des comptes pas verifies et de faire 
+                    // qq chose qui peut nuir a notre site.
                     if ( $email['primary'] === true && $email['verified'] === true) {
                         $data = $githubUser->toArray();
                         $data['email'] = $email['email'];
                         $githubUser = new GithubResourceOwner($data);
                     }
                 }
+                // on verifie que l'email n'est pas nul
                 if ($githubUser->getEmail() === null){
                     throw new NotVerifiedEmailException();
                 }
+                
+                // on fini par ajouter l'utilisateur dans notre base de donnees .
                 return $this->userRepository->findorCreateFromOauth($githubUser);
 
                
             })
         );
     }
-
+/**
+ * Si la authentification a reussi, on redirige vers la page d'accueil
+ */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        // change "app_homepage" to some route in your app
         $targetUrl = $this->router->generate('home');
 
         return new RedirectResponse($targetUrl);
-
-        // or, on success, let the request continue to be handled by the controller
-        //return null;
     }
-
+/**
+ * Sinon on interdit l'access
+ */
+  
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $message = strtr($exception->getMessageKey(), $exception->getMessageData());

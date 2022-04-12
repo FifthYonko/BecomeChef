@@ -11,6 +11,7 @@ use App\Repository\PossederRepository;
 use App\Repository\RecetteRepository;
 use App\Service\FileUploader;
 use App\Service\RecetteHasIngredient;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
@@ -92,6 +93,8 @@ class RecetteController extends AbstractController
           
             // on defini l'auteur avec les informations de l'auteur authentifie
             $new_recette->setAuthor($this->getUser());
+            $date = new DateTime();
+            $new_recette->setDate($date);
             // on fait une boucle car le champs ingredients du formulaire est de type array
             foreach ($form_recette->get('posseders')->getData() as $ingredient) {
                 // on ajoute la relation entre la recette et l'ingredient dans l'entite Posseder

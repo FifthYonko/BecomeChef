@@ -40,45 +40,44 @@ class  GoogleAuthenticator extends OAuth2Authenticator
     public function start(Request $request , AuthenticationException $authException = null){
         return new RedirectResponse($this->router->generate('app_login'));
     }
+
+    /**
+     * Si la route correspond à celle attendue, alors on déclenche cet authenticator
+    **/
     public function supports(Request $request): ?bool
     {
         return $request->attributes->get('_route') === 'connect_google_check';
     }
-
+  /**
+     * Methode d'authentification via google
+     */
     public function authenticate(Request $request):Passport
     {
+        // Récupère l'utilisateur à partir du AccessToken
         $client = $this->clientRegistry->getClient('google');
         $accessToken = $this->fetchAccessToken($client);
         
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
-
-               
-                $googleUser = $client->fetchUserFromToken($accessToken);
-                
-
-                // on recupere l'email  de l'utilisateur
-
-
-              
-                return $this->userRepository->findOrCreateGoogleAuth($googleUser);
-
-               
+                $googleUser = $client->fetchUserFromToken($accessToken);                
+                return $this->userRepository->findOrCreateGoogleAuth($googleUser);               
             })
         );
     }
-
+/**
+ * Si la authentification a reussi, on redirige vers la page d'accueil
+ */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        // change "app_homepage" to some route in your app
+        
         $targetUrl = $this->router->generate('home');
 
         return new RedirectResponse($targetUrl);
-
-        // or, on success, let the request continue to be handled by the controller
-        //return null;
     }
-
+/**
+ * Sinon on interdit l'access
+ */
+  
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $message = strtr($exception->getMessageKey(), $exception->getMessageData());
