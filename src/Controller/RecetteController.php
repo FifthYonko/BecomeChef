@@ -124,7 +124,7 @@ class RecetteController extends AbstractController
         $commentaires = $recette->getCommentaires();
 
         // on verifie que l'utilisateur est bien connecte pour pouvoir poster de commentaires
-        if ($this->IsGranted('ROLE_USER')) {
+        if ($this->IsGranted('ROLE_USER') || $this->getUser()->getEtat()!= 1) {
             // on cree un formulaire grace a la classe CommentaireType 
             $form_comm = $this->createForm(CommentaireType::class);
             $form_comm->handleRequest($request);

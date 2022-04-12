@@ -148,6 +148,9 @@ class AdminController extends AbstractController
             $this->addFlash('warning', 'Vous devez etre connecte ou etre admin pour acceder a cette page!');
             return $this->redirectToRoute('app_login');
         }
+        if(!$this->isGranted('ROLE_ADMIN')){
+            $this->redirect('home');
+        }
         // on verifie que l'utilisateur n'est pas banni car les utilisateurs bannis n'ont pas le droit d'ajouter des recettes
         if($this->getUser()->getEtat() === true ){
             $this->addFlash('danger','Vous etes banni et donc vous ne pouvez plus acceder a cette fonctionnalite');

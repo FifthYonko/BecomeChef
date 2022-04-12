@@ -30,9 +30,9 @@ class ContactController extends AbstractController
             // et pour finir le message
             $message = $contact_form->get('message')->getData();
             // en utilisant le service d'envoi de mail, on envoi le mail avec les arguments suivants (l'envoyeur , le destinataire , le sujet,et le message)
-            $sendEmail->send($email,'BecomeChef@admin.com',$subject,$message);
+            $sendEmail->contact($email,'BecomeChef@admin.com',$subject,$message,'emails/contact.html.twig');
             // on affiche un message de succes
-            $this->addFlash('success', 'Le mail a bien ete envoye');
+            $this->addFlash('success', 'Le mail à bien été envoyé');
             // et on redirige vers la page d'accueuil
             return $this->redirectToRoute('home');
         }

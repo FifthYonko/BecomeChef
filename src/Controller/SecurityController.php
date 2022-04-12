@@ -94,9 +94,9 @@ class SecurityController extends AbstractController
             $url = $this->generateUrl('app_reset_password', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
             $urlCancel = $this->generateUrl('app_cancel_reset', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
             // on envoie le mail
-            $sendEmail->send('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url,'emails/passwordchange.html.twig',$urlCancel);
+            $sendEmail->ResetPassword('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url,'emails/passwordchange.html.twig',$urlCancel);
             // on affiche un message et on redirige vers la page de connexion
-            $this->addFlash('success', 'Un email vous a ete envoye, cliquez sur le lien pour changer votre mdp');
+            $this->addFlash('success', 'Un email vous à été envoyé, cliquez sur le lien pour changer votre mot de passe');
             if(!$user){
                
                 return $this->redirectToRoute('app_login');
