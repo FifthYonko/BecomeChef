@@ -2,22 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Posseder;
-use App\Entity\Recette;
+
 use App\Form\CommentaireType;
 use App\Form\RecetteFormType;
-use App\Repository\CommentaireRepository;
 use App\Repository\PossederRepository;
 use App\Repository\RecetteRepository;
 use App\Service\FileUploader;
-use App\Service\RecetteHasIngredient;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
-use phpDocumentor\Reflection\DocBlock\Tags\Author;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -85,12 +78,11 @@ class RecetteController extends AbstractController
                 $newFileName = $fileUploader->upload($imgFile);
                 // on remplace le contenu du champs photo
                 $new_recette->setPhoto($newFileName);
-            }
-            else{
+            } else {
                 $new_recette->setPhoto('DefaultPhotoDark.png');
             }
             // si l'utilisateur n'as pas ajoute de recette on met par default le logo du site
-          
+
             // on defini l'auteur avec les informations de l'auteur authentifie
             $new_recette->setAuthor($this->getUser());
             $date = new DateTime();
@@ -127,7 +119,7 @@ class RecetteController extends AbstractController
         $commentaires = $recette->getCommentaires();
 
         // on verifie que l'utilisateur est bien connecte pour pouvoir poster de commentaires
-        if ($this->IsGranted('ROLE_USER') && $this->getUser()->getEtat()!= 1) {
+        if ($this->IsGranted('ROLE_USER') && $this->getUser()->getEtat() != 1) {
             // on cree un formulaire grace a la classe CommentaireType 
             $form_comm = $this->createForm(CommentaireType::class);
             $form_comm->handleRequest($request);
@@ -175,8 +167,8 @@ class RecetteController extends AbstractController
     public function update_recette(Request $request, int $id, FileUploader $fileUploader)
     {
         $user = $this->getUser();
-        if(!$user){
-            $this->addFlash('warning','Vous devez être connecté pour accéder à cette fonctionnalité');
+        if (!$user) {
+            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette fonctionnalité');
             return $this->redirectToRoute('app_login');
         }
         // on recherche la recette dans la bdd grace a son id
@@ -205,7 +197,7 @@ class RecetteController extends AbstractController
                 }
                 // on modifie le nom de la photo et on stocke dans uploads
                 $imgFile = $update_recette->get('photo')->getData();
-                
+
                 if ($imgFile) {
                     if ($imageExistante && $imageExistante != "DefaultPhotoDark.png") {
                         unlink('uploads/' . $imageExistante);
@@ -228,7 +220,7 @@ class RecetteController extends AbstractController
                 // si oui, on lui affiche un meessage et on redirige vers la page catalogue recettes de l'utilisateur
                 $this->addFlash("danger", "Vous devez etre Admin ou le proprietaire de la recette pour la modifier!");
                 return $this->redirectToRoute('recette', ['page' => 1]);
-            } 
+            }
         }
         // sinon on redirige vers la page d'ajout de recette
         return $this->render('recette/update_recette.html.twig', [
@@ -293,31 +285,46 @@ class RecetteController extends AbstractController
      */
     #[Route('/search/{page}', name: 'search')]
 
-    public function search( int $page ,Request $request)
+    public function search(int $page, Request $request)
     {
         // on cherche dans la base de donnes ce que l'utilisateur a insere dans le champs search
         // grace a une fonction definie dans recetteRepository
-    
-        // $var = explode($request->query->get('search_value'));
-        $valeurs = explode(' ',$request->query->get('search_value'));
+        if ($request->request->get('nbaAfficher')) {
+            $nbAAfficher = $request->request->get('nbaAfficher');
+        } else {
+            $nbAAfficher = 3;
+        }
+
+        $valeurs = explode(' ', $request->query->get('search_value'));
         $recettes = array();
-       for ($i=0; $i < count($valeurs); $i++) { 
-        $resultats  = $this->recetteRepository->findByExampleField($valeurs[$i],$page-1,count($valeurs));
-           for ($j=0; $j < count($resultats) ; $j++) { 
-            array_push($recettes,$resultats[$j]);
-            
-           }
-       }
-        if(empty($recettes)){
+
+        for ($i = 0; $i < count($valeurs); $i++) {
+            $resultats  = $this->recetteRepository->findByExampleField($valeurs[$i]);
+
+            for ($j = 0; $j < count($resultats); $j++) {
+                array_push($recettes, $resultats[$j]);
+            }
+        }
+
+        if (empty($recettes)) {
 
             // faudra creer un template pour cette erreur
             $recettes = "Nous n'avons rien trouvé , veuillez essayer autre chose";
         }
-        
+        $taille = count($recettes);
+        $recetteAafficher = array();
+
+        for ($i = ($page - 1) * $nbAAfficher; $i < (($page - 1) * $nbAAfficher) + $nbAAfficher; $i++) {
+            if ($i >= $taille) {
+                break;
+            }
+            array_push($recetteAafficher, $recettes[$i]);
+        }
         // et on redirige vers la page d'affichage des recettes
-        return $this->render('recette/index.html.twig', [
-            'recettes' => $recettes,
-            'total'=>count($recettes),
+        return $this->render('recette/search.html.twig', [
+            'recettes' => $recetteAafficher,
+            'total' => $taille,
+            'nbaffichage'=>$nbAAfficher,
         ]);
     }
     /* fonction qui supprime un ingredient de la liste d'ingredients d'une recette.

@@ -5,13 +5,12 @@ namespace App\Controller;
 use App\Form\CommentaireType;
 use App\Form\RecetteFormType;
 use App\Repository\CommentaireRepository;
+use App\Repository\PossederRepository;
 use App\Repository\RecetteRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager,private RecetteRepository $recetteRepository)
+    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager,private RecetteRepository $recetteRepository, private PossederRepository $possederRepository)
     {
     }
 

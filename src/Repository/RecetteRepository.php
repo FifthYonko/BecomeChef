@@ -74,7 +74,7 @@ class RecetteRepository extends ServiceEntityRepository
      * Methode qui permet de rechercher une recette par nom ou par ingredient
      * elle prend en paramentre une chaine de caracteres $value
      */
-    public function findByExampleField($value,$page,$nbrecettes)
+    public function findByExampleField($value)
     {
         // on cree la requete sur la table recette
         return $this->createQueryBuilder('r')
@@ -89,11 +89,7 @@ class RecetteRepository extends ServiceEntityRepository
             ->setParameter('val', '%'.$value.'%')
             // ordonne par id maniere croissante
             ->orderBy('r.id', 'ASC')
-            // le nb de resultats a 10
-            ->setMaxResults(10)
-            // et on defini le premier resultat comme etat le produit de la page et de la recette
-            // comme ca on peut afficher de maniere precise
-            ->setFirstResult($page*$nbrecettes)
+         
             // on execute la requete et on recup le resultat
             ->getQuery()
             ->getResult();
