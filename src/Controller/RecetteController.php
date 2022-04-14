@@ -127,7 +127,7 @@ class RecetteController extends AbstractController
         $commentaires = $recette->getCommentaires();
 
         // on verifie que l'utilisateur est bien connecte pour pouvoir poster de commentaires
-        if ($this->IsGranted('ROLE_USER') || $this->getUser()->getEtat()!= 1) {
+        if ($this->IsGranted('ROLE_USER') && $this->getUser()->getEtat()!= 1) {
             // on cree un formulaire grace a la classe CommentaireType 
             $form_comm = $this->createForm(CommentaireType::class);
             $form_comm->handleRequest($request);
@@ -291,16 +291,33 @@ class RecetteController extends AbstractController
     /**
      * Methode de recherche dans la base de donnes 
      */
-    #[Route('/search', name: 'search')]
+    #[Route('/search/{page}', name: 'search')]
 
-    public function search(Request $request)
+    public function search( int $page ,Request $request)
     {
         // on cherche dans la base de donnes ce que l'utilisateur a insere dans le champs search
         // grace a une fonction definie dans recetteRepository
-        $recettes = $this->recetteRepository->findByExampleField($request->query->get('search_value'));
+    
+        // $var = explode($request->query->get('search_value'));
+        $valeurs = explode(' ',$request->query->get('search_value'));
+        $recettes = array();
+       for ($i=0; $i < count($valeurs); $i++) { 
+        $resultats  = $this->recetteRepository->findByExampleField($valeurs[$i],$page-1,count($valeurs));
+           for ($j=0; $j < count($resultats) ; $j++) { 
+            array_push($recettes,$resultats[$j]);
+            
+           }
+       }
+        if(empty($recettes)){
+
+            // faudra creer un template pour cette erreur
+            $recettes = "Nous n'avons rien trouvé , veuillez essayer autre chose";
+        }
+        
         // et on redirige vers la page d'affichage des recettes
         return $this->render('recette/index.html.twig', [
             'recettes' => $recettes,
+            'total'=>count($recettes),
         ]);
     }
     /* fonction qui supprime un ingredient de la liste d'ingredients d'une recette.

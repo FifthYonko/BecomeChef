@@ -66,9 +66,12 @@
 		{{ form_end(form_pseudo) }}
 	</div>
 		<hr>
+		<div class="row">
+			<h2 class="titres text-center w-75 m-auto coloredText pb-3">Vos Recettes</h2>
+		</div>
 	<div class="row  ">
 		{# on affiche les recettes ajoutes par l'utilisateur connecte #}
-		<h2 class="titres text-center w-75 m-auto coloredText pb-3">Vos Recettes</h2>
+		
 		{% for recette in recettes %}
 		{% if app.user and is_granted('ROLE_ADMIN') %}
 		{% include "components/_AdminRecetteSimple.html.twig" %}

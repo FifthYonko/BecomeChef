@@ -58,13 +58,13 @@ class RecetteRepository extends ServiceEntityRepository
      * elle renvoie un resultat sql
      * 
      */
-    public function findLast(){
+    public function findLast(int $nbAfficher){
         // creation de la requette sur la table recettes
         return $this->createQueryBuilder('r')
         // On veut que le resultat soit ordonnee par id de recette de maniere decroissante
         ->orderBy('r.id','DESC')
         // on met le nb maximal de recettes a 3
-        ->setMaxResults(3)
+        ->setMaxResults($nbAfficher)
         // on execute et on recupere les donnes
         ->getQuery()
         ->getResult();
@@ -74,7 +74,7 @@ class RecetteRepository extends ServiceEntityRepository
      * Methode qui permet de rechercher une recette par nom ou par ingredient
      * elle prend en paramentre une chaine de caracteres $value
      */
-    public function findByExampleField($value)
+    public function findByExampleField($value,$page,$nbrecettes)
     {
         // on cree la requete sur la table recette
         return $this->createQueryBuilder('r')
@@ -86,14 +86,19 @@ class RecetteRepository extends ServiceEntityRepository
             ->innerJoin('r.posseders','p')
             ->innerJoin('p.ingredients','i')
             // on defini la valeur a chercher
-            ->setParameter('val', $value)
+            ->setParameter('val', '%'.$value.'%')
             // ordonne par id maniere croissante
             ->orderBy('r.id', 'ASC')
             // le nb de resultats a 10
             ->setMaxResults(10)
-            // on execute et on renvoie le resultat
+            // et on defini le premier resultat comme etat le produit de la page et de la recette
+            // comme ca on peut afficher de maniere precise
+            ->setFirstResult($page*$nbrecettes)
+            // on execute la requete et on recup le resultat
             ->getQuery()
-            ->getResult()
+            ->getResult();
+            // on execute et on renvoie le resultat
+           
         ;
     }
 

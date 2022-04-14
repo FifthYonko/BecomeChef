@@ -47,6 +47,7 @@ class FavorisController extends AbstractController
         // si la recette existe deja dans les favoris , on affiche un message et on redirige vers la liste des favoris
         if (array_key_exists($id, $favoris)) {
             $this->addFlash('warning', 'cette recette est deja aux favoris');
+            
             return $this->redirectToRoute('list');
             // si elle n'existe pas, on l'ajoute  au favoris 
         } else {

@@ -19,11 +19,12 @@ jQuery(document).ready(function () {
 
     jQuery('.remove-another-collection-widget').click(function (e) {
         var list = jQuery(jQuery(this).attr('data-list-selector'));
-A
         var counter = list.data('widget-counter') || list.children().length;
 
-
-        counter--;
+        if(counter > 0){
+            counter--;
+        }
+    
 
         list.data('widget-counter', counter);
         list.children().last().remove();

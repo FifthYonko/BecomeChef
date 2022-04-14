@@ -28,7 +28,7 @@ class HomeController extends AbstractController
         // on recupere les informations de l'utilisateur
        
         // on recupere les dernieres recettes ajoutes au site
-        $lasts = $this->recetteRepository->findLast();
+        $lasts = $this->recetteRepository->findLast(3);
 
         // on redirige vers le template acueil
 
