@@ -11,6 +11,7 @@ use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -116,22 +117,22 @@ class AdminController extends AbstractController
         elle prend en parametre un entier page, qui represente le nr de page sur lequel on veut aller
     */
     #[Route('/admin/recette/{page}', name: 'recette_admin')]
-    public function index(int $page): Response
+ 
+   
+    public function index(int $page,PaginatorInterface $paginator)
     {
-        /* En utilisant la methode findByPage (definie dans RecetteRepository.php) qui prend en argument 2 entiers, une page, et un nombre de recettes a afficher
-            on recupere dans une variable $recette , le resultat de la recherche dans la base de donnnes 
-        */
-        $recette = $this->recetteRepository->findByPage($page-1,3);
-        /* Dans une autre variable, nbtotal et en utilisant la methode compter (aussi definie dans RecetteRepository.php), on recupere le nombre total de recettes disponibles
-        dans notre base de donnees. 
-        */
-        $nbtotal = $this->recetteRepository->compter();
-        // on fait une redirection vers le template(la vue) avec les arguments definis plus haut dans la fonction
+        // on recupere les recettes qui se trouvent dans notre base de donnees grace a une la fonction findByPage (cf RecetteRepository.php dans Repository)
+        // et on stocke les informations dans la variable recettes 
+        $recettes = $this->recetteRepository->findAll();
+
+       $recettes =  $paginator->paginate($recettes,$page,1);
+
         return $this->render('admin/index_recetteAdmin.html.twig', [
-            'recettes' => $recette,
-            'total' =>$nbtotal,
+            'recettes' => $recettes,
+            
         ]);
     }
+   
 
     /* Methode destinee aux admin pour ajouter des nouvelles recettes
         Cette methode instancie le composant symfony Request qui nous permet de gerer les les donnees envoies en post ou en GET

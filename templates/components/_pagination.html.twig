@@ -13,7 +13,7 @@
     <nav>
         {% set classAlign = (align is not defined) ? '' : align=='center' ? ' justify-content-center' : (align=='right' ? ' justify-content-end' : '') %}
         {% set classSize = (size is not defined) ? '' : size=='large' ? ' pagination-lg' : (size=='small' ? ' pagination-sm' : '') %}
-        <ul class="pagination{{ classAlign }}{{ classSize }}">
+        <ul class="pagination{{ classAlign }}{{ classSize }} w-25 justify-content-center m-auto my-2">
 
             {% if previous is defined %}
                 <li class="page-item">

@@ -1,38 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} BecomeChef-Catalogue Recettes Admin {% endblock %}
+{% block title %}
+	BecomeChef-Catalogue Recettes Admin
+{% endblock %}
 
 {% block body %}
 
 	<div class="container-fluid">
-	<h1 class="titres coloredText text-center fs-1">Nos recettes de cuisine</h1>
-	<div class="row m-auto justify-content-center">
-		{# on affiche les recettees grace a une boucle for #}
+		<h1 class="titres coloredText text-center fs-1">Nos recettes de cuisine</h1>
+		<div
+			class="row m-auto justify-content-center">
+			{# on affiche les recettees grace a une boucle for #}
 			{% for recette in recettes %}
-			{# on utilise le composant recette #}
+				{# on utilise le composant recette #}
 				{% include "components/_adminRecetteSimple.html.twig" %}
 			{% endfor %}
 
 		</div>
-		<div class="row navRow" >
-	{# total//3 car on affiche 3 recette par page  #}
-	{# faire un formulaire dynamique #}
-
-	{% if total > 3 %}
-		{% for nb in range(1,(total/3)|round(0,'ceil')) %}
-		<div class="col text-center ">
-			<a href="{{path('recette_admin',{'page': nb})}}" class="anchorStyle fs-4 ">{{nb}}</a>
-
+		<div class="row justify-content-center ">
+			{{ knp_pagination_render(recettes,'components/_pagination.html.twig') }}
 		</div>
-		{% endfor %}
-		{% else %}
-			
-		<div class="col-2 navCol ">
-			<a href="{{path('recette_admin',{'page': 1})}}" class="anchorStyle fs-4 ">1</a>
-
-		</div>
-	
-		{% endif %}
-	</div>
 	</div>
 {% endblock %}

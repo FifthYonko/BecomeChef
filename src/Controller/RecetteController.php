@@ -10,6 +10,7 @@ use App\Repository\RecetteRepository;
 use App\Service\FileUploader;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,23 +22,22 @@ class RecetteController extends AbstractController
     public function __construct(private RecetteRepository $recetteRepository, private PossederRepository $possederRepository, private EntityManagerInterface $entityManager, private SluggerInterface $slugger)
     {
     }
-
+   
     /*
         Methode d'affichage de recettes. Elle prend en parametre un entier $page .
         Elle redirige vers la page d'affichage des recettes disponibles sur le site
     */
     #[Route('/recette/{page}', name: 'recette')]
-    public function index(int $page)
+    public function index(int $page,PaginatorInterface $paginator)
     {
         // on recupere les recettes qui se trouvent dans notre base de donnees grace a une la fonction findByPage (cf RecetteRepository.php dans Repository)
         // et on stocke les informations dans la variable recette 
-        $recette = $this->recetteRepository->findByPage($page - 1, 3);
-        // grace a la fonction (Aussi definie dans RecetteRepository) on compte le nombre total de recettes presentes sur notre site
-        $nbtotal = $this->recetteRepository->compter();
+        $recettes = $this->recetteRepository->findAll();
+       $recettes =  $paginator->paginate($recettes,$page,2);
         // On redirige vers la page d'affichage des recettes
         return $this->render('recette/index.html.twig', [
-            'recettes' => $recette,
-            'total' => $nbtotal,
+            'recettes' => $recettes,
+            
         ]);
     }
 
@@ -280,53 +280,24 @@ class RecetteController extends AbstractController
         }
     }
 
-    /**
+       /**
      * Methode de recherche dans la base de donnes 
      */
+  
     #[Route('/search/{page}', name: 'search')]
 
-    public function search(int $page, Request $request)
+    public function search(int $page, Request $request, PaginatorInterface $paginator)
     {
-        // on cherche dans la base de donnes ce que l'utilisateur a insere dans le champs search
-        // grace a une fonction definie dans recetteRepository
-        if ($request->request->get('nbaAfficher')) {
-            $nbAAfficher = $request->request->get('nbaAfficher');
-        } else {
-            $nbAAfficher = 3;
-        }
-
-        $valeurs = explode(' ', $request->query->get('search_value'));
-        $recettes = array();
-
-        for ($i = 0; $i < count($valeurs); $i++) {
-            $resultats  = $this->recetteRepository->findByExampleField($valeurs[$i]);
-
-            for ($j = 0; $j < count($resultats); $j++) {
-                array_push($recettes, $resultats[$j]);
-            }
-        }
-
-        if (empty($recettes)) {
-
-            // faudra creer un template pour cette erreur
-            $recettes = "Nous n'avons rien trouvé , veuillez essayer autre chose";
-        }
-        $taille = count($recettes);
-        $recetteAafficher = array();
-
-        for ($i = ($page - 1) * $nbAAfficher; $i < (($page - 1) * $nbAAfficher) + $nbAAfficher; $i++) {
-            if ($i >= $taille) {
-                break;
-            }
-            array_push($recetteAafficher, $recettes[$i]);
-        }
-        // et on redirige vers la page d'affichage des recettes
+        $recettes = $this->recetteRepository->findAll();
+       $recettes =  $paginator->paginate($recettes,$page,2);
+       
         return $this->render('recette/search.html.twig', [
-            'recettes' => $recetteAafficher,
-            'total' => $taille,
-            'nbaffichage'=>$nbAAfficher,
+            'recettes' => $recettes,
+           
         ]);
     }
+
+  
     /* fonction qui supprime un ingredient de la liste d'ingredients d'une recette.
         accessible a partir de la page d'affichage d'une recette
         prend en parametre un entier qui represente l'id de l'enregistrement a supprimer

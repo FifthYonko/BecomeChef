@@ -4,7 +4,7 @@
     font-family: Dejavu Sans;
     
 }
-nav{
+.navTop{
     background:-webkit-linear-gradient(top, #71C72B ,#26430F 99%);
 }
 .titres{
@@ -162,14 +162,6 @@ main{
     font-size: large;
 }
 
-.navRow{
-    border: solid #FFF1D6 2px;
-    border-radius: 15px;
-    margin: 10px auto 10px auto;
-    padding: 10px;
-    width: 10%;
-    justify-content: center;
-}
 .navCol{
     border: solid #71C72B 1px;
     border-radius: 10px;
