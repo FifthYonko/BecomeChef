@@ -1,5 +1,4 @@
 
-{# J'ai cree un component recette  car ca permet de reduire le code , au lieu de copier le meme bout dans chaque fichier recette. #}
 {# 
 COMPOSANT RECETTE SIMPLE
 Dans ce fichier on trouve l'affichage d'une recette simple sur la page catalogue
@@ -11,9 +10,7 @@ Dans ce fichier on trouve l'affichage d'une recette simple sur la page catalogue
 		<p><i class="fas fa-calendar-alt "></i> {{recette.date|date("d/m/Y")}}</p>
 		<p>Par 
 		<b>
-		{# on verifie bien qu'il est admin #}
 			{% if app.user and is_granted('ROLE_ADMIN') %}
-			{# si oui, le nom de l'auteur est clickable #}
 				<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a>
 
 			{% else %}
@@ -38,7 +35,6 @@ Dans ce fichier on trouve l'affichage d'une recette simple sur la page catalogue
 		</div>
 		<div class="btns text-center  mt-auto ">
 			<a href="{{path('show_recette_admin', {'id': recette.id})}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-		{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
 		{% if app.user and is_granted('ROLE_ADMIN')  %}
 		<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
 

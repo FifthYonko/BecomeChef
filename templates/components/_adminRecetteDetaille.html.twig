@@ -13,7 +13,6 @@
 			{{recette.date|date("d/m/Y")}}</span>
 		<span>Par
 			{% if app.user and "ROLE_ADMIN" in  app.user.roles %}
-			{# si il l'est, le nom de l'auteur de la recette est clickable pour pouvoir acceder a l'inspection du profil #}
 				<a href="{{path('inspect_profil',{'id': recette.author.id})}}" class="anchorStyle coloredText ">{{recette.author.pseudo}}</a>
 			{% endif %}
 		</span>
@@ -32,7 +31,6 @@
 			<i class="fas fa-star"></i>
 		</a>
 		{% endif %}
-		{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
 		{% if app.user and "ROLE_ADMIN" in  app.user.roles  %}
 		<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning">
 			<i class="fas fa-edit text-light"></i>

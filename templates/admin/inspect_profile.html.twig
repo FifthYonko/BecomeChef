@@ -4,7 +4,6 @@
 {# Template d'inspection de profil par un administrateur, Un administrateur a le droit d'inspecter les profils des autres utilisateurs #}
 
 {% block body %}
-{# Petite verification twig pour voir si l'utilisateur possede bien le role d'admin #}
 {% if "ROLE_ADMIN" in  app.user.roles %}
 <div class="container-fluid conteneur w-50 my-5 justify-content-center">
 	<h1 class="titres coloredText text-center"> Inspection profil utilisateur</h1>
@@ -30,12 +29,10 @@
 			<h4 class=" titres">Etat : {{ utilisateur.etat == 0 ? 'Not Banned' : 'banned' }}</h4>
 			<h4 class=" titres">Action: {% if utilisateur.etat == 0 %}
 
-				{# si oui, on affiche un icone de ban #}
 				<a href="{{ path('ban',{'id': utilisateur.id}) }}" class='btn btn-danger '>
 					<i class="fas fa-ban"></i>
 				</a>
 
-				{# sinon on affiche un icone de unban (la couleur change) #}
 				{% else %}
 				<a href="{{ path('unban',{'id': utilisateur.id}) }}" class='btn btn-success'>
 					<i class="fas fa-ban"></i>

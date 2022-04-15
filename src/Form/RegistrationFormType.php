@@ -29,7 +29,6 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        // champ de email
             ->add('email', EmailType::class ,[
                 'attr'=>[
                     'placeholder'=>'Votre Adresse mail'
@@ -39,7 +38,6 @@ class RegistrationFormType extends AbstractType
                     new Email(["message"=>"Votre mail n'est pas valide"]),
                 ]
             ])
-            // champ pseudo
             ->add('pseudo', TextType::class,[
                 'attr'=>[
                     'placeholder'=>'Votre Pseudo',
@@ -53,7 +51,6 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
-            // champ photo (pas obligatoire)
             ->add('photo', FileType::class, [
                 'label' => 'photo',
                 'mapped' => false,
@@ -68,25 +65,18 @@ class RegistrationFormType extends AbstractType
                     ])
                 ],
             ])
-            // champ accepter les terms
-           
-            // champ password
+
             ->add('password', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                // il n'est pas ajoute a la bdd directement car on va le hash d'abord.
+            
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    // contrainte de ne pas etre vide
                     new NotBlank([
                         'message' => 'Entrez un mot de passe',
                     ]),
-                    // contrainte de taille
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit contenir minumum {{ limit }} characteres',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
@@ -94,7 +84,6 @@ class RegistrationFormType extends AbstractType
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
-                    // contrainte d'obligation d'accepter
                     new IsTrue([
                         'message' => 'Vous devez accepter les termes.',
                     ]),
@@ -102,7 +91,6 @@ class RegistrationFormType extends AbstractType
             ])
         ;
     }
-// lie a l'entite User
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

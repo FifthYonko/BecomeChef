@@ -10,9 +10,7 @@
 		<h1 class="titres coloredText text-center fs-1">Nos recettes de cuisine</h1>
 		<div
 			class="row m-auto justify-content-center">
-			{# on affiche les recettees grace a une boucle for #}
 			{% for recette in recettes %}
-				{# on utilise le composant recette #}
 				{% include "components/_adminRecetteSimple.html.twig" %}
 			{% endfor %}
 

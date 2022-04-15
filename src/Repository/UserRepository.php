@@ -48,15 +48,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      */
     public function findBannedUsers()
     {
-        // recherche dans la table user
         return $this->createQueryBuilder('u')
-        // on met la condition where sur la colonne etat qui doit etre egale a la valeur prise en parametre
             ->andWhere('u.etat = :val')
-            // on defini la valeur du parametre
             ->setParameter('val', 1)
-            // on ordonne de maniere croissante et par id
             ->orderBy('u.id', 'ASC')
-            // on execute et on renvoie le resultat
             ->getQuery()
             ->getResult()
         ;

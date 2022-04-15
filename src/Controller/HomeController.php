@@ -24,14 +24,8 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request): Response
     {
-        
-        // on recupere les informations de l'utilisateur
-       
-        // on recupere les dernieres recettes ajoutes au site
+    
         $lasts = $this->recetteRepository->findLast(3);
-
-        // on redirige vers le template acueil
-
         return $this->render('home/index.html.twig', [
 
             'last' =>$lasts,

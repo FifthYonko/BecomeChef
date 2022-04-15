@@ -82,24 +82,25 @@ class GithubAuthenticator extends OAuth2Authenticator
                 );
                 
                 $emails = json_decode($respose->getContent(), true);
+
             //   avec github on peut creer des public emails pour des raisons de securite ou donnees prives.
             // donc on va verifier les emails du compte afin de recuperer celui qui a servi a la creation de compte
                 foreach ($emails as $email) {
+
                     // donc on verifie qu'il est primaire mais aussi que l'utilisateur a bien verifié son email 
                     // car ca empeche un utilisateur de se connecter a notre application avec des comptes pas verifies et de faire 
                     // qq chose qui peut nuir a notre site.
+
                     if ( $email['primary'] === true && $email['verified'] === true) {
                         $data = $githubUser->toArray();
                         $data['email'] = $email['email'];
                         $githubUser = new GithubResourceOwner($data);
                     }
                 }
-                // on verifie que l'email n'est pas nul
                 if ($githubUser->getEmail() === null){
                     throw new NotVerifiedEmailException();
                 }
                 
-                // on fini par ajouter l'utilisateur dans notre base de donnees .
                 return $this->userRepository->findorCreateFromOauth($githubUser);
 
                

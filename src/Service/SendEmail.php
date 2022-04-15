@@ -9,13 +9,11 @@ use Symfony\Component\Mailer\MailerInterface;
  * Service d'envoi de mail
  */
 class SendEmail{
-    // attribut qui contiendra un objet de type Mailer
     private $mailer;
 
 
     public function __construct( MailerInterface $mailer)
     {
-        // on attribue l'objet mailer a l'attribut de la classe
         $this->mailer = $mailer;
     }
 
@@ -25,9 +23,7 @@ class SendEmail{
      * $subject represente l'objet du mail et pour finir $message pour representer le corps du mail
      */
     public function ResetPassword(string $from,string $to,string $subject,string $message ,string $template, string $cancelUrl){
-        // on instancie un objet de type Email
         $email = (new TemplatedEmail())
-        // on defini remplis les champs avec valeurs recues en argument
             ->from($from)
             ->to($to)
             ->subject($subject)
@@ -37,14 +33,11 @@ class SendEmail{
                 'message'=>$message,
                 'cancel'=>$cancelUrl,
             ]);
-        // on envoie le mail grace au mailer
         $this->mailer->send($email);
     }
 
     public function contact(string $from,string $to,string $subject,string $message ,string $template){
-        // on instancie un objet de type Email
         $email = (new TemplatedEmail())
-        // on defini remplis les champs avec valeurs recues en argument
             ->from($from)
             ->to($to)
             ->subject($subject)
@@ -53,7 +46,6 @@ class SendEmail{
             ->context([
                 'message'=>$message,
             ]);
-        // on envoie le mail grace au mailer
         $this->mailer->send($email);
     }
 }

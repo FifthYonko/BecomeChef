@@ -4,10 +4,9 @@
 
 
 {# Template d'ajout de recette par un admin #}
+
 {% block body %}
-{# on verifie qu'il est bien admin #}
 	{% if "ROLE_ADMIN" in  app.user.roles %}
-{# l'affichage du formulaire #}
 {{ form_start(form_recette,{'attr': {'class': 'container w-50 m-auto my-5 p-3 '}}) }}
 <div class="row">
     <h1 class="titres coloredText text-center fs-1"> Ajoutez une recette</h1>
@@ -30,9 +29,6 @@
     {{ form_widget(form_recette.photo) }}
 </div>
 
-
-{# si on veut rajouter juste un champ, on utilise .nom-champ apres prototype #}
-{# buttons pour l'ajout/suppression d'un ingredient #}
 <div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(form_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ form_recette.posseders|length }}">
   
 </div>

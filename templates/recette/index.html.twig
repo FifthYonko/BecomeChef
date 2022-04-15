@@ -9,12 +9,10 @@
 		<h1 class="titres coloredText text-center fs-1">Nos recettes de cuisine</h1>
 		<div
 			class="row m-auto justify-content-center">
-			{# l'affichage  des recettes grace au composant recetteSimpleUtilisateur#}
 			{% for recette in recettes %}
 				{% include "components/_userRecetteSimple.html.twig" %}
 			{% endfor %}
 		</div>
-		{# affichage de la navigation par page #}
 		<div class="row justify-content-center ">
 			{{ knp_pagination_render(recettes,'components/_pagination.html.twig') }}
 		</div>

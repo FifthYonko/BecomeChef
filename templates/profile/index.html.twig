@@ -70,7 +70,6 @@
 			<h2 class="titres text-center w-75 m-auto coloredText pb-3">Vos Recettes</h2>
 		</div>
 	<div class="row  ">
-		{# on affiche les recettes ajoutes par l'utilisateur connecte #}
 		
 		{% for recette in recettes %}
 		{% if app.user and is_granted('ROLE_ADMIN') %}
@@ -83,7 +82,6 @@
 		{% endfor %}
 
 	</div>
-	{# si c'est un admin , on affiche aussi les utilisateurs bannis #}
 	{% if "ROLE_ADMIN" in app.user.roles %}
 	<hr>
 	<div class="row">
@@ -92,7 +90,6 @@
 			{% for banned in bannedList %}
 			<li>
 				<b>
-					{# avec la possibilite d'inspecter le profil de l'utilisateur pour eventuellement le unban #}
 					<a href="{{path('inspect_profil',{'id': banned.id})}}" class="anchorStyle coloredText ">{{banned.pseudo}}</a>
 				</b>
 			</li>

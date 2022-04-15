@@ -12,7 +12,6 @@
 						{% if error %}
 							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 						{% endif %}
-						{# si l'utilisateur est deja connecte on le previent , et on lui offre la possibilite de se deconnecter #}
 						{% if app.user %}
 							<div class="mb-3">
 								You are logged in as
@@ -46,7 +45,6 @@
 																				#}
 
 						<button type="submit" class="FormSub btn w-100 text-dark fs-5 my-2">Se connecter</button>
-						{# lien pour le changement de mot de passe #}
 						<a href="{{path('forgot_password')}}">Mot de passe oublié ?</a>
 					</form>
 				</div>

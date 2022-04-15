@@ -16,23 +16,18 @@ class CommentaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        // le champs commentaire de type textarea
             ->add('commentaire',TextareaType::class,[
                 'constraints'=>[
-                    // il peut pas etre vide
                     new NotBlank(['message'=>'Veuillez remplir ce champ!']),
-                    // contrainte de taille 
                     new Length([
                         'min'=>2,
                         'minMessage' => 'Votre commentaire doit contenir minumum {{ limit }} characteres',
                     ])
                 ]
             ])
-            // ->add('author')
-            // ->add('recette')
+
         ;
     }
-    // lie a une table
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

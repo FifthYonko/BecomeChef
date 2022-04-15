@@ -26,37 +26,29 @@ class RecetteFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        // le champ du formulaire consacree au titre de la recette
             ->add('titre', TextType::class, [
-                // les attributs du champ
                 'attr' => [
                     'placeholder' => 'Le titre de la recette',
                   
                 ],
                 'label_attr'=>['class'=>'titres'],
-                // les contraintes
                 'constraints' => [
-                    // pas vide
                     new NotBlank([
                         'message' => 'Veuillez completer ce champ',
                         
                     ]),
-                    // une taille minimale
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Le titre doit contenir minumum {{ limit }} caracteres',
                     ])
                 ]
             ])
-            // champ corespondant a l'affichage simple sur la page catalogue
             ->add('intro', TextType::class, [
-                // l'attribut
                 'attr' => [
                     'placeholder' => 'Nombre de personnes, temps de preparation',
                   
                 ],
                 'label_attr'=>['class'=>'titres'],
-                // les contraintes
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez completer ce champ',
@@ -67,24 +59,20 @@ class RecetteFormType extends AbstractType
                     ])
                 ]
             ])
-            // champ correspondant a la preparation de la recette
             ->add('preparation', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Veuillez bien detailler le processus de preparation de la recette',
                    
                 ],
                 'label_attr'=>['class'=>'titres'],
-                // contraintes
                 'constraints' => [
                     new NotBlank(['message' => 'Veuillez completer ce champ',]),
-                    // on met une taille minimale de 200 characteres
                     new Length([
                         'min' => 200,
                         'minMessage' => 'Ce champ necessite minimum {{ limit }} caracteres'
                     ])
                 ]
             ])
-            // champ correspondant a la photo de la recette
             ->add('photo', FileType::class, [
                 'label' => 'Photo',
                 'label_attr'=>['class'=>'titres'],
@@ -100,14 +88,10 @@ class RecetteFormType extends AbstractType
                     ])
                 ]
             ])
-        //   champ corespondant a l'ensemble des ingredients possedes par la recette
-        // type collectionType
+
             ->add('posseders', CollectionType::class, [
-                // l'etiquette du champ
                     'label' => false,
-                    // les valeurs qu'on peut choisir
                     'entry_type' => PossederType::class,
-                    // on autorise les ajouts et les suppressions
                     'allow_add'=> true,
                     'allow_delete'=>true,
                     
@@ -119,7 +103,6 @@ class RecetteFormType extends AbstractType
            
                 
     }
-// formulaire lie a l'entite Recette
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

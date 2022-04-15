@@ -19,7 +19,6 @@ class ContactType extends AbstractType
     {
 
         $builder
-        // champ adresse email
             ->add('email',EmailType::class,[
                 'label_attr'=>['class'=>'titres'],
                 'attr'=>[
@@ -30,7 +29,6 @@ class ContactType extends AbstractType
                     new ConstraintsEmail(["message"=>"Votre mail n'est pas valide"]),
                 ]
             ])
-            // champ sujet du mail
             ->add('subject',TextType::class,[
                 'label_attr'=>['class'=>'titres'],
                 'constraints'=>[
@@ -41,7 +39,6 @@ class ContactType extends AbstractType
                     ])
                 ]
             ])
-        // champ message a envoyer
             ->add('message',TextareaType::class,[
                 'label_attr'=>['class'=>'titres'],
                 'constraints'=>[
@@ -56,11 +53,9 @@ class ContactType extends AbstractType
         ;
     }
 
-    // ce formulaire n'est relie a aucune table
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
         ]);
     }
 }

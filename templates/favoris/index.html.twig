@@ -11,7 +11,6 @@
 		<div class="row w-75 m-auto">
 			{% for recettes in favoris %}
 				{% for recette in recettes %}
-				{# on fait appel au composant recetteSimple car on affiche pas la recette en detail #}
 					{% include "components/_AdminRecetteSimple.html.twig" %}
 				{% endfor %}
 			{% endfor %}

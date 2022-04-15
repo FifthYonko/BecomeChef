@@ -28,7 +28,6 @@ COMPOSANT DE RECETTE DETAILLE POUR UN USER
 			<i class="fas fa-star"></i>
 		</a>
 		{% endif %}
-		{# on verifie que l'utilisateur est bien connecte et le proprio de la recette pour qu'il puisse voir les butons de modif ou suppression de la recette #}
 		{% if app.user and app.user.id is same as (recette.author.id)  %}
 		<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">
 			<i class="fas fa-edit text-light"></i>

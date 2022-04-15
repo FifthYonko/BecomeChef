@@ -12,7 +12,6 @@
 		<h1 class="titres text-center w-75 m-auto coloredText pb-3 fs-2">Dernieres recettes ajoutes</h1>
 
 	<div class="row m-auto justify-content-center  ">
-		{# on affiche les recettes ajoutes par l'utilisateur connecte #}
 		{% for recette in last  %}
 		{% if app.user and is_granted('ROLE_ADMIN') %}
 		{% include "components/_AdminRecetteSimple.html.twig" %}

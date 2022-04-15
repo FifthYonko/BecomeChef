@@ -7,7 +7,6 @@
 
 {% block body %}
 
-	{# l'affichage du formulaire #}
 	{{ form_start(form_recette,{'attr': {'class': 'container w-50 m-auto p-3 my-5'}}) }}
 	<div class="row ">
 		<h1 class="w-100 text-center titres fs-2">
@@ -33,7 +32,6 @@
 
 
 
-	{# boutons pour l'ajout/suppression d'un ingredient dans le formulaire #}
 	<div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(form_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ form_recette.posseders|length }}"></div>
 
 	<div class="row my-2 w-50 m-auto">

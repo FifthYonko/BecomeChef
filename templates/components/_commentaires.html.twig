@@ -19,18 +19,15 @@ Ce fichier contient le code pour l'affichage des commentaires d'une recette ains
 						{{comment.author.pseudo}}
 					</a>
 				</b>
-				{# sinon on affiche un nom normal #}
 			{% else %}
 				<b>{{comment.author.pseudo}}</b>
 			{% endif %}
 			{{comment.commentaire}}
-			{# on verifie que l'utilisateur est bien l'autheur du commentaire pour pouvoir afficher le bouton de suppression de commentaire #}
 			{% if app.user and ( app.user.id is same as (comment.author.id) ) %}
 				<a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}">
 					<i class="fas fa-trash-alt"></i>
 				</a>
 			{% endif %}
-			{# on verifie que l'utilisateur est bien un admin  pour pouvoir afficher le bouton de suppression de commentaire #}
 
 			{% if app.user and is_granted('ROLE_ADMIN')  %}
 				<a href="{{path('delete_commentaire_admin',{'id': comment.id, 'idR': recette.id} )}}">
@@ -46,7 +43,6 @@ Ce fichier contient le code pour l'affichage des commentaires d'une recette ains
 </div>
 <div
 	class="row mt-4">
-	{# on verifie que l'utilisateur est connecte et qu'il n'as pas ete banni car un utilisateur banni n'as pas le droit de poster des commentaires #}
 	{% if app.user and app.user.etat == 0 %}
 		{{ form_start(form_comm) }}
 		<div class="col-6 m-auto text-center">

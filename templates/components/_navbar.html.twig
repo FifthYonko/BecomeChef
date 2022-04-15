@@ -30,11 +30,9 @@
 									Recettes</a>
 								<ul class="dropdown-menu" aria-labelledby="recetteMenu">
 									<li>
-										{# on verifie que l'utilsiateur est bien admin pour afficher le catalogue admin #}
 										{% if app.user and "ROLE_ADMIN" in app.user.roles %}
 										<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue
 											Admin</a>
-										{# si il ne l'est pas, on affiche le catalogue  #}
 										{% else %}
 										<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
 										{% endif %}
@@ -42,11 +40,9 @@
 									{% if app.user %}
 									<li>
 
-										{# s'il est connecte et qu'il est admin , on affiche les onglets admin #}
 										{% if "ROLE_ADMIN" in app.user.roles %}
 										<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
 
-										{# sinon l'onglet user #}
 										{% else %}
 										<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
 										{% endif %}
@@ -76,7 +72,6 @@
 
 					<a href="{{path('app_logout')}}" class="btn butonsNav">deconexion</a>
 
-					{# sinon on affiche l'inscription ou la connexion #}
 					{% else %}
 
 					<a href="{{path('app_register')}}" class="btn  butonsNav ">Register</a>

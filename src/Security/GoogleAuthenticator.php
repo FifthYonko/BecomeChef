@@ -53,7 +53,6 @@ class  GoogleAuthenticator extends OAuth2Authenticator
      */
     public function authenticate(Request $request):Passport
     {
-        // Récupère l'utilisateur à partir du AccessToken
         $client = $this->clientRegistry->getClient('google');
         $accessToken = $this->fetchAccessToken($client);
         

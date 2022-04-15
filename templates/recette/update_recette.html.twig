@@ -6,7 +6,6 @@
 
 {% block body %}
 <script src="{{asset('js/recette.js')}}"></script>
-{# l'affichage du formulaire #}
 {{ form_start(update_recette,{'attr': {'class': 'container w-50 m-auto my-5 p-3 '}}) }}
 <div class="row">
     <h1 class="w-100 text-center titres fs-2">Modifier une recette</h1>
@@ -30,8 +29,6 @@
 </div>
 
 
-{# si on veut rajouter juste un champ, on utilise .nom-champ apres prototype #}
-{# buttons pour l'ajout/suppression d'un ingredient #}
 <div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(update_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ update_recette.posseders|length }}">
   
 </div>
@@ -47,6 +44,5 @@
 <button type="submit" class="btn btn-success">Modifier</button>
 {{ form_end(update_recette) }}
 
-{# a supprimer  #}
 
 {% endblock %}

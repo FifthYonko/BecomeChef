@@ -7,7 +7,6 @@ BecomeChef -
 
 {% block body %}
 {# Template d'affichage d'une recette pour un Admin #}
-{# on verifie qu'il est bien admin #}
 {% if "ROLE_ADMIN" in  app.user.roles %}
 
 <div class="container-fluid">
@@ -31,7 +30,6 @@ BecomeChef -
 	</div>
 
 	<hr>
-	{# on affiche aussi les commentaires de la recette en question #}
 	{% include "components/_commentaires.html.twig" %}
 
 </div>

@@ -20,7 +20,6 @@ class ResetPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        // champ password
         ->add('password',RepeatedType::class,[
             'type'=>PasswordType::class,
             'invalid_message'=>'les mots de passes doivent etre identiques',
@@ -35,7 +34,6 @@ class ResetPasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
         ]);
     }
 }
