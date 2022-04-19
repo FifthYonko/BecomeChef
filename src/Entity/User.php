@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksPassword;
 
 /**
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
@@ -32,6 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
     #[ORM\Column(type: 'string',nullable: true)]
+    #[RollerWorksPassword\PasswordStrength(minLength: '7', minStrength:'3')]    
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]

@@ -19,11 +19,38 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository, private PossederRepository $possederRepository)
+    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository, private PossederRepository $possederRepository,private CommentaireRepository $commentaireRepository)
     {
     }
 
-    // fonction de ban reserve aux utilisateurs disposant du role Admin. 
+    
+    #[Route('admin/espace/{tableau}', name: 'espaceAdmin')]
+    public function index($tableau)
+    {
+        if($tableau=='utilisateurs'){
+            $utilisateurs = $this->userRepository->findAll();
+
+            return $this->render('admin/espace_admin.html.twig', [
+                'utilisateurs'=>$utilisateurs,
+            ]);
+        }
+        elseif ($tableau=='commentaires') {
+            $commentaires = $this->commentaireRepository->findAll();
+            return $this->render('admin/espace_admin.html.twig', [
+                'commentaires'=>$commentaires,
+            ]);
+        }
+        else{
+            $recettes = $this->recetteRepository->findAll();
+
+            return $this->render('admin/espace_admin.html.twig', [
+                'recettes'=>$recettes,
+            ]);
+        }
+        
+    }
+
+      // fonction de ban reserve aux utilisateurs disposant du role Admin. 
     // Cette fonction prend en parametres un entier qui est l'id de l'utilisateur a bannir et ne renvoie aucune donnee, juste une redirection vers une autre page, en fonction des conditions remplies.
     #[Route('admin/ban/{id}', name: 'ban')]
     public function ban(int $id)
@@ -103,12 +130,12 @@ class AdminController extends AbstractController
         elle prend en parametre un entier page, qui represente le nr de page sur lequel on veut aller
     */
     #[Route('/admin/recette/{page}', name: 'recette_admin')]
-    public function index(int $page, PaginatorInterface $paginator)
+    public function recetteList(int $page, PaginatorInterface $paginator)
     {
 
         $recettes = $this->recetteRepository->findAll();
 
-        $recettes =  $paginator->paginate($recettes, $page, 1);
+        $recettes =  $paginator->paginate($recettes, $page, 4);
 
         return $this->render('admin/index_recetteAdmin.html.twig', [
             'recettes' => $recettes,
@@ -336,7 +363,7 @@ class AdminController extends AbstractController
             $entityManager->remove($comment_aSupp);
             $entityManager->flush();
             $this->addFlash('success', 'Le commentaire a bien ete supprime');
-            return $this->redirectToRoute('show_recette_admin ', ['id' => $idR]);
+            return $this->redirectToRoute('show_recette_admin', ['id' => $idR]);
         } else {
             $this->addFlash('warning', 'Vous ne disposez pas de ces droits');
             return $this->redirectToRoute('show_recette', ['id' => $idR]);

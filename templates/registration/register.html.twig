@@ -77,11 +77,12 @@
 		<!-- page 4 -->
 		<div class="page">
 			<div class="titres fs-3 text-start">Veuillez choisir un mot de passe</div>
-			<div class="champs d-flex flex-wrap">
+			<div class="champs d-flex ">
+							{{form_errors(registrationForm.password)}}
+
 				{{ form_widget(registrationForm.password, 
                     {'attr': {'class': 'formInput'}}
 				) }}
-				{{form_errors(registrationForm.password)}}
 			</div>
 			<div class="champs btns">
 

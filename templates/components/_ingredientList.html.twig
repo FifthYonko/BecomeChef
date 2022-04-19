@@ -3,12 +3,12 @@
  #}
 
 <div class="container">
-	<div class="row shadow rounded w-75 m-auto my-2 ">
+	<div class="row  w-75 m-auto my-2 ">
 		<h3 class="titreRecette coloredText ">Ingredients</h3>
 	</div>
 	<div class="row flex-lg-row flex-column justify-content-around">
 		{% for ingredient in recette.posseders %}
-		<div class="col-lg-4  p-0 my-2 m-lg-2 rounded shadow text-center">
+		<div class="col-lg-4  p-0 my-2 m-lg-2 text-center">
 			<p class="titres coloredText "><b>{{ingredient.ingredients.nom}}</b></p>
 			{{ingredient.quantite}}
 			

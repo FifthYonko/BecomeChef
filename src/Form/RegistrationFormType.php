@@ -3,6 +3,8 @@
 namespace App\Form;
 // autocompletation
 use App\Entity\User;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordStrength;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordStrengthValidator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -74,10 +76,9 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Entrez un mot de passe',
                     ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir minumum {{ limit }} characteres',
-                        'max' => 4096,
+                    new PasswordStrength([
+                        'minLength'=>8,
+                        'minStrength'=>4,
                     ]),
                 ],
             ])
