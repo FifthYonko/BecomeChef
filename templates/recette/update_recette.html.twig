@@ -16,9 +16,13 @@
     {{ form_widget(update_recette.titre, {'attr': {'class':'formInput m-auto' }}) }}
 </div>
 <div class="row my-2">
-    {{ form_label(update_recette.intro) }}
-    {{ form_widget(update_recette.intro, {'attr': {'class': 'formInput m-auto'}}) }}
+    {{ form_label(update_recette.temps) }}
+    {{ form_widget(update_recette.temps, {'attr': {'class': 'formInput m-auto'}}) }}
 </div>
+<div class="row my-2">
+		{{ form_label(update_recette.nbPersonnes) }}
+		{{ form_widget(update_recette.nbPersonnes, {'attr': {'class': 'formInput m-auto'}}) }}
+	</div>
 <div class="row my-2">
     {{ form_label(update_recette.preparation) }}
     {{ form_widget(update_recette.preparation, {'attr': {'class': 'formInput m-auto'}}) }}

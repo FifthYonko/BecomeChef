@@ -31,7 +31,7 @@ Dans ce fichier on trouve l'affichage d'une recette simple sur la page catalogue
 	<div class="card-body">
 
 		<div class="text w-100">
-			<p class="card-text intro"><i class="fas fa-clock"></i> {{recette.intro}}</p>
+			<p class="card-text intro"><i class="fas fa-clock"></i> {{recette.intro}}min  <i class="fas fa-users"></i> {{recette.nbPersonnes}} Personnes</p>
 		</div>
 		<div class="btns text-center  mt-auto ">
 			<a href="{{path('show_recette_admin', {'id': recette.id})}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>

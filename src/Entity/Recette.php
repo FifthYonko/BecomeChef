@@ -6,6 +6,7 @@ use App\Repository\RecetteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Entite Recette
  */
@@ -21,7 +22,7 @@ class Recette
     private $titre;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $intro;
+    private $temps;
 
     #[ORM\Column(type: 'text')]
     private $preparation;
@@ -42,6 +43,10 @@ class Recette
 
     #[ORM\Column(type: 'date', nullable: true)]
     private $date;
+
+    #[ORM\Column(type: 'integer')]
+
+    private $nbPersonnes;
 
 
     public function __construct()
@@ -68,14 +73,14 @@ class Recette
         return $this;
     }
 
-    public function getIntro(): ?string
+    public function gettemps(): ?string
     {
-        return $this->intro;
+        return $this->temps;
     }
 
-    public function setIntro(string $intro): self
+    public function settemps(string $temps): self
     {
-        $this->intro = $intro;
+        $this->temps = $temps;
 
         return $this;
     }
@@ -186,6 +191,18 @@ class Recette
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getNbPersonnes(): ?int
+    {
+        return $this->nbPersonnes;
+    }
+
+    public function setNbPersonnes(int $nbPersonnes): self
+    {
+        $this->nbPersonnes = $nbPersonnes;
 
         return $this;
     }

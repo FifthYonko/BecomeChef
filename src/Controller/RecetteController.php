@@ -55,11 +55,10 @@ class RecetteController extends AbstractController
         }
         $form_recette = $this->createForm(RecetteFormType::class);
         $form_recette->handleRequest($request);
-        if ($form_recette->isSubmitted() && $form_recette->isValid()) {
-
+        if ($form_recette->isSubmitted()&& $form_recette->isValid() ) {
             $new_recette = $form_recette->getData();
             $new_recette->setTitre(ucfirst($form_recette->get('titre')->getData()));
-            $new_recette->setIntro(ucfirst($form_recette->get('intro')->getData()));
+            
             $new_recette->setPreparation(ucfirst($form_recette->get('preparation')->getData()));
             $imgFile = $form_recette->get('photo')->getData();
             if ($imgFile) {
@@ -148,11 +147,10 @@ class RecetteController extends AbstractController
         if ($user->getId() === $recette_modifie->getAuthor()->getId()) {
             $update_recette = $this->createForm(RecetteFormType::class, $recette_modifie);
             $update_recette->handleRequest($request);
-
             if ($update_recette->isSubmitted() && $update_recette->isValid()) {
+
                 $recette_modifie = $update_recette->getData();
                 $recette_modifie->setTitre(ucfirst($update_recette->get('titre')->getData()));
-                $recette_modifie->setIntro(ucfirst($update_recette->get('intro')->getData()));
                 $recette_modifie->setPreparation(ucfirst($update_recette->get('preparation')->getData()));
                 foreach ($update_recette->get('posseders')->getData() as $ingredient) {
                     $ingredient->setRecette($recette_modifie);

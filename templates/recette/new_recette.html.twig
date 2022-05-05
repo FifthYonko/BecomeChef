@@ -18,8 +18,12 @@
 		{{ form_widget(form_recette.titre, {'attr': {'class':'formInput m-auto' }}) }}
 	</div>
 	<div class="row my-2">
-		{{ form_label(form_recette.intro) }}
-		{{ form_widget(form_recette.intro, {'attr': {'class': 'formInput m-auto'}}) }}
+		{{ form_label(form_recette.temps) }}
+		{{ form_widget(form_recette.temps, {'attr': {'class': 'formInput m-auto'}}) }}
+	</div>
+	<div class="row my-2">
+		{{ form_label(form_recette.nbPersonnes) }}
+		{{ form_widget(form_recette.nbPersonnes, {'attr': {'class': 'formInput m-auto'}} )}}
 	</div>
 	<div class="row my-2">
 		{{ form_label(form_recette.preparation) }}

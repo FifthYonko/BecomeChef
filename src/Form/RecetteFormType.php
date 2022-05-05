@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,9 +43,9 @@ class RecetteFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('intro', TextType::class, [
+            ->add('temps', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Nombre de personnes, temps de preparation',
+                    'placeholder' => 'Temps de preparation',
                   
                 ],
                 'label_attr'=>['class'=>'titres'],
@@ -54,10 +54,18 @@ class RecetteFormType extends AbstractType
                         'message' => 'Veuillez completer ce champ',
                     ]),
                     new Length([
-                        'min' => 25,
+                        'min' => 1,
                         'minMessage' => 'Ce champ doit contenir minimum {{ limit }} caracteres',
                     ])
                 ]
+            ])
+            ->add('nbPersonnes', IntegerType::class, [
+                'attr' => [
+                    'placeholder' => 'Nombre de personnes',
+                    'min' => 1,
+                    
+                ],
+               
             ])
             ->add('preparation', TextareaType::class, [
                 'attr' => [

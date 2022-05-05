@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Access denied{% endblock %}
+{% block body %}
+ <div class="w-100 h-100 d-flex flex-row flex-wrap  mt-2 justify-content-center">
+<div class="row w-100 justify-content-center">
+    <img src="{{asset('img/404.png')}}" alt="error500" class="align-self-center w-50" >
+</div>
+  <div class="row w-50 justify-content-center">
+    <a href="{{path('home')}}" class="btn btn-primary  my-3">Cliquez ici pour revenir a la page d'accueil</a>
+  </div>
+
+ </div>
+{% endblock %}

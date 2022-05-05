@@ -157,33 +157,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('home');
     }
 
-    #[Route('/accepte/cookie', name: 'accepte_cookie')]
-    public function accept_cookie(Request $request ,RecetteRepository $recetteRepository ){
-        $response = new Response();
-        $expires = time()+(365*24*60*60);
-        $cookie = Cookie::create('accept_cookies','oui',$expires);
-        $response->headers->setCookie($cookie);
-        $lasts = $recetteRepository->findLast();
-       
-        $content = $this->renderView('home/index.html.twig', [
-            'last' =>$lasts,
-        ]);
-        $response->setContent($content);
-        return $response;
-    }
-    #[Route('/refuse/cookie', name: 'refuse_cookie')]
-    public function refuse_cookie(Request $request ,RecetteRepository $recetteRepository ){
-        $response = new Response();
-        $expires = time()+(365*24*60*60);
-        $cookie = Cookie::create('accept_cookies','non',$expires);
-        $response->headers->setCookie($cookie);
-        $lasts = $recetteRepository->findLast();
-        $content = $this->renderView('home/index.html.twig', [
-            'last' =>$lasts,
-        ]);
-        $response->setContent($content);
-        return $response;
-    }
+
 
     #[Route('/politique_de_conf', name: 'pdc')]
     public function pdc(){
