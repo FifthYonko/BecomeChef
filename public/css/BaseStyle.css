@@ -40,16 +40,7 @@ hr{
     color: #71C72B;
   
 }
-.butonsNav{
-    background-color: rgba(68, 32, 20, 0) ;
-    color: #442014;
-    border: solid #442014 1px;
-    border-radius: 14px;
-}
-.butonsNav:hover{
-    background-color: rgba(68, 32, 20, 1) ;
-    color:#FFFBF3;
-}
+
 
 html,body{
     height: 100vh;
@@ -62,11 +53,14 @@ body{
     flex-direction: column;
     
 }
-.card,.container,.conteneur{
-    background-color: #FFF8EB;
-    border: solid #FFF1D6 3px;
-    padding: 5px;
-    border-radius: 15px;
+.petitConteneur{
+    background-color: #dfefff;
+    border: solid #608299 1px;
+    padding: 5px;    
+}
+.infos {
+    align-items: center;
+    padding: 12px;
 }
 .en-tete{
     width: 100%;
@@ -83,10 +77,23 @@ main{
     flex: 1 0 auto;
 }
 
-
-.img{
-    width: 95%;
+.conteneurBox{
+    background-color: #98cef2;
+    width: 60%;
+    border-radius: 15px;
+    margin: 20px auto 10px auto;
+    padding: 15px;
 }
+
+.imgBox{
+    width: 80%;
+    
+}
+.imgBox img{
+    box-shadow: 10px 10px 5px #ccc;
+    border:solid black px;
+}
+
 
 
 .FormSub{
@@ -105,7 +112,7 @@ main{
     10px;
 }
 .coloredText{
-    color: #71C72B;
+    color: black;
 }
 
 .profileForm{

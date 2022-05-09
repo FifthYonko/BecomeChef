@@ -5,10 +5,9 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid">
+	<div class="container-fluid conteneurBox">
 		<h1 class="titres coloredText text-center fs-1">Nos recettes de cuisine</h1>
-		<div
-			class="row m-auto justify-content-center">
+		<div	class="row m-auto justify-content-center">
 			{% for recette in recettes %}
 				{% include "components/_userRecetteSimple.html.twig" %}
 			{% endfor %}

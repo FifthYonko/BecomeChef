@@ -1,35 +1,34 @@
 {% extends 'base.html.twig' %}
 {# Vue pour une recette en particulier #}
 {% block title %}
-	BecomeChef -
-	{{recette.titre}}
+BecomeChef -
+{{recette.titre}}
 {% endblock %}
 
 {% block body %}
 
-	<div
-		class="container-fluid ">
-		<div class="row">
-			<h1 class="titres coloredText text-center fs-1">{{recette.titre}}</h1>
-		</div>
-		<div class="row  w-75 m-auto my-5">
-			<div class="col-md-3 ">
-				{% include "components/_ingredientList.html.twig" %}
-			</div>
-			<div class="col-md-9">
-				{% include "components/_userRecetteDetaille.html.twig" %}
-			</div>
-
-		</div>
-		<div class="row w-75 fs-5  m-auto">
-			<div class="col-12 shadow rounded w-75 m-auto my-2 ">
-				<h3 class="titreRecette coloredText text-center bold">Preparation</h3>
-			</div>
-			<p class="preparations">{{recette.preparation}}</p>
-		</div>
-
-		<hr>
-		{% include "components/_commentaires.html.twig" %}
-
+<div class="container-fluid  ">
+	<div class="row conteneurBox">
+		<h1 class="titres coloredText text-center fs-1">{{recette.titre}}</h1>
 	</div>
+	<div class="row conteneurBox">
+		{% include "components/_userRecetteDetaille.html.twig" %}
+	</div>
+	<div class="row m-auto mb-3  conteneurBox">
+		<div class="col-md-9 m-auto ">
+			{% include "components/_ingredientList.html.twig" %}
+		</div>
+	</div>
+	<div class="row fs-5  m-auto conteneurBox">
+		<div class="col-12  w-75 m-auto my-5 ">
+			<h3 class="titreRecette coloredText text-center bold">Preparation</h3>
+		</div>
+		<p class="preparations">{{recette.preparation}}</p>
+	</div>
+
+	<div class="row conteneurBox">
+		{% include "components/_commentaires.html.twig" %}
+	</div>
+
+</div>
 {% endblock %}

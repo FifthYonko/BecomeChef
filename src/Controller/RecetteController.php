@@ -32,7 +32,7 @@ class RecetteController extends AbstractController
     {
 
         $recettes = $this->recetteRepository->findAll();
-       $recettes =  $paginator->paginate($recettes,$page,2);
+       $recettes =  $paginator->paginate($recettes,$page,8);
         return $this->render('recette/index.html.twig', [
             'recettes' => $recettes,
             

@@ -3,16 +3,16 @@ COMPOSANT DE RECETTE SIMPLE POUR UN USER
 Ce fichier contient le code necessaire a l'affichage d'une recette simple dans la page catalogue d'un utilisateur connecte ou pas
 
  #}
-<div class="card w-sm-75 mx-2 m-2 shadow " style="width: 18rem;">
-	<div class="infos d-flex justify-content-around">
-		<p><i class="fas fa-calendar-alt "></i> {{recette.date|date("d/m/Y")}}</p>
-		<p>Par <b>{{recette.author.pseudo}}</b> </p>
+<div class="card w-sm-75 mx-2 m-2 petitConteneur" style="width: 18rem;">
+	<div class="infos d-flex justify-content-around text-center">
+		<p class="m-0" ><i class="fas fa-calendar-alt "></i> {{recette.date|date("d/m/Y")}}</p>
+		<p class="m-0">Par <b>{{recette.author.pseudo}}</b> </p>
 	</div>
 	<div class="card-title ">
 		<h4 class="card-title titreRecette">{{recette.titre}}</h4>
 	</div>
 
-	<div class="img m-auto d-flex justify-content-center align-items-center">
+	<div class="imgBox m-auto d-flex justify-content-center align-items-center">
 
 		<img src="{{ asset('uploads/'~ recette.photo) }}" class="card-img-top rounded-3 h-50  align-center "
 			alt="{{recette.titre}}">

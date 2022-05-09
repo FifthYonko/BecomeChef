@@ -1,103 +1,113 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BecomeChef - Profil{% endblock %}
+{% block title %}BecomeChef - Profil
+{% endblock %}
 {# Page profile d'un utilisateur #}
 {% block body %}
-<div class="container-fluid conteneur w-50 my-5 justify-content-center">
-<div class="row">
-	<h1 class="titres coloredText text-center fs-1">Votre profil</h1>
-</div>
-	<div class="row w-75 justify-content-center m-auto mt-5 ">
-		<div class="col-6 text-center">
-			{% if  user.photo %}
-			<img src='{{ asset('uploads/'~ user.photo ) }}' style="width:100px " alt='photo de profil'
-				class="rounded-circle ">
-			{% else %}
-			<img src='{{ asset('uploads/BecomeChefLogo.png' ) }}' style="width:100px;  " alt='photo de profil'
-				class="rounded-circle  coloredBorder">
-			{% endif %}
-			<h5 class="titres pt-2">MON PROFIL <br>
-				<hr>
-			</h5>
-			<h4 class="coloredText titres">{{ user.pseudo }}</h4>
+<div class="container-fluid conteneur my-5 justify-content-center ">
+	<div class="conteneurBox">
+		<div class="row ">
+			<h1 class="titres coloredText text-center fs-1">Votre profil</h1>
+		</div>
+		<div class="row w-75 justify-content-center m-auto mt-5 petitConteneur ">
+			<div class="col-6 text-center">
+				{% if  user.photo %}
+				<img src='{{ asset('uploads/'~ user.photo ) }}' style="width:100px " alt='photo de profil'
+					class="rounded-circle ">
+				{% else %}
+				<img src='{{ asset('uploads/BecomeChefLogo.png' ) }}' style="width:100px;  " alt='photo de profil'
+					class="rounded-circle  coloredBorder">
+				{% endif %}
+				<h5 class="titres pt-2">MON PROFIL
+					<br>
+					<hr>
+				</h5>
+				<h4 class="coloredText titres">{{ user.pseudo }}</h4>
 
-		</div>
-	</div>
-	<div class="row w-75 justify-content-center m-auto conteneur p-3 mb-5">
-		{{ form_start(form_pseudo, {'attr': {'class': 'profileForm'}}) }}
-		<div class="col-6">
-			<div class="field my-2">
-				
-				{{ form_widget(form_pseudo.photo)}}
-			</div>
-			<div class="field my-2 "> 
-				{{ form_label(form_pseudo.pseudo)}}
-				{{ form_widget(form_pseudo.pseudo,{'attr': {'class':'formInput '}})}}
-			</div>
-		
-			<div class="field my-2">
-				{{ form_label(form_pseudo.adresse)}}
-				{{ form_widget(form_pseudo.adresse,{'attr': {'class':'formInput'}})}}
 			</div>
 		</div>
-		<div class="col-6">
-	
-		{% if app.user.githubId is null and app.user.googleId is null %}
-			<div class="field my-2">
-				<a href="{{path('forgot_password')}}" class="coloredText  titres fs-5 anchorStyle">Modifier mon mot de passe</a>
-			</div>
-			{% else %}
+		<div class="row w-75 justify-content-center m-auto conteneur p-3 mb-5 mt-3 petitConteneur">
+			{{ form_start(form_pseudo, {'attr': {'class': 'profileForm'}}) }}
+			<div class="col-6">
 				<div class="field my-2">
-				
+
+					{{ form_widget(form_pseudo.photo)}}
+				</div>
+				<div class="field my-2 ">
+					{{ form_label(form_pseudo.pseudo)}}
+					{{ form_widget(form_pseudo.pseudo,{'attr': {'class':'formInput '}})}}
+				</div>
+
+				<div class="field my-2">
+					{{ form_label(form_pseudo.adresse)}}
+					{{ form_widget(form_pseudo.adresse,{'attr': {'class':'formInput'}})}}
+				</div>
 			</div>
-		{% endif %}
-		
-		
-			<div class="field my-2">
-				{{ form_label(form_pseudo.codePostal)}}
-				{{ form_widget(form_pseudo.codePostal,{'attr': {'class':'formInput'}})}}
+			<div class="col-6">
+
+				{% if app.user.githubId is null and app.user.googleId is null %}
+				<div class="field my-2">
+					<a href="{{path('forgot_password')}}" class="coloredText  titres fs-5 anchorStyle">Modifier mon mot
+						de passe</a>
+				</div>
+				{% else %}
+				<div class="field my-2"></div>
+				{% endif %}
+
+
+				<div class="field my-2">
+					{{ form_label(form_pseudo.codePostal)}}
+					{{ form_widget(form_pseudo.codePostal,{'attr': {'class':'formInput'}})}}
+				</div>
+				<div class="field my-2">
+					{{ form_label(form_pseudo.ville)}}
+					{{ form_widget(form_pseudo.ville,{'attr': {'class':'formInput'}})}}
+				</div>
 			</div>
-			<div class="field my-2">
-				{{ form_label(form_pseudo.ville)}}
-				{{ form_widget(form_pseudo.ville,{'attr': {'class':'formInput'}})}}
-			</div>
+			<button type="submit" class="btn FormSub w-100 text-dark fs-5">Modifier</button>
+			{{ form_end(form_pseudo) }}
 		</div>
-		<button type="submit" class="btn FormSub w-100 text-dark fs-5">Modifier</button>
-		{{ form_end(form_pseudo) }}
 	</div>
-		<hr>
+
+	<div class="conteneurBox">
 		<div class="row">
-			<h2 class="titres text-center w-75 m-auto coloredText pb-3">Vos Recettes</h2>
+			<h2 class="titres text-center w-75 m-auto coloredText pb-3 fs-1">Vos Recettes</h2>
 		</div>
-	<div class="row mx-auto   ">
-		
-		{% for recette in recettes %}
-		{% if app.user and is_granted('ROLE_ADMIN') %}
-		{% include "components/_AdminRecetteSimple.html.twig" %}
-		{% else %}
-		{% include "components/_userRecetteSimple.html.twig" %}
-		{% endif %}
+		<div class="row mx-auto justify-content-center">
+
+			{% for recette in recettes %}
+			{% if app.user and is_granted('ROLE_ADMIN') %}
+			{% include "components/_AdminRecetteSimple.html.twig" %}
+			{% else %}
+			{% include "components/_userRecetteSimple.html.twig" %}
+			{% endif %}
 
 
-		{% endfor %}
+			{% endfor %}
 
+		</div>
 	</div>
+
+	
 	{% if "ROLE_ADMIN" in app.user.roles %}
-	<hr>
+	<div class="conteneurBox">
+	
 	<div class="row">
-		<h2 class="titres text-center w-75 m-auto coloredText pb-3">Utilisateurs bannis</h2>
+		<h2 class="titres text-center w-75 m-auto coloredText pb-3 fs-1">Utilisateurs bannis</h2>
 		<ul class="list-unstyled">
 			{% for banned in bannedList %}
 			<li>
 				<b>
-					<a href="{{path('inspect_profil',{'id': banned.id})}}" class="anchorStyle coloredText ">{{banned.pseudo}}</a>
+					<a href="{{path('inspect_profil',{'id': banned.id})}}"
+						class="anchorStyle coloredText ">{{banned.pseudo}}</a>
 				</b>
 			</li>
 			{% endfor %}
 		</ul>
 	</div>
+	</div>	
 	{% endif %}
-
+	
 
 </div>
 

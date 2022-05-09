@@ -1,97 +1,80 @@
 {# COMPOSANT NAVBAR
 	Ce fichier contient le code necessaire a l'affichage de la navbar
 	 #}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container-fluid">
+	<a class=" mb-0 text-center navbar-brand" href="{{path('home')}}"><img src="{{asset('img/BecomeChefLogo.png')}}" width="70px" height="70px" class="rounded-circle align-self-center" alt="logo"></a>
+		
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
+				</li>
+				{% if app.user and "ROLE_ADMIN" in app.user.roles  %}
+					<li class="nav-item">
+						<a class="nav-link " href="{{path('espaceAdmin',{'tableau': 'recettes'})}}">Espace Admin</a>
+					</li>
+				{% endif %}
 
-<header>
-
-	<nav class="navTop py-3">
-		<div class="container-fluid">
-			<div class="row w-100 d-flex m-auto">
-
-				<div class="col-md-4 d-flex flex-column flex-xl-row align-center ">
-					<div class="col-lg-2 me-2 d-flex justify-content-center">
-						<a class=" mb-0 text-center" href="#"><img src="{{asset('img/BecomeChefLogo.png')}}" width="70px" height="70px" class="rounded-circle align-self-center" alt="logo"></a>
-					</div>
-					<div class=" col d-flex flex-row  m-auto ">
-						<ul class="d-flex  me-auto mb-2 mb-lg-0 list-unstyled">
-							{% if app.user and "ROLE_ADMIN" in app.user.roles  %}
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link " href="{{path('profile')}}">Profil</a>
+					</li>
+				{% endif %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="recetteMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Recettes
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="recetteMenu">
+						{% if app.user and "ROLE_ADMIN" in app.user.roles %}
 							<li>
-								<a class="nav-link " href="{{path('espaceAdmin',{'tableau': 'recettes'})}}">Espace Admin</a>
+								<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
 							</li>
+						{% else %}
+							<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
+						{% endif %}
+						<li>
+
+							{% if  app.user and "ROLE_ADMIN" in app.user.roles %}
+								<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
+
+							{% else %}
+								<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
 							{% endif %}
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
+						</li>
+					</ul>
+				</li>
 
-							{% if app.user %}
-							<li>
-								<a class="nav-link " href="{{path('profile')}}">Profil</a>
-							</li>
-							{% endif %}
-
-							<li>
-								<a class="nav-link " href="{{path('home')}}">Home</a>
-							</li>
-
-							<li class="dropdown">
-								<a href="#" class="nav-link dropdown-toggle" id="recetteMenu" role="button"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									Recettes</a>
-								<ul class="dropdown-menu" aria-labelledby="recetteMenu">
-									<li>
-										{% if app.user and "ROLE_ADMIN" in app.user.roles %}
-										<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue
-											Admin</a>
-										{% else %}
-										<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
-										{% endif %}
-									</li>
-				
-									<li>
-
-										{% if  app.user and "ROLE_ADMIN" in app.user.roles %}
-										<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
-
-										{% else %}
-										<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
-										{% endif %}
-									</li>
-									<li>
-										<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
-									</li>
-								
-								</ul>
-							</li>
-
-							<li>
-								<a class="nav-link " href="{{path('contact')}}">Contact</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-4 align-self-center ">
-					<form class="d-flex" action="{{path('search',{'page':1 })}}">
-						<input class="form-control mx-3" type="search" placeholder="Search" aria-label="Search"
-							name="search_value">
-						<button class="btn butonsNav" type="submit">Search</button>
-					</form>
-				</div>
-				<div class="col-md-4 text-center text-md-end align-self-center my-3 ">
+				<li>
+					<a class="nav-link " href="{{path('contact')}}">Contact</a>
+				</li>
+			</ul>
+			<form class="d-flex" action="{{path('search',{'page':1 })}}">
+				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_value">
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</form>
+			<div class="col-md-4 text-center text-md-end align-self-center my-3 ">
 					{% if app.user %}
 
-					<a href="{{path('app_logout')}}" class="btn butonsNav">deconexion</a>
+					<a href="{{path('app_logout')}}" class="btn btn-outline-success">Deconexion</a>
 
 					{% else %}
 
-					<a href="{{path('app_register')}}" class="btn  butonsNav ">Register</a>
+					<a href="{{path('app_register')}}" class="btn btn-outline-success">Register</a>
 
 
-					<a href="{{path('app_login')}}" class="btn  mx-2 butonsNav">Login</a>
+					<a href="{{path('app_login')}}" class="btn btn-outline-success">Login</a>
 
 
 					{% endif %}
 
 				</div>
-			</div>
-
 		</div>
-	</nav>
-
-</header>
+	</div>
+</nav>
