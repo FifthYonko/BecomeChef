@@ -6,6 +6,7 @@ use App\Form\ChangementProfilType;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,8 +23,8 @@ class ProfileController extends AbstractController
         methode qui permet d'afficher la page profile de l'utilisateur
         Cette methode ne prend pas de parametres, et redirige vers la page profil
     */
-    #[Route('/profile', name: 'profile')]
-    public function index(Request $request, FileUploader $fileUploader): Response
+    #[Route('/profile/{page}', name: 'profile')]
+    public function index(Request $request,int $page, FileUploader $fileUploader,PaginatorInterface $paginator): Response
     {   
         if (!$this->IsGranted('ROLE_USER')) {
             $this->addFlash('danger', 'Cette action necessite une connexion');
@@ -32,6 +33,7 @@ class ProfileController extends AbstractController
 
         $user = $this->getUser();
         $recette = $user->getRecettes();
+        $recette =  $paginator->paginate($recette,$page,3);
 
         $form_profil = $this->createForm(ChangementProfilType::class,$user);
         $form_profil->handleRequest($request);
@@ -58,6 +60,7 @@ class ProfileController extends AbstractController
         if ($this->isGranted('ROLE_ADMIN')) {
             
             $bannedList = $this->userRepository->findBannedUsers();
+          
 
           
             return $this->renderForm('profile/index.html.twig', [

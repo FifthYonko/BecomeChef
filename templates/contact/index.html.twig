@@ -3,22 +3,30 @@
 {% block title %}BecomeChef-Contact{% endblock %}
 
 {% block body %}
+    <div class="container-fluid conteneurBox">
+        <div class="row">
+            <h1 class="w-100 text-center titres fs-2">Nous Contacter</h1>
     
-    {{ form_start(contact,{'attr': {'class': 'container w-50 m-auto p-3 my-5'}}) }}
-    <h1 class="titres coloredText text-center fs-1">Nous contacter</h1>
-    <div class="row my-2" > 
-        {{form_label(contact.email)}}
-        {{ form_widget(contact.email, {'attr': {'class':'formInput m-auto' }}) }}
+        </div>
+     <div class="row  w-75 justify-content-center m-auto conteneur p-3 mb-5 mt-3 petitConteneur">
+        {{ form_start(contact) }}
+        
+        <div class="row my-2" > 
+            {{form_label(contact.email)}}
+            {{ form_widget(contact.email, {'attr': {'class':'formInput m-auto' }}) }}
+        </div>
+        <div class="row my-2"> 
+            {{form_label(contact.subject )}}
+            {{ form_widget(contact.subject, {'attr': {'class':'formInput m-auto ' }}) }}
+        </div>
+        <div class="row my-2"> 
+            {{form_label(contact.message)}}
+            {{ form_widget(contact.message, {'attr': {'class':'formInput m-auto ' }}) }}
+        </div>
+    
+        <button type="submit" class="FormSub btn w-100 text-dark fs-5" >Envoyer</button>
+        {{ form_end(contact) }}
+     </div>
     </div>
-    <div class="row my-2"> 
-        {{form_label(contact.subject )}}
-        {{ form_widget(contact.subject, {'attr': {'class':'formInput m-auto ' }}) }}
-    </div>
-    <div class="row my-2"> 
-        {{form_label(contact.message)}}
-        {{ form_widget(contact.message, {'attr': {'class':'formInput m-auto ' }}) }}
-    </div>
-
-    <button type="submit" class="FormSub btn w-100 text-dark fs-5" >Envoyer</button>
-    {{ form_end(contact) }}
+  
 {% endblock %}

@@ -6,47 +6,59 @@
 {% endblock %}
 
 {% block body %}
-	<script src="{{asset('js/recette.js')}}"></script>
+	<div class="container-fluid my-5 justify-content-center conteneurBox">
+    <div class="row">
+        <h1 class="w-100 text-center titres fs-2">Modifier une recette</h1>
 
-	{{ form_start(update_recette,{'attr': {'class': 'container w-50 m-auto my-5 p-3'}}) }}
-	<div class="row">
-		<h1 class="w-100 text-center titres fs-1 coloredText">Modifier une recette</h1>
+    </div>
+    <div class="row w-75 justify-content-center m-auto conteneur p-3 mb-5 mt-3 petitConteneur">
+        
+        {{ form_start(update_recette) }}
+        
+        <div class="row my-2">
+            {{ form_label(update_recette.titre) }}
+            {{ form_widget(update_recette.titre, {'attr': {'class':'formInput m-auto' }}) }}
+        </div>
+        <div class="row my-2">
+            {{ form_label(update_recette.temps) }}
+            {{ form_widget(update_recette.temps, {'attr': {'class': 'formInput m-auto'}}) }}
+        </div>
+        <div class="row my-2">
+            {{ form_label(update_recette.nbPersonnes) }}
+            {{ form_widget(update_recette.nbPersonnes, {'attr': {'class': 'formInput m-auto'}}) }}
+        </div>
+        <div class="row my-2">
+            {{ form_label(update_recette.preparation) }}
+            {{ form_widget(update_recette.preparation, {'attr': {'class': 'formInput m-auto'}}) }}
+        </div>
+        <div class="row my-2">
+            {{ form_label(update_recette.photo) }}
+            {{ form_widget(update_recette.photo) }}
+        </div>
 
-	</div>
-	<div class="row my-2">
-		{{ form_label(update_recette.titre) }}
-		{{ form_widget(update_recette.titre, {'attr': {'class':'formInput m-auto' }}) }}
-	</div>
-	<div class="row my-2">
-		{{ form_label(update_recette.temps) }}
-		{{ form_widget(update_recette.temps, {'attr': {'class': 'formInput m-auto'}}) }}
-	</div>
-	<div class="row my-2">
-		{{ form_label(update_recette.nbPersonnes) }}
-		{{ form_widget(update_recette.nbPersonnes, {'attr': {'class': 'formInput m-auto'}}
-		)}}
-	</div>
-	<div class="row my-2">
-		{{ form_label(update_recette.preparation) }}
-		{{ form_widget(update_recette.preparation, {'attr': {'class': 'formInput m-auto'}}) }}
-	</div>
-	<div class="row my-2">
-		{{ form_label(update_recette.photo) }}
-		{{ form_widget(update_recette.photo) }}
-	</div>
 
+        <div class="d-flex flex-wrap flex-row" id="ingredient-fields-list"
+            data-prototype="{{ form_widget(update_recette.posseders.vars.prototype)|e }}"
+            data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ update_recette.posseders|length }}">
 
-	<div class="d-flex flex-wrap flex-row" id="ingredient-fields-list" data-prototype="{{ form_widget(update_recette.posseders.vars.prototype)|e }}" data-widget-tags="{{ '<div> </div>'|e }}" data-widget-counter="{{ update_recette.posseders|length }}"></div>
+        </div>
 
-	<div class="row my-2 w-50 m-auto">
-		<button type="button" class="add-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2" data-list-selector="#ingredient-fields-list">Ajouter
-			        Ingredient</button>
-		<button type="button" class="remove-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2" data-list-selector="#ingredient-fields-list">Supprimer Ingredient</button>
+        <div class="row my-2 w-50 m-auto">
+            <button type="button" class="add-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2"
+                data-list-selector="#ingredient-fields-list">Ajouter
+                Ingredient</button>
+            <button type="button" class="remove-another-collection-widget FormSub btn w-100 text-dark fs-5 mb-2"
+                data-list-selector="#ingredient-fields-list">Supprimer Ingredient</button>
 
-	</div>
+        </div>
 
-	<button type="submit" class="btn btn-success">Modifier</button>
-	{{ form_end(update_recette) }}
+        <button type="submit" class="btn btn-success">Modifier</button>
+        {{ form_end(update_recette) }}
+    </div>
+</div>
+
+<script src="{{asset('js/recette.js')}}"></script>
+
 
 
 {% endblock %}

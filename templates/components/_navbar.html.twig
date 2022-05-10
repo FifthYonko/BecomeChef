@@ -15,13 +15,13 @@
 				</li>
 				{% if app.user and "ROLE_ADMIN" in app.user.roles  %}
 					<li class="nav-item">
-						<a class="nav-link " href="{{path('espaceAdmin',{'tableau': 'recettes'})}}">Espace Admin</a>
+						<a class="nav-link " href="{{path('espaceAdmin',{'tableau': 'recettes', 'page': 1})}}">Espace Admin</a>
 					</li>
 				{% endif %}
 
 				{% if app.user %}
 					<li class="nav-item">
-						<a class="nav-link " href="{{path('profile')}}">Profil</a>
+						<a class="nav-link " href="{{path('profile',{'page':1 })}}">Profil</a>
 					</li>
 				{% endif %}
 				<li class="nav-item dropdown">

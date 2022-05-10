@@ -24,11 +24,12 @@ class AdminController extends AbstractController
     }
 
     
-    #[Route('admin/espace/{tableau}', name: 'espaceAdmin')]
-    public function index($tableau)
+    #[Route('admin/espace/{tableau}/{page}', name: 'espaceAdmin')]
+    public function index($tableau ,int $page, PaginatorInterface $paginator)
     {
         if($tableau=='utilisateurs'){
             $utilisateurs = $this->userRepository->findAll();
+            $utilisateurs =  $paginator->paginate($utilisateurs,$page,10);
 
             return $this->render('admin/espace_admin.html.twig', [
                 'utilisateurs'=>$utilisateurs,
@@ -36,12 +37,14 @@ class AdminController extends AbstractController
         }
         elseif ($tableau=='commentaires') {
             $commentaires = $this->commentaireRepository->findAll();
+            $commentaires =  $paginator->paginate($commentaires,$page,10);
             return $this->render('admin/espace_admin.html.twig', [
                 'commentaires'=>$commentaires,
             ]);
         }
         else{
             $recettes = $this->recetteRepository->findAll();
+            $recettes =  $paginator->paginate($recettes,$page,10);
 
             return $this->render('admin/espace_admin.html.twig', [
                 'recettes'=>$recettes,

@@ -1,119 +1,140 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	BecomeChef-Espace Admin
+BecomeChef-Espace Admin
 {% endblock %}
 
 {% block body %}
 
-<div class="container-fluid">
+<div class="container-fluid conteneurBox">
 	<h1 class="titres coloredText text-center fs-1">Espace Admin</h1>
 	<div class="row d-flex justify-content-around mb-5">
-		<a href="{{path('espaceAdmin',{'tableau': 'recettes'})}}" class="w-25">Recettes</a>
-		<a href="{{path('espaceAdmin',{'tableau': 'utilisateurs'})}}" class="w-25">Utilisateurs</a>
-		<a href="{{path('espaceAdmin',{'tableau': 'commentaires'})}}" class="w-25">Commentaires</a>
+		<a href="{{path('espaceAdmin',{'tableau': 'recettes', 'page': 1})}}" class="w-25">Recettes</a>
+		<a href="{{path('espaceAdmin',{'tableau': 'utilisateurs', 'page': 1})}}" class="w-25">Utilisateurs</a>
+		<a href="{{path('espaceAdmin',{'tableau': 'commentaires' , 'page': 1})}}" class="w-25">Commentaires</a>
 	</div>
 	<div class="row  w-75 m-auto">
+		<!-- tableau recettes -->
 		{% if recettes is defined %}
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Id</th>
-						<th scope="col">Nom</th>
-						<th scope="col">Autheur</th>
-						<th scope="col">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Nom</th>
+					<th scope="col">Autheur</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
 
-					{% for recette in recettes %}
-						<tr>
-							<td>{{recette.id}}</td>
-							<td>{{recette.titre}}</td>
-							<td>{{recette.author.pseudo}}</td>
-							<td>
-								<div class="btns text-center  mt-auto ">
-									<a href="{{path('show_recette_admin', {'id': recette.id})}}" class="btn btn-primary">
-										<i class="fas fa-eye"></i>
-									</a>
-									{% if app.user and is_granted('ROLE_ADMIN')  %}
-										<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning">
-											<i class="fas fa-edit"></i>
-										</a>
+				{% for recette in recettes %}
+				<tr>
+					<td>{{recette.id}}</td>
+					<td>{{recette.titre}}</td>
+					<td>{{recette.author.pseudo}}</td>
+					<td>
+						<div class="btns text-center  mt-auto ">
+							<a href="{{path('show_recette_admin', {'id': recette.id})}}" class="btn btn-primary">
+								<i class="fas fa-eye"></i>
+							</a>
+							{% if app.user and is_granted('ROLE_ADMIN')  %}
+							<a href="{{path('update_recette_admin', {'id': recette.id})}}" class="btn btn-warning">
+								<i class="fas fa-edit"></i>
+							</a>
 
-										<a href="{{path('delete_recette_admin', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
-											<i class="fas fa-trash-alt"></i>
-										</a>
-									{% endif %}
-								</div>
-							</td>
-						</tr>
-					{% endfor %}
+							<a href="{{path('delete_recette_admin', {'id': recette.id})}}" class="btn btn-danger"
+								onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+							{% endif %}
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
 
 
-				</tbody>
-			</table>
+			</tbody>
+		</table>
+		<div class="row justify-content-center conteneurBox text-dark">
+			{{ knp_pagination_render(recettes,'components/_pagination.html.twig') }}
+		</div>
 		{% endif %}
-
+		{# tableau utilisateurs #}
 		{% if utilisateurs is defined %}
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Id</th>
-						<th scope="col">Pseudo</th>
-						<th scope="col">email</th>
-						<th scope="col">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Pseudo</th>
+					<th scope="col">email</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
 
-					{% for utilisateur in utilisateurs %}
-						<tr>
-							<td>{{utilisateur.id}}</td>
-							<td>{{utilisateur.pseudo}}</td>
-							<td>{{utilisateur.email}}</td>
-							<td>
-								{% if utilisateur.etat == 0 %}
+				{% for utilisateur in utilisateurs %}
+				<tr>
+					<td>{{utilisateur.id}}</td>
+					<td>{{utilisateur.pseudo}}</td>
+					<td>{{utilisateur.email}}</td>
+					<td>
+						{% if utilisateur.etat == 0 %}
 
-									<a href="{{ path('ban',{'id': utilisateur.id}) }}" class='btn btn-danger '>
-										<i class="fas fa-ban"></i>
-									</a>
+						<a href="{{ path('ban',{'id': utilisateur.id}) }}" class='btn btn-danger '>
+							<i class="fas fa-ban"></i>
+						</a>
 
-								{% else %}
-									<a href="{{ path('unban',{'id': utilisateur.id}) }}" class='btn btn-success'>
-										<i class="fas fa-ban"></i>
-									</a>
-								{% endif %}
-							</td>
-						</tr>
-					</div>
-				</tbody>
-			</td>
-		</tr>
-	{% endfor %}
+						{% else %}
+						<a href="{{ path('unban',{'id': utilisateur.id}) }}" class='btn btn-success'>
+							<i class="fas fa-ban"></i>
+						</a>
+						{% endif %}
+					</td>
+				</tr>
+
+				{% endfor %}
 
 
-</tbody></table>{% endif %}{% if commentaires is defined %}<table class="table">
-<thead>
-	<tr>
-		<th scope="col">Id</th>
-		<th scope="col">message</th>
-		<th scope="col">Autheur</th>
-		<th scope="col">Actions</th>
-	</tr>
-</thead>
-<tbody>
+			</tbody>
+		</table>
+			<div class="row justify-content-center conteneurBox text-dark">
+			{{ knp_pagination_render(utilisateurs,'components/_pagination.html.twig') }}
+		</div>
+		{% endif %}
+		{# tableau commentaires #}
+		{% if commentaires is defined %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">message</th>
+					<th scope="col">Autheur</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
 
-	{% for commentaire in commentaires %}
-		<tr>
-			<td>{{commentaire.id}}</td>
-			<td>{{commentaire.commentaire}}</td>
-			<td>{{commentaire.author.pseudo}}</td>
-			<td>
-				<a href="{{path('delete_commentaire_admin',{'id': commentaire.id, 'idR': commentaire.recette.id} )}}">
-					<i class="fas fa-trash-alt"></i>
-				</a>
-			</td>
-		</tr>
+				{% for commentaire in commentaires %}
+				<tr>
+					<td>{{commentaire.id}}</td>
+					<td>{{commentaire.commentaire}}</td>
+					<td>{{commentaire.author.pseudo}}</td>
+					<td>
+						<a
+							href="{{path('delete_commentaire_admin',{'id': commentaire.id, 'idR': commentaire.recette.id} )}}">
+							<i class="fas fa-trash-alt"></i>
+						</a>
+					</td>
+				</tr>
+
+
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="row justify-content-center conteneurBox text-dark">
+			{{ knp_pagination_render(commentaires,'components/_pagination.html.twig') }}
+		</div>
+		{% endif %}
+			
 	</div>
-</tbody></td></tr>{% endfor %}</tbody></table>{% endif %}</div></div>{% endblock %}
+</div>{% endblock %}

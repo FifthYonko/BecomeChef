@@ -3,22 +3,22 @@
  dans ce fichier on trouve l'affichage d'une recette pour un admin
  #}
 
-<div class="container w-50">
+
 	<span>
 		<h3 class="titreRecette coloredText text-center bold">{{recette.titre}}</h3>
 	</span>
-	<div class="infos d-none d-md-flex align-items-center  justify-content-around my-3 shadow rounded w-75 m-auto ">
+	<div class="infos d-none d-md-flex align-items-center justify-content-around my-3 m-auto ">
 		<span class=" m-0 h-50">
 			<i class="fas fa-calendar-alt "></i>
 			{{recette.date|date("d/m/Y")}}</span>
 		<span>Par
 			{% if app.user and "ROLE_ADMIN" in  app.user.roles %}
-				<a href="{{path('inspect_profil',{'id': recette.author.id})}}" class="anchorStyle coloredText ">{{recette.author.pseudo}}</a>
+				<a href="{{path('inspect_profil',{'id': recette.author.id})}}">{{recette.author.pseudo}}</a>
 			{% endif %}
 		</span>
 	</div>
-	<div class="img m-auto">
-		<img src="{{ asset('uploads/'~ recette.photo) }}" class=" img m-auto rounded  align-center "
+	<div class=" m-auto text-center">
+		<img src="{{ asset('uploads/'~ recette.photo) }}" class="w-50 rounded  align-center"
 			alt="{{recette.titre}}">
 	</div>
 	<div class="intro">
@@ -44,4 +44,3 @@
 		{% endif %}
 	</div>
 	
-</div>

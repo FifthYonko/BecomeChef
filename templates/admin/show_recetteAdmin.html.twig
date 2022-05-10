@@ -10,27 +10,30 @@ BecomeChef -
 {% if "ROLE_ADMIN" in  app.user.roles %}
 
 <div class="container-fluid">
-	<div class="row">
+	<div class="row conteneurBox">
 		<h1 class="titres coloredText text-center fs-1">{{recette.titre}}</h1>
 	</div>
-	<div class="row  w-75 m-auto my-5">
-		<div class="col-md-3 ">
-			{% include "components/_ingredientList.html.twig" %}
-		</div>
-		<div class="col-md-9">
+	<div class="row conteneurBox">
 			{% include "components/_adminRecetteDetaille.html.twig" %}
 		</div>
-
+	<div class="row mx-auto conteneurBox">
+	<div class="col-md-9 mx-auto ">
+			{% include "components/_ingredientList.html.twig" %}
+		</div>
+	
 	</div>
-	<div class="row w-75 fs-5  m-auto">
-		<div class="col-12 shadow rounded w-75 m-auto my-2 ">
+	<div class="row  fs-5  mx-auto conteneurBox">
+		<div class="col-12 w-75 m-auto my-5 ">
 			<h3 class="titreRecette coloredText text-center bold">Preparation</h3>
 		</div>
 		<p class="preparations">{{recette.preparation}}</p>
 	</div>
 
-	<hr>
-	{% include "components/_commentaires.html.twig" %}
+
+
+	<div class="row conteneurBox">
+		{% include "components/_commentaires.html.twig" %}
+	</div>
 
 </div>
 {% endif %}
