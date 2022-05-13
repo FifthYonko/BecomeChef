@@ -59,7 +59,7 @@
 				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_value">
 				<button class="btn btn-outline-success" type="submit">Search</button>
 			</form>
-			<div class="col-md-4 text-center text-md-end align-self-center my-3 ">
+			<div class="col-md-4 text-center text-md-end align-self-center my-3  dont-show ">
 					{% if app.user %}
 
 					<a href="{{path('app_logout')}}" class="btn btn-outline-success">Deconexion</a>
@@ -67,9 +67,10 @@
 					{% else %}
 
 					<a href="{{path('app_register')}}" class="btn btn-outline-success">Register</a>
+					
 
 
-					<a href="{{path('app_login')}}" class="btn btn-outline-success">Login</a>
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#connexionForm">Se connecter</button>
 
 
 					{% endif %}

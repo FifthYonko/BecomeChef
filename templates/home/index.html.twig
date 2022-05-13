@@ -4,38 +4,13 @@
 
 {% block body %}
 
-<div class="container-fluid  ">
+<div class="container-fluid">
 
-	<div id="HomeSlider" class="carousel slide mt-1" data-bs-touch="false" data-bs-ride="carousel">
-		
-		<div class="carousel-inner">
-			<div class="carousel-item active" data-bs-interval="4000">
-				<img src="{{asset('img/img1.png')}}" class="d-block w-100" alt="...">
-			</div>
-			
-			<div class="carousel-item" data-bs-interval="4100">
-				<video class="img-fluid d-block w-100" autoplay loop muted>
-                    <source src="{{asset('img/cooking.mp4')}}" type="video/mp4">
-                </video>
-				<div class="carousel-caption d-none d-md-block">
-					<h5>BecomeChef</h5>
-					<p>“La cuisine est devenue un art, une science noble . les cuisiniers sont de gentilshommes.”</p>
-				  </div>
-			</div>
-		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#HomeSlider" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="false"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#HomeSlider" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>
-	</div>
+	
 	
 
 	<div class="row  justify-content-center conteneurBox ">
-		<h1 class="titres text-center w-75 m-auto coloredText pb-3 fs-2">Dernieres recettes ajoutes</h1>
+		<h1 class="titres text-center w-100 m-auto coloredText pb-3 fs-2">Dernieres recettes ajoutes</h1>
 		{% for recette in last  %}
 		{% if app.user and is_granted('ROLE_ADMIN') %}
 		{% include "components/_AdminRecetteSimple.html.twig" %}

@@ -29,13 +29,15 @@ class SecurityController extends AbstractController
     {
         if ($this->getUser()) {
             $this->addFlash("warning", 'Vous etes deja connecte');
-            return $this->redirectToRoute('target_path');
+            return $this->redirectToRoute('home');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+      
+        return $this->redirectToRoute('home', ['last_username' => $lastUsername, 'error' => $error]);
+
     }
 
     /**

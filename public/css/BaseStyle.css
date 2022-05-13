@@ -53,6 +53,13 @@ body{
     flex-direction: column;
     
 }
+.modal-body{
+    background-color:#98cef2 ;
+}
+.bloc-profil,.bloc-info{
+    display: none;
+   
+}
 body a{
     color: #2d3741;
 }
@@ -82,7 +89,6 @@ main{
 
 .conteneurBox{
     background-color: #98cef2;
-    width: 60%;
     border-radius: 15px;
     margin: 20px auto 10px auto;
     padding: 15px;
@@ -204,3 +210,41 @@ footer{
 
 }
 
+@media (min-width:1350px) {
+    main{
+        display: grid;
+        grid-template-columns: 1fr 5fr 1fr;
+        grid-template-rows: auto;
+        gap: 10px;
+    }
+    .conteneurBox{
+        /* width: 60%; */
+    }
+    .bloc-profil,.bloc-info{
+        display: inline;
+        background-color:#98cef2 ;
+        border-radius: 15px;
+        margin: 20px 0 20px 0;
+        padding-bottom: 30px;
+    }
+   .one{
+       grid-column: 1/4;
+   }
+    .two{
+        grid-column: 2/3;
+        
+    }
+    .three{
+        grid-column: 1/2;
+        grid-row: 2/4;
+    }
+    .four{
+        grid-column: 3/4;
+        grid-row: 2/4;
+    }
+    .dont-show{
+        display: none;
+    }
+
+ 
+}
