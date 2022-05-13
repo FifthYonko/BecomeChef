@@ -43,7 +43,6 @@ hr{
 
 
 html,body{
-    height: 100vh;
     background-color:#2d3741;
     
     
@@ -134,7 +133,7 @@ main{
 .formInput{
     height: 100%;
     width: 95%;
-    border: 2px solid #FFF1D6;
+    border: 2px solid #608299;
     border-radius: 5px;
     font-size: 18px;
     margin: 0;
@@ -143,8 +142,8 @@ main{
 
 
 .selector{
-    background-color: #FFF1D6;
-    border: solid #71C72B 2px;
+    background-color: #98cef2;
+    border: solid #608299 2px;
     color: #442014 ;
     text-align: center;
 
