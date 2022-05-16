@@ -3,20 +3,21 @@
 namespace App\Controller;
 
 use App\Repository\RecetteRepository;
-use Doctrine\ORM\EntityManager;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security\UserAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class HomeController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository )
+    private $requestStack;
+
+    public function __construct(private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository , private UserRepository $userRepository, RequestStack $requestStack )
     {
-        
+        $this->requestStack = $requestStack;
     }
     /* methode qui permet d'afficher la landing page
         on recupere le composant symfony Request
@@ -26,10 +27,19 @@ class HomeController extends AbstractController
     {
     
         $lasts = $this->recetteRepository->findLast(3);
+
+        $compterR = $this->recetteRepository->compterRecette();
+        $compterU = $this->userRepository->compterUsers();
+        
+        $session = $this->requestStack->getSession();
+        $session->set('Infos',[$compterR,$compterU]);
+
+        
         return $this->render('home/index.html.twig', [
 
             'last' =>$lasts,
         ]);
-
+        
+        
     }
 }

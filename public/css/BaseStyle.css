@@ -38,6 +38,9 @@ hr{
     border: none;
     height: 12px;
     color: #2d3741;
+    width: 85%;
+    margin: 0 auto 10px auto;
+    
   
 }
 
@@ -59,7 +62,7 @@ body{
     display: none;
    
 }
-body a{
+body a,p{
     color: #2d3741;
 }
 .petitConteneur{

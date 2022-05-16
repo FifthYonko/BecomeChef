@@ -183,7 +183,19 @@
 				</div>
 
 				<div class="bloc-info text-light four">
-					truc
+				<div class="row ">
+						<h1 class="titres coloredText text-center fs-1">Infos</h1>
+					</div>
+					<hr>
+					<div class="row text-center">
+						<h5 class="titreRecette coloredText">Nos recettes</h5>
+						<p>Grace a votre aide notre site possede {{app.session.get('Infos')[0]}} recettes ,merci de votre support!</p>
+					</div>
+					<hr>
+					<div class="row text-center">
+						<h5 class="titreRecette coloredText">Nous</h5>
+						<p >Notre communaute compte ajourd'hui {{app.session.get('Infos')[1]}} utilisateurs ,merci de votre support!</p>
+					</div>
 				</div>
 
 			</main>

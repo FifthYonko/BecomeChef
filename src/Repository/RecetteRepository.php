@@ -42,12 +42,12 @@ class RecetteRepository extends ServiceEntityRepository
      * !!!!! ON UTILISE KPNPAGINATOR DONC PLUS BESOIN DE CETTE FONCTION !!!!
      */
 
-    // public function compter(){
-    //     return $this->createQueryBuilder('r')
-    //     ->select('count(r.id)')
-    //     ->getQuery()
-    //     ->getSingleScalarResult();
-    // }
+    public function compterRecette(){
+        return $this->createQueryBuilder('r')
+        ->select('count(r.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
 
 
     /**

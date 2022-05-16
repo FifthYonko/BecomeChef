@@ -42,6 +42,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+     * Methode qui permet de compter le nb de recettes disponibles dans la base de donnes 
+     * Cette methode ne prend pas de parametres
+     * elle renvoie un resultat 
+     * !!!!! ON UTILISE KPNPAGINATOR DONC PLUS BESOIN DE CETTE FONCTION !!!!
+     */
+    public function compterUsers(){
+        return $this->createQueryBuilder('u')
+        ->select('count(u.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
+    /**
      * Methode de recherche des utilisateurs bannis
      * Elle ne prend pas de parametres
      * elle renvoie un resultat
