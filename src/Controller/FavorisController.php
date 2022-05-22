@@ -20,6 +20,11 @@ class FavorisController extends AbstractController
     #[Route('/list', name: 'list')]
     public function index()
     {
+        if(!$this->getUser()){
+            $this->addFlash('warning', 'Vous devez etre connecte pour acceder a cette fonctionnalitee');
+            
+            return $this->redirectToRoute('app_login');
+        }
         $session = $this->requestStack->getSession();
         $favoris = [];
         foreach ($session->get('favoris', []) as $id) {

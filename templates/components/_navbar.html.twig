@@ -3,8 +3,8 @@
 	 #}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
-	<a class=" mb-0 text-center navbar-brand" href="{{path('home')}}"><img src="{{asset('img/BecomeChefLogo.png')}}" width="70px" height="70px" class="rounded-circle align-self-center" alt="logo"></a>
-		
+		<a class=" mb-0 text-center navbar-brand" href="{{path('home')}}"><img src="{{asset('img/BecomeChefLogo.png')}}" width="70px" height="70px" class="rounded-circle align-self-center" alt="logo"></a>
+
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -45,9 +45,13 @@
 								<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
 							{% endif %}
 						</li>
-						<li>
-							<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
-						</li>
+						{% if app.user %}
+
+							<li>
+								<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
+							</li>
+						{% endif %}
+
 					</ul>
 				</li>
 
@@ -60,22 +64,21 @@
 				<button class="btn btn-outline-success" type="submit">Search</button>
 			</form>
 			<div class="col-md-4 text-center text-md-end align-self-center my-3  dont-show ">
-					{% if app.user %}
+				{% if app.user %}
 
 					<a href="{{path('app_logout')}}" class="btn btn-outline-success">Deconexion</a>
 
-					{% else %}
+				{% else %}
 
 					<a href="{{path('app_register')}}" class="btn btn-outline-success">Register</a>
-					
 
 
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#connexionForm">Se connecter</button>
 
 
-					{% endif %}
+				{% endif %}
 
-				</div>
+			</div>
 		</div>
 	</div>
 </nav>

@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Notation;
 use App\Form\CommentaireType;
 use App\Form\RecetteFormType;
+use App\Repository\NotationRepository;
 use App\Repository\PossederRepository;
 use App\Repository\RecetteRepository;
 use App\Service\FileUploader;
@@ -32,6 +33,8 @@ class RecetteController extends AbstractController
     {
 
         $recettes = $this->recetteRepository->findAll();
+    //  dd(  $recettes[8]->getNotations()[0]->getNote());
+
        $recettes =  $paginator->paginate($recettes,$page,8);
         return $this->render('recette/index.html.twig', [
             'recettes' => $recettes,
@@ -87,12 +90,16 @@ class RecetteController extends AbstractController
         Route utilisateur pour l'affichage d'une recette , elle prend en parametre le composant symfony Request et un entier, cet entier est l'id de la recette a afficher
         Cette methode renvoie sur une page d'affichage d'une seule recette    
     */
-    #[Route('/show_recette/{id}', name: 'show_recette')]
-    public function show_recette(Request $request, int $id)
+    #[Route('/show_recette/{id}/{page}', name: 'show_recette')]
+    public function show_recette(Request $request, int $id,int $page, NotationRepository $notationRepository,PaginatorInterface $paginator)
     {
        
         $recette = $this->recetteRepository->findOneBy(['id' => $id]);
         $commentaires = $recette->getCommentaires();
+        $commentaires = $paginator->paginate($commentaires,$page,2);
+        
+        $moy = round($notationRepository->moyenneNotation($id),1);
+        $notee = $notationRepository->verifierNotation($id,$this->getUser())!=null;
 
         if ($this->IsGranted('ROLE_USER') && $this->getUser()->getEtat() != 1) {
             $form_comm = $this->createForm(CommentaireType::class);
@@ -114,6 +121,8 @@ class RecetteController extends AbstractController
                 'recette' => $recette,
                 'comments' => $commentaires,
                 'form_comm' => $form_comm,
+                'note'=>$moy,
+                'notee'=>$notee,
             ]);
         }
 
@@ -121,6 +130,8 @@ class RecetteController extends AbstractController
         return $this->renderForm('recette/show_recette.html.twig', [
             'recette' => $recette,
             'comments' => $commentaires,
+            'note'=>$moy,
+            'notee'=>$notee,
 
         ]);
     }
@@ -225,7 +236,7 @@ class RecetteController extends AbstractController
     }
 
        /**
-     * Methode de recherche dans la base de donnes 
+     * Methode de recherche de recettes dans la base de donnes avec les valeurs inseres par l'utilisateur dans le champ prevu a cet effet.
      */
   
     #[Route('/search/{page}', name: 'search')]
@@ -282,4 +293,43 @@ class RecetteController extends AbstractController
         $this->addFlash('success', 'Ingredient retire');
         return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId()]);
     }
+    /**
+     * 
+     * Methode de notation de cette. Elle prend en parametres un entier $idR qui represente l'id de la recette qu'on souhaite noter
+     * ainsi que l'entier $note qui represente la note que l'utilisateur souhaite donner a la recette, et un parametre $notationRepository
+     * qui nous permetra de faire de recherches dans la BDD sur la table Notation. 
+     * 
+     */
+
+    #[Route('/noter_recette/{idR}/{note}', name: 'noter_recette')]
+
+    public function noter_recette(int $idR, int $note,NotationRepository $notationRepository)
+    {
+      
+        if (!$this->IsGranted('ROLE_USER')) {
+            $this->addFlash('danger', 'vous devez vous connecter pour acceder a cette fonctionnalite');
+            return $this->redirectToRoute('app_login');
+        }
+
+        $recetteNotee = $this->recetteRepository->find($idR);
+        if (!$recetteNotee) {
+            $this->addFlash('danger', 'On n\'as pas reussi a trouver la recette!');
+            return $this->redirectToRoute('recette', ['page' => 1]);
+        }
+       
+        if($notationRepository->verifierNotation($idR,$this->getUser())!=null){
+            $this->addFlash('danger','Vous avez deja notee cette recette!');
+            return $this->redirectToRoute('show_recette', ['id' => $idR]);
+        }
+        $notation = new Notation();
+        $notation->setNoteur($this->getUser());
+        $notation->setRecetteNote($recetteNotee);
+        $notation->setNote($note);
+
+        $this->entityManager->persist($notation);
+        $this->entityManager->flush();
+        
+        return $this->redirectToRoute('show_recette', ['id' => $idR]);
+    }
+
 }

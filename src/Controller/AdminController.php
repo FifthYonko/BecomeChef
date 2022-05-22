@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\CommentaireType;
 use App\Form\RecetteFormType;
 use App\Repository\CommentaireRepository;
+use App\Repository\NotationRepository;
 use App\Repository\PossederRepository;
 use App\Repository\RecetteRepository;
 use App\Repository\UserRepository;
@@ -202,13 +203,17 @@ class AdminController extends AbstractController
         Route admin pour l'affichage d'une recette , elle prend en parametre le composant symfony Request et un entier, cet entier est l'id de la recette a afficher
         Cette methode renvoie sur une page d'affichage d'une seule recette    
     */
-    #[Route('admin/show_recette/{id}', name: 'show_recette_admin')]
-    public function show_recette(Request $request, int $id)
+    #[Route('admin/show_recette/{id}/{page}', name: 'show_recette_admin')]
+    public function show_recette(Request $request, int $id,int $page, NotationRepository $notationRepository,PaginatorInterface $paginator)
     {
         $recette = $this->recetteRepository->findOneBy(['id' => $id]);
         $commentaires = $recette->getCommentaires();
+        $commentaires = $paginator->paginate($commentaires,$page,2);
 
-        if ($this->IsGranted('ROLE_USER')) {
+        $moy = round($notationRepository->moyenneNotation($id),1);
+        $notee = $notationRepository->verifierNotation($id,$this->getUser())!=null;
+
+        if ($this->IsGranted('ROLE_ADMIN')) {
             $form_comm = $this->createForm(CommentaireType::class);
             $form_comm->handleRequest($request);
 
@@ -220,18 +225,22 @@ class AdminController extends AbstractController
                 $this->entityManager->persist($new_comm);
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Le commentaire a ete ajoute');
-                return $this->redirectToRoute('show_recette_admin', ['id' => $id]);
+                return $this->redirectToRoute('show_recette_admin', ['id' => $id, 'page'=>1]);
             }
             return $this->renderForm('admin/show_recetteAdmin.html.twig', [
                 'recette' => $recette,
                 'comments' => $commentaires,
                 'form_comm' => $form_comm,
+                'note'=>$moy,
+                'notee'=>$notee,
             ]);
         }
 
         return $this->renderForm('admin/show_recetteAdmin.html.twig', [
             'recette' => $recette,
             'comments' => $commentaires,
+            'note'=>$moy,
+            'notee'=>$notee,
 
         ]);
     }

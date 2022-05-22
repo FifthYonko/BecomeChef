@@ -4,7 +4,6 @@ Ce fichier contient le code pour l'affichage des commentaires d'une recette ains
  #}
 
 <div class="row w-75 d-flex flex-wrap m-auto collapse">
-	{% for comment in comments %}
 		<div class="col text-center">
 			<div class="imgContainer w-100">
 				{% if  comment.author.photo %}
@@ -23,7 +22,7 @@ Ce fichier contient le code pour l'affichage des commentaires d'une recette ains
 				<b>{{comment.author.pseudo}}</b>
 			{% endif %}
 			{{comment.commentaire}}
-			{% if app.user and ( app.user.id is same as (comment.author.id) ) %}
+			{% if app.user and ( app.user.id is same as (comment.author.id) and is_granted('ROLE_ADMIN') == false) %}
 				<a href="{{path('delete_commentaire',{'id': comment.id, 'idR': recette.id} )}}">
 					<i class="fas fa-trash-alt"></i>
 				</a>
@@ -35,23 +34,4 @@ Ce fichier contient le code pour l'affichage des commentaires d'une recette ains
 				</a>
 				{% endif %}	
 		</div>
-
-
-	{% endfor %}
-
-
-</div>
-<div
-	class="row mt-4">
-	{% if app.user and app.user.etat == 0 %}
-		{{ form_start(form_comm) }}
-		<div class="col-6 m-auto text-center">
-
-			{{form_widget(form_comm.commentaire,{'attr': {'class': 'formInput'}})}}
-			<button type="submit" class="btn btn-primary btn FormSub w-50 text-dark fs-5 m-auto">Ajouter commentaire</button>
-		</div>
-
-		{{ form_end(form_comm) }}
-	{% endif %}
-
 </div>

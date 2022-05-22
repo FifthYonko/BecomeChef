@@ -3,40 +3,67 @@ COMPOSANT DE RECETTE DETAILLE POUR UN USER
  #}
 
 <span>
-		<h3 class="titreRecette coloredText text-center bold">{{recette.titre}}</h3>
+	<h3 class="titreRecette coloredText text-center bold">{{recette.titre}}</h3>
+</span>
+<div class="infos d-none d-md-flex align-items-center  justify-content-around my-3 m-auto ">
+	<span class=" m-0 h-50">
+		<i class="fas fa-calendar-alt "></i>
+		{{recette.date|date("d/m/Y")}}</span>
+	<span>Par
+		<b>{{recette.author.pseudo}}</b>
 	</span>
-	<div class="infos d-none d-md-flex align-items-center  justify-content-around my-3 m-auto ">
-		<span class=" m-0 h-50">
-			<i class="fas fa-calendar-alt "></i>
-			{{recette.date|date("d/m/Y")}}</span>
-		<span>Par
-			<b>{{recette.author.pseudo}}</b>
-		</span>
+</div>
+<div class="d-flex justify-content-center notation">
+	{% if notee is defined and notee == true %}
+	<div class="voted">
+		
+		{% for i in 0 .. 4 %}
+			{% if i < note - 1 %}
+				<i class="fas fa-star fs-2 voted-star"></i>
+			{% else %}
+				<i class="fas fa-star fs-2 "></i>
+			{% endif %}
+
+
+		{% endfor %}
+
 	</div>
-	<div class=" m-auto text-center ">
-		<img src="{{ asset('uploads/'~ recette.photo) }}" class=" w-50 rounded  align-center "
-			alt="{{recette.titre}}">
-	</div>
-	<div class="intro">
-		<i class="fas fa-clock"></i>
-		{{recette.temps}}min
-		 <i class="fas fa-users"></i> {{recette.nbPersonnes}} Personnes
-	</div>
-	<div class="btns text-center mt-auto ">
-		{% if app.user   %}
+
+	{% else %}
+
+		<a href="{{path('noter_recette', {'idR': recette.id,'note': 5})}}" class="fas fa-star fs-2 s1"></a>
+		<a href="{{path('noter_recette', {'idR': recette.id,'note': 4})}}" class="fas fa-star fs-2 s2"></a>
+		<a href="{{path('noter_recette', {'idR': recette.id,'note': 3})}}" class="fas fa-star fs-2 s3"></a>
+		<a href="{{path('noter_recette', {'idR': recette.id,'note': 2})}}" class="fas fa-star fs-2 s4"></a>
+		<a href="{{path('noter_recette', {'idR': recette.id,'note': 1})}}" class="fas fa-star fs-2 s5"></a>
+
+	{% endif %}
+</div>
+<div class=" m-auto text-center ">
+	<img src="{{ asset('uploads/'~ recette.photo) }}" class=" w-50 rounded  align-center " alt="{{recette.titre}}">
+</div>
+<div class="intro">
+	<i class="fas fa-clock"></i>
+	{{recette.temps}}min
+	<i class="fas fa-users"></i>
+	{{recette.nbPersonnes}}
+	Personnes
+</div>
+
+
+<div class="btns text-center mt-auto ">
+	{% if app.user   %}
 		<a href="{{path('add_favori', {'id': recette.id})}}" class="btn btn-dark text-warning">
-			<i class="fas fa-star"></i>
+			<i class="fas fa-star "></i>
 		</a>
-		{% endif %}
-		{% if app.user and app.user.id is same as (recette.author.id)  %}
+	{% endif %}
+	{% if app.user and app.user.id is same as (recette.author.id)  %}
 		<a href="{{path('update_recette', {'id': recette.id})}}" class="btn btn-warning">
 			<i class="fas fa-edit text-light"></i>
 		</a>
 
-		<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger"
-			onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
+		<a href="{{path('delete_recette', {'id': recette.id})}}" class="btn btn-danger" onclick="return confirm('Etez-vous sur de vouloir effacer la recette?'); ">
 			<i class="fas fa-trash-alt"></i>
 		</a>
-		{% endif %}
-	</div>
-	
+	{% endif %}
+</div>

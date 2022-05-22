@@ -69,11 +69,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $googleId;
 
+    #[ORM\OneToMany(mappedBy: 'noteur', targetEntity: Notation::class)]
+    private $notations;
+
     public function __construct()
     {
         $this->recettes = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->etat = 0;
+        $this->notations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -311,6 +315,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setGoogleId(?string $googleId): self
     {
         $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notation>
+     */
+    public function getNotations(): Collection
+    {
+        return $this->notations;
+    }
+
+    public function addNotation(Notation $notation): self
+    {
+        if (!$this->notations->contains($notation)) {
+            $this->notations[] = $notation;
+            $notation->setNoteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotation(Notation $notation): self
+    {
+        if ($this->notations->removeElement($notation)) {
+            // set the owning side to null (unless already changed)
+            if ($notation->getNoteur() === $this) {
+                $notation->setNoteur(null);
+            }
+        }
 
         return $this;
     }

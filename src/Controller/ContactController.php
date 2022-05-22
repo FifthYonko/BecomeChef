@@ -24,7 +24,7 @@ class ContactController extends AbstractController
             $email = $contact_form->get('email')->getData();
             $subject = $contact_form->get('subject')->getData();
             $message = $contact_form->get('message')->getData();
-            $sendEmail->contact($email,'BecomeChef@admin.com',$subject,$message,'emails/contact.html.twig');
+            $sendEmail->contact($email,'becomechef96@gmail.com',$subject,$message,'emails/contact.html.twig');
             $this->addFlash('success', 'Le mail à bien été envoyé');
             return $this->redirectToRoute('home');
         }

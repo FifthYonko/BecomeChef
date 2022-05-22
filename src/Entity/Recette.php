@@ -48,12 +48,16 @@ class Recette
 
     private $nbPersonnes;
 
+    #[ORM\OneToMany(mappedBy: 'recetteNote', targetEntity: Notation::class)]
+    private $notations;
+
 
     public function __construct()
     {
 
         $this->commentaires = new ArrayCollection();
         $this->posseders = new ArrayCollection();
+        $this->notations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +207,36 @@ class Recette
     public function setNbPersonnes(int $nbPersonnes): self
     {
         $this->nbPersonnes = $nbPersonnes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notation>
+     */
+    public function getNotations(): Collection
+    {
+        return $this->notations;
+    }
+
+    public function addNotation(Notation $notation): self
+    {
+        if (!$this->notations->contains($notation)) {
+            $this->notations[] = $notation;
+            $notation->setRecetteNote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotation(Notation $notation): self
+    {
+        if ($this->notations->removeElement($notation)) {
+            // set the owning side to null (unless already changed)
+            if ($notation->getRecetteNote() === $this) {
+                $notation->setRecetteNote(null);
+            }
+        }
 
         return $this;
     }
