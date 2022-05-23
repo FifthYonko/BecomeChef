@@ -4,7 +4,7 @@
 {% endblock %}
 {# Page profile d'un utilisateur #}
 {% block body %}
-<div class="container-fluid conteneur my-5 justify-content-center ">
+<div class="container-fluid conteneur justify-content-center ">
 	<div class="conteneurBox">
 		<div class="row ">
 			<h1 class="titres coloredText text-center fs-1">Votre profil</h1>
@@ -31,7 +31,8 @@
 			<div class="col-6">
 				<div class="field my-2">
 
-					{{ form_widget(form_pseudo.photo)}}
+					{{ form_row(form_pseudo.photo)}}
+					
 				</div>
 				<div class="field my-2 ">
 					{{ form_label(form_pseudo.pseudo)}}
@@ -64,7 +65,7 @@
 					{{ form_widget(form_pseudo.ville,{'attr': {'class':'formInput'}})}}
 				</div>
 			</div>
-			<button type="submit" class="btn FormSub w-100 text-dark fs-5">Modifier</button>
+			<button type="submit" class="btn FormSub w-100  fs-5">Modifier</button>
 			{{ form_end(form_pseudo) }}
 		</div>
 	</div>

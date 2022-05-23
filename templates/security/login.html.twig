@@ -3,7 +3,8 @@
 	<div class="container-fluid ">
 		<div class="container my-5">
 			<div class="row">
-				<div class="col-6 m-auto ">
+			<div class="h3 mb-3 text-center font-weight-normal"><img src="{{asset('img/BecomeChefLogo.png')}}" width="100px" height="100px" class="rounded-circle" alt="BecomeChef-logo"></div>
+				<div class="col-6 m-auto petitConteneur">
 					<form method="post" action="{{ path('app_login')}}" >
 						{% if error is defined and error%}
 							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -16,7 +17,7 @@
 							</div>
 						{% endif %}
 						{# sinon on affiche le formulaire de connection #}
-						<div class="h3 mb-3 text-center font-weight-normal"><img src="{{asset('img/BecomeChefLogo.png')}}" width="100px" height="100px" class="rounded-circle" alt="BecomeChef-logo"></div>
+						
 						<h1 class="titres coloredText text-center fs-1">Connexion</h1>
 						<h5 class="text-center">Nouveau sur ce site ?
 							<a href="{{path('app_register')}}" >S'inscrire</a>
@@ -40,7 +41,7 @@
 																					</div>
 																				#}
 
-						<button type="submit" class="FormSub btn w-100 text-dark fs-5 my-2">Se connecter</button>
+						<button type="submit" class="FormSub btn fs-5 my-2">Se connecter</button>
 						<a href="{{path('forgot_password')}}">Mot de passe oublié ?</a>
 					</form>
 				</div>

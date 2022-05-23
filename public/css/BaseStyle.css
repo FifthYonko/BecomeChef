@@ -109,20 +109,24 @@ main{
 
 
 .FormSub{
-    border:solid #442014;
+    display: block;
+    background-color: #2d3741;
+    color:white;
+    border: 2px solid #608299;
     border-radius: 5px;
-    background: #FFFBF3;
+    margin: auto;
+  
 }
 
 .btns a:hover, .FormSub:hover{
-    background-color: #71C72B;
+    background-color: #98cef2;
     border: none;
     transition: 0.3s ease;
 }
-.coloredBorder{
-    border: solid #FFF1D6 
-    10px;
+.LabelBtn{
+    cursor: pointer;
 }
+
 .coloredText{
     color: black;
 }
@@ -193,10 +197,11 @@ main{
 
 .anchorStyle{
     text-decoration: none;
+    
 
 }
 .anchorStyle:hover{
-    color: #442014;
+    color: #98cef2;
 }
 
 .banniere{

@@ -165,12 +165,12 @@
 									<img src='{{ asset('uploads/BecomeChefLogo.png' ) }}' style="width:100px;  " alt='photo de profil' class="rounded-circle  coloredBorder text-dark">
 								{% endif %}
 								<h5 class="titres pt-2">
-									<a class="nav-link " href="{{path('profile',{'page':1 })}}">Voir profil</a>
+									<a class="nav-link titres coloredText anchorStyle" href="{{path('profile',{'page':1 })}}">Voir profil</a>
 									<hr>
 								</h5>
 								<h4 class="coloredText titres">{{ app.user.pseudo }}</h4>
 								<br>
-								<a href="{{path('app_logout')}}" class="btn btn-outline-success">Deconexion</a>
+								<a href="{{path('app_logout')}}" class="btn FormSub">Deconexion</a>
 
 							</div>
 						</div>
@@ -179,8 +179,8 @@
 							<h1 class="titres coloredText text-center fs-1">Rejoignez la communauté!</h1>
 						</div>
 						<div class="row w-75 justify-content-center m-auto mt-5 petitConteneur ">
-							<a href="{{path('app_register')}}" class="btn btn-outline-success">S'inscrire</a>
-							<button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#connexionForm">Se connecter</button>
+							<a href="{{path('app_register')}}" class="btn FormSub">S'inscrire</a>
+							<button type="button" class="btn FormSub my-2" data-bs-toggle="modal" data-bs-target="#connexionForm">Se connecter</button>
 						</div>
 					{% endif %}
 				</div>

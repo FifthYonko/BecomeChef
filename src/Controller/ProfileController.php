@@ -24,7 +24,7 @@ class ProfileController extends AbstractController
         Cette methode ne prend pas de parametres, et redirige vers la page profil
     */
     #[Route('/profile/{page}', name: 'profile')]
-    public function index(Request $request,int $page, FileUploader $fileUploader,PaginatorInterface $paginator): Response
+    public function index(Request $request,int $page=1, FileUploader $fileUploader,PaginatorInterface $paginator): Response
     {   
         if (!$this->IsGranted('ROLE_USER')) {
             $this->addFlash('danger', 'Cette action necessite une connexion');
@@ -54,7 +54,7 @@ class ProfileController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', "Le profil a bien ete modifie :)");
-            return $this->redirectToRoute('profile');
+            return $this->redirectToRoute('profile',['page'=>1]);
         }
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -91,6 +91,6 @@ class ProfileController extends AbstractController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         $this->addFlash('success', 'photo supprime');
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('profile',['page'=>1]);
     }
 }

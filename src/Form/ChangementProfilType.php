@@ -33,7 +33,7 @@ class ChangementProfilType extends AbstractType
             ]
         ])
             ->add('photo', FileType::class, [
-                'label' => 'photo',
+                'label' => 'Ajoutez/Modifiez la photo',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -45,6 +45,13 @@ class ChangementProfilType extends AbstractType
                         'mimeTypesMessage' => 'Veuillez uploader une image!',
                     ])
                 ],
+                'label_attr'=>[
+                    'class'=>'LabelBtn coloredText  titres fs-5'
+                ],
+                'attr'=>[
+                    'class'=>'d-none'
+                ]
+              
             ])
             ->add('adresse',TextType::class,[
                 'required'=>false,
