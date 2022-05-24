@@ -1,10 +1,6 @@
 
 
-.containerDiv {
-    
-    width: 80%;
-    height: auto;
-    margin: 20px auto;
+.containerDiv {  
     text-align: center;
     padding: 50px 35px 10px 35px;
 }
@@ -30,7 +26,7 @@
 
 .formulaire form .page {
     width: 25%;
-    margin: 0px;
+    margin: auto;
     transition: margin-left 0.3s ease-in-out;
 
 }
@@ -65,15 +61,15 @@
 .formulaire form .page .btns  {
 
     width: 80%;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 
 
 .formulaire form .page .btns button {
-    margin-top: -20px !important;
-    margin-left: 10px;
-    margin-right: 10px;
+   
+    margin: auto;
+    width: 40%;
 
 }
 .formulaire form .first-page .btns {
@@ -125,15 +121,4 @@
     right: -20px;
     top: 0;
     border-left: 20px solid #71C72B ;
-}
-
-
-@media (min-width:1350px) {
-    
-
-    .containerDiv {
-        width: 31%;
-    }
-
- 
 }

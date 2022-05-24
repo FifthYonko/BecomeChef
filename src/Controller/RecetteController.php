@@ -23,22 +23,22 @@ class RecetteController extends AbstractController
     public function __construct(private RecetteRepository $recetteRepository, private PossederRepository $possederRepository, private EntityManagerInterface $entityManager, private SluggerInterface $slugger)
     {
     }
-   
+
     /*
         Methode d'affichage de recettes. Elle prend en parametre un entier $page .
         Elle redirige vers la page d'affichage des recettes disponibles sur le site
     */
     #[Route('/recette/{page}', name: 'recette')]
-    public function index(int $page,PaginatorInterface $paginator)
+    public function index(int $page, PaginatorInterface $paginator)
     {
 
         $recettes = $this->recetteRepository->findAll();
-    //  dd(  $recettes[8]->getNotations()[0]->getNote());
+        //  dd(  $recettes[8]->getNotations()[0]->getNote());
 
-       $recettes =  $paginator->paginate($recettes,$page,8);
+        $recettes =  $paginator->paginate($recettes, $page, 8);
         return $this->render('recette/index.html.twig', [
             'recettes' => $recettes,
-            
+
         ]);
     }
 
@@ -58,10 +58,10 @@ class RecetteController extends AbstractController
         }
         $form_recette = $this->createForm(RecetteFormType::class);
         $form_recette->handleRequest($request);
-        if ($form_recette->isSubmitted()&& $form_recette->isValid() ) {
+        if ($form_recette->isSubmitted() && $form_recette->isValid()) {
             $new_recette = $form_recette->getData();
             $new_recette->setTitre(ucfirst($form_recette->get('titre')->getData()));
-            
+
             $new_recette->setPreparation(ucfirst($form_recette->get('preparation')->getData()));
             $imgFile = $form_recette->get('photo')->getData();
             if ($imgFile) {
@@ -91,15 +91,15 @@ class RecetteController extends AbstractController
         Cette methode renvoie sur une page d'affichage d'une seule recette    
     */
     #[Route('/show_recette/{id}/{page}', name: 'show_recette')]
-    public function show_recette(Request $request, int $id,int $page, NotationRepository $notationRepository,PaginatorInterface $paginator)
+    public function show_recette(Request $request, int $id, int $page, NotationRepository $notationRepository, PaginatorInterface $paginator)
     {
-       
+
         $recette = $this->recetteRepository->findOneBy(['id' => $id]);
         $commentaires = $recette->getCommentaires();
-        $commentaires = $paginator->paginate($commentaires,$page,2);
-        
-        $moy = round($notationRepository->moyenneNotation($id),1);
-        $notee = $notationRepository->verifierNotation($id,$this->getUser())!=null;
+        $commentaires = $paginator->paginate($commentaires, $page, 2);
+
+        $moy = round($notationRepository->moyenneNotation($id), 1);
+        $notee = $notationRepository->verifierNotation($id, $this->getUser()) != null;
 
         if ($this->IsGranted('ROLE_USER') && $this->getUser()->getEtat() != 1) {
             $form_comm = $this->createForm(CommentaireType::class);
@@ -121,8 +121,8 @@ class RecetteController extends AbstractController
                 'recette' => $recette,
                 'comments' => $commentaires,
                 'form_comm' => $form_comm,
-                'note'=>$moy,
-                'notee'=>$notee,
+                'note' => $moy,
+                'notee' => $notee,
             ]);
         }
 
@@ -130,8 +130,8 @@ class RecetteController extends AbstractController
         return $this->renderForm('recette/show_recette.html.twig', [
             'recette' => $recette,
             'comments' => $commentaires,
-            'note'=>$moy,
-            'notee'=>$notee,
+            'note' => $moy,
+            'notee' => $notee,
 
         ]);
     }
@@ -226,8 +226,6 @@ class RecetteController extends AbstractController
 
             $this->addFlash('success', "La recette a bien ete supprime!");
             return $this->redirectToRoute('recette', ['page' => 1]);
-
-
         } elseif ($user === $recette_aSupp->getAuthor() || !$this->isGranted("ROLE_ADMIN")) {
 
             $this->addFlash('warning', "Vous ne pouvez pas supprimer cette recette car vous n'etez ni admin, ni auteur");
@@ -235,38 +233,43 @@ class RecetteController extends AbstractController
         }
     }
 
-       /**
+    /**
      * Methode de recherche de recettes dans la base de donnes avec les valeurs inseres par l'utilisateur dans le champ prevu a cet effet.
      */
-  
+
     #[Route('/search/{page}', name: 'search')]
 
     public function search(int $page, Request $request, PaginatorInterface $paginator)
     {
 
-       $valeurs = explode(' ',$request->query->get('search_value'));
+        $valeurs = explode(' ', $request->query->get('search_value'));
         $recettes = array();
-       for ($i=0; $i < count($valeurs); $i++) { 
-        $resultats  = $this->recetteRepository->findByExampleField($valeurs[$i],$page-1,count($valeurs));
-           for ($j=0; $j < count($resultats) ; $j++) { 
-            array_push($recettes,$resultats[$j]);
-            
-           }
-       }
-        if(empty($recettes)){
+
+        for ($i = 0; $i < count($valeurs); $i++) {
+
+            $resultats  = $this->recetteRepository->findByExampleField($valeurs[$i], $page - 1, count($valeurs));
+            if (!$resultats) {
+                $this->addFlash('warning', "On n'a rien trouve");
+                return $this->redirectToRoute('recette', ['page' => 1]);
+            }
+            for ($j = 0; $j < count($resultats); $j++) {
+                array_push($recettes, $resultats[$j]);
+            }
+        }
+        if (empty($recettes)) {
 
             $recettes = "Nous n'avons rien trouvé , veuillez essayer autre chose";
         }
-        
-        $recettes =  $paginator->paginate($recettes,$page,3);
-       
+
+        $recettes =  $paginator->paginate($recettes, $page, 3);
+
         return $this->render('recette/search.html.twig', [
             'recettes' => $recettes,
-           
+
         ]);
     }
 
-  
+
     /* fonction qui supprime un ingredient de la liste d'ingredients d'une recette.
         accessible a partir de la page d'affichage d'une recette
         prend en parametre un entier qui represente l'id de l'enregistrement a supprimer
@@ -303,9 +306,9 @@ class RecetteController extends AbstractController
 
     #[Route('/noter_recette/{idR}/{note}', name: 'noter_recette')]
 
-    public function noter_recette(int $idR, int $note,NotationRepository $notationRepository)
+    public function noter_recette(int $idR, int $note, NotationRepository $notationRepository)
     {
-      
+
         if (!$this->IsGranted('ROLE_USER')) {
             $this->addFlash('danger', 'vous devez vous connecter pour acceder a cette fonctionnalite');
             return $this->redirectToRoute('app_login');
@@ -316,9 +319,9 @@ class RecetteController extends AbstractController
             $this->addFlash('danger', 'On n\'as pas reussi a trouver la recette!');
             return $this->redirectToRoute('recette', ['page' => 1]);
         }
-       
-        if($notationRepository->verifierNotation($idR,$this->getUser())!=null){
-            $this->addFlash('danger','Vous avez deja notee cette recette!');
+
+        if ($notationRepository->verifierNotation($idR, $this->getUser()) != null) {
+            $this->addFlash('danger', 'Vous avez deja notee cette recette!');
             return $this->redirectToRoute('show_recette', ['id' => $idR]);
         }
         $notation = new Notation();
@@ -328,8 +331,7 @@ class RecetteController extends AbstractController
 
         $this->entityManager->persist($notation);
         $this->entityManager->flush();
-        
+
         return $this->redirectToRoute('show_recette', ['id' => $idR]);
     }
-
 }

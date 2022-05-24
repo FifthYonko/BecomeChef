@@ -5,7 +5,7 @@
 {% block body %}
 
 <link rel="stylesheet" href="{{asset('css/inscription.css')}}">
-<div class="conteneur containerDiv conteneurBox">
+<div class=" containerDiv conteneurBox">
 	<header class="titres coloredText"><h1>Inscription</h1></header>
 	<div class="step-row">
 		<div id="progress"></div>
@@ -28,12 +28,15 @@
 	<div class="formulaire">
 		{# affichage du formulaire #}
 
-		{{ form_start(registrationForm) }}
+		{{ form_start(registrationForm,{'attr':{'class': 'petitConteneur'}}) }}
 
 		<!-- page 1 -->
 		<div class="page first-page">
 			{{form_errors(registrationForm)}}
-			<div class="titres fs-3 text-start">Quelle est votre adresse mail ?</div>
+			<div class="titres fs-4 text-start w-75 m-auto">
+				<h3 class="w-75 ">Quelle est votre adresse mail ?</h3>
+			</div>
+			
 			<div class="champs d-flex flex-wrap">
 				{{ form_widget(registrationForm.email,{'attr': {'class': 'formInput'}}) }}
 				{{form_errors(registrationForm.email)}}
@@ -42,26 +45,32 @@
 			</div>
 
 			<div class="champs btns">
-				<button class="firstNext next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+				<button class="firstNext next FormSub btn  fs-5 mb-2">Next</button>
 			</div>
 
 		</div>
 		<!-- page 2 -->
 		<div class="page">
-			<div class="titres fs-3 text-start">Veuillez choisir un pseudo</div>
+			<div class="titres fs-4 text-start w-75 m-auto">
+				<h3 class="w-75">Veuillez choisir un pseudo</h3>
+			</div>
+			
 			<div class="champs d-flex flex-wrap">
 				{{ form_widget(registrationForm.pseudo,{'attr': {'class': 'formInput'}}) }}
 				{{form_errors(registrationForm.pseudo)}}
 			</div>
 			<div class="champs btns">
-				<button class="prev-1 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
-				<button class="next-1 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+				<button class="prev-1 prev FormSub btn  fs-5 mb-2">Previous</button>
+				<button class="next-1 next FormSub btn   fs-5 mb-2">Next</button>
 
 			</div>
 		</div>
 		<!-- page 3 -->
 		<div class="page">
-			<div class="titres fs-3 text-start">Voulez vous ajouter une photo ?</div>
+			<div class="titres fs-4 text-start w-75 m-auto">
+				<h3 class="w-75">Voulez vous ajouter une photo ?</h3>
+			</div>
+		
 			<div class="champs d-flex flex-wrap">
 				{{ form_widget(registrationForm.photo) }}
 				{{form_errors(registrationForm.photo)}}
@@ -69,14 +78,16 @@
 			</div>
 
 			<div class="champs btns">
-				<button class="prev-2 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
-				<button class="next-2 next FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+				<button class="prev-2 prev FormSub btn   fs-5 mb-2">Previous</button>
+				<button class="next-2 next FormSub btn  fs-5 mb-2">Next</button>
 
 			</div>
 		</div>
 		<!-- page 4 -->
 		<div class="page">
-			<div class="titres fs-3 text-start">Veuillez choisir un mot de passe</div>
+			<div class="titres fs-4 text-start w-75 m-auto">
+				<h3 class="w-75">Veuillez choisir un mot de passe</h3>
+			</div>
 			<div class="champs d-flex ">
 							{{form_errors(registrationForm.password)}}
 
@@ -86,13 +97,13 @@
 			</div>
 			<div class="champs btns">
 
-				<button class="prev-3 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
-				<button class=" next-3 FormSub btn w-100 text-dark fs-5 mb-2">Next</button>
+				<button class="prev-3 prev FormSub btn  fs-5 mb-2">Previous</button>
+				<button class=" next-3 FormSub btn   fs-5 mb-2">Next</button>
 			</div>
 		</div>
 		<!-- page 5 -->
 		<div class="page">
-			<div class="titres fs-5 text-start w-75 ">
+			<div class="titres fs-4 text-start w-75 m-auto ">
 				<p>En cochant cette case vous acceptez les <a href="{{path('cgu')}}" class="anchorStyle   ">Conditions generales d'utilisation</a> et la
 					<a href="{{path('pdc')}}" class="anchorStyle ">Politique de confidentialité</a></p>
 			</div>
@@ -101,9 +112,9 @@
 				{{ form_errors(registrationForm.agreeTerms) }}
 			</div>
 			<div class="champs btns">
-				<button class="prev-4 prev FormSub btn w-100 text-dark fs-5 mb-2">Previous</button>
+				<button class="prev-4 prev FormSub btn fs-5 mb-2">Previous</button>
 
-				<button type="submit" class="FormSub btn w-100 text-dark fs-5 mb-2">Inscription</button>
+				<button type="submit" class="FormSub btn fs-5 mb-2">Inscription</button>
 			</div>
 		</div>
 
