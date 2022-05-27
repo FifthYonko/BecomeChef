@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Form\CommentaireType;
+use App\Form\IngredientFormType;
 use App\Form\RecetteFormType;
 use App\Repository\CommentaireRepository;
+use App\Repository\IngredientRepository;
 use App\Repository\NotationRepository;
 use App\Repository\PossederRepository;
 use App\Repository\RecetteRepository;
@@ -20,41 +22,38 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository, private PossederRepository $possederRepository,private CommentaireRepository $commentaireRepository)
+    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository, private PossederRepository $possederRepository, private CommentaireRepository $commentaireRepository)
     {
     }
 
-    
+
     #[Route('admin/espace/{tableau}/{page}', name: 'espaceAdmin')]
-    public function index($tableau ,int $page, PaginatorInterface $paginator)
+    public function index($tableau, int $page, PaginatorInterface $paginator)
     {
-        if($tableau=='utilisateurs'){
+        if ($tableau == 'utilisateurs') {
             $utilisateurs = $this->userRepository->findAll();
-            $utilisateurs =  $paginator->paginate($utilisateurs,$page,10);
+            $utilisateurs =  $paginator->paginate($utilisateurs, $page, 10);
 
             return $this->render('admin/espace_admin.html.twig', [
-                'utilisateurs'=>$utilisateurs,
+                'utilisateurs' => $utilisateurs,
             ]);
-        }
-        elseif ($tableau=='commentaires') {
+        } elseif ($tableau == 'commentaires') {
             $commentaires = $this->commentaireRepository->findAll();
-            $commentaires =  $paginator->paginate($commentaires,$page,10);
+            $commentaires =  $paginator->paginate($commentaires, $page, 10);
             return $this->render('admin/espace_admin.html.twig', [
-                'commentaires'=>$commentaires,
+                'commentaires' => $commentaires,
             ]);
-        }
-        else{
+        } else {
             $recettes = $this->recetteRepository->findAll();
-            $recettes =  $paginator->paginate($recettes,$page,10);
+            $recettes =  $paginator->paginate($recettes, $page, 10);
 
             return $this->render('admin/espace_admin.html.twig', [
-                'recettes'=>$recettes,
+                'recettes' => $recettes,
             ]);
         }
-        
     }
 
-      // fonction de ban reserve aux utilisateurs disposant du role Admin. 
+    // fonction de ban reserve aux utilisateurs disposant du role Admin. 
     // Cette fonction prend en parametres un entier qui est l'id de l'utilisateur a bannir et ne renvoie aucune donnee, juste une redirection vers une autre page, en fonction des conditions remplies.
     #[Route('admin/ban/{id}', name: 'ban')]
     public function ban(int $id)
@@ -204,14 +203,14 @@ class AdminController extends AbstractController
         Cette methode renvoie sur une page d'affichage d'une seule recette    
     */
     #[Route('admin/show_recette/{id}/{page}', name: 'show_recette_admin')]
-    public function show_recette(Request $request, int $id,int $page, NotationRepository $notationRepository,PaginatorInterface $paginator)
+    public function show_recette(Request $request, int $id, int $page, NotationRepository $notationRepository, PaginatorInterface $paginator)
     {
         $recette = $this->recetteRepository->findOneBy(['id' => $id]);
         $commentaires = $recette->getCommentaires();
-        $commentaires = $paginator->paginate($commentaires,$page,2);
+        $commentaires = $paginator->paginate($commentaires, $page, 2);
 
-        $moy = round($notationRepository->moyenneNotation($id),1);
-        $notee = $notationRepository->verifierNotation($id,$this->getUser())!=null;
+        $moy = round($notationRepository->moyenneNotation($id), 1);
+        $notee = $notationRepository->verifierNotation($id, $this->getUser()) != null;
 
         if ($this->IsGranted('ROLE_ADMIN')) {
             $form_comm = $this->createForm(CommentaireType::class);
@@ -225,22 +224,22 @@ class AdminController extends AbstractController
                 $this->entityManager->persist($new_comm);
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Le commentaire a ete ajoute');
-                return $this->redirectToRoute('show_recette_admin', ['id' => $id, 'page'=>1]);
+                return $this->redirectToRoute('show_recette_admin', ['id' => $id, 'page' => 1]);
             }
             return $this->renderForm('admin/show_recetteAdmin.html.twig', [
                 'recette' => $recette,
                 'comments' => $commentaires,
                 'form_comm' => $form_comm,
-                'note'=>$moy,
-                'notee'=>$notee,
+                'note' => $moy,
+                'notee' => $notee,
             ]);
         }
 
         return $this->renderForm('admin/show_recetteAdmin.html.twig', [
             'recette' => $recette,
             'comments' => $commentaires,
-            'note'=>$moy,
-            'notee'=>$notee,
+            'note' => $moy,
+            'notee' => $notee,
 
         ]);
     }
@@ -380,5 +379,53 @@ class AdminController extends AbstractController
             $this->addFlash('warning', 'Vous ne disposez pas de ces droits');
             return $this->redirectToRoute('show_recette', ['id' => $idR]);
         }
+    }
+
+    /**
+     * Methode reservee aux admins pour ajouter un nouveau ingredient a la liste d'ingredients du site
+     */
+
+    #[Route('admin/ajout_ingredient', name: 'ajoutIngredients')]
+    public function ajout_ingredient(Request $request, FileUploader $fileUploader,IngredientRepository $ingredientRepository)
+    {
+        if (!$this->isGranted('ROLE_USER') || !$this->isGranted('ROLE_ADMIN')) {
+
+            $this->addFlash('warning', 'Vous devez etre connecte ou etre admin pour acceder a cette page!');
+            return $this->redirectToRoute('app_login');
+        }
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->redirect('home');
+        }
+        $form_ingredient = $this->createForm(IngredientFormType::class);
+        $form_ingredient->handleRequest($request);
+
+        if ($form_ingredient->isSubmitted() && $form_ingredient->isValid() ) {
+            $new_ingredient = $form_ingredient->getData();
+           
+            if(empty($ingredientRepository->findBy(['nom'=>$new_ingredient->getNom()])) == false){
+                $this->addFlash('warning','L\'ingredient existe deja !');
+                return $this->render('admin/new_IngredientAdmin.html.twig', [
+                    'form_ingredient' => $form_ingredient->createView(),
+                    
+                ]);
+            }
+            $imgFile = $form_ingredient->get('photo')->getData();
+            if ($imgFile) {
+                $newFileName = $fileUploader->upload($imgFile);
+                $new_ingredient->setPhoto($newFileName);
+            } else {
+                $new_ingredient->setPhoto('DefaultPhotoDark.png');
+            }
+            $this->entityManager->persist($new_ingredient);
+            $this->entityManager->flush();
+            $this->addFlash('success', 'L\'ingredient a ete ajoute !');
+            return $this->redirectToRoute('recette_admin', ['page' => 1]);
+          
+        }
+
+        return $this->render('admin/new_IngredientAdmin.html.twig', [
+            'form_ingredient' => $form_ingredient->createView(),
+            
+        ]);
     }
 }

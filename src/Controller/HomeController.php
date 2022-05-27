@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\NotationRepository;
 use App\Repository\RecetteRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,7 +16,7 @@ class HomeController extends AbstractController
 {
     private $requestStack;
 
-    public function __construct(private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository , private UserRepository $userRepository, RequestStack $requestStack )
+    public function __construct(private EntityManagerInterface $entityManager, private RecetteRepository $recetteRepository , private UserRepository $userRepository, RequestStack $requestStack, private NotationRepository $notationRepository )
     {
         $this->requestStack = $requestStack;
     }
@@ -30,9 +31,13 @@ class HomeController extends AbstractController
 
         $compterR = $this->recetteRepository->compterRecette();
         $compterU = $this->userRepository->compterUsers();
+        $meilleureRecette = $this->notationRepository->meilleureRecette();
+      
+        $bestRecette = $this->recetteRepository->find($meilleureRecette[0]['id']);
+       
         
         $session = $this->requestStack->getSession();
-        $session->set('Infos',[$compterR,$compterU]);
+        $session->set('Infos',[$compterR,$compterU,$bestRecette]);
 
         
         return $this->render('home/index.html.twig', [

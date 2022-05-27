@@ -7,7 +7,10 @@
 	</div>
 	<div class="row flex-lg-row flex-column justify-content-around">
 		{% for ingredient in recette.posseders %}
+		
 		<div class="col-lg-4  p-0 my-2 m-lg-2 text-center">
+		
+		<img src="{{ asset('uploads/'~ ingredient.ingredients.photo) }}" alt="{{ingredient.ingredients.nom}}" class="w-25 rounded rounded-circle">
 			<p class="titres coloredText "><b>{{ingredient.ingredients.nom}}</b></p>
 			{{ingredient.quantite}}
 			

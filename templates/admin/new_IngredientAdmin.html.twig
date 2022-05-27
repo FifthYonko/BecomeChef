@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	BecomeChef-Ajout Ingredients Admin
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-fluid conteneurBox">
+		<div class="row">
+			<h1 class="titres coloredText text-center fs-1">Ajoutez le nouveau ingredient</h1>
+		</div>
+		<div class="row  w-75 justify-content-center m-auto conteneur p-3 mb-5 mt-3 petitConteneur">
+            {{ form_start(form_ingredient) }}
+			<div class="row my-2" > 
+				{{ form_label(form_ingredient.nom) }}
+				{{ form_widget(form_ingredient.nom,{'attr': {'class':'formInput m-auto' }}) }}
+			</div>
+			
+			<div class="row my-2" > 
+            	{{ form_label(form_ingredient.photo) }}
+            	{{ form_widget(form_ingredient.photo, {'attr': {'class':'formInput m-auto ' }}) }}
+			</div>
+			<button type="submit" class="FormSub btn fs-5">Ajouter</button>
+            {{ form_end(form_ingredient) }}
+		</div>
+	
+	</div>
+{% endblock %}

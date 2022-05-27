@@ -127,7 +127,7 @@
 							<video class="img-fluid d-block w-100" autoplay loop muted>
 								<source src="{{asset('img/cooking.mp4')}}" type="video/mp4">
 							</video>
-							<div class="carousel-caption d-none d-md-block">
+							<div class="carousel-caption d-none d-md-block text-left">
 								<h5>BecomeChef</h5>
 								<p>“La cuisine est devenue un art, une science noble . les cuisiniers sont de gentilshommes.”</p>
 							</div>
@@ -203,6 +203,17 @@
 							{{app.session.get('Infos')[1]}}
 							utilisateurs ,merci de votre support!</p>
 					</div>
+					<hr>
+					<div class="row text-center">
+						<h5 class="titreRecette coloredText">Votre choix</h5>
+						<p>La recette prefere de notre communaute
+						{% set recette = app.session.get('Infos')[2] %}
+							
+								 <a href="{{path('show_recette', {'id': recette.id , 'page': 1})}}" class="">{{recette.titre}}</a>   
+						
+						</p>
+					</div>
+				
 				</div>
 
 			</main>

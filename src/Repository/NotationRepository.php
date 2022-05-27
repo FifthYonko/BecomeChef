@@ -20,6 +20,38 @@ class NotationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Notation::class);
     }
+    
+    /**
+     * methode qui permet de trouver la recette ayant la meilleure note parmis toutes les recettes
+     *
+     * 
+     * AVEC SOUS-REQUETE
+     * SELECT recette,max(moyenne) FROM (SELECT recette_note_id AS recette ,AVG(note) as moyenne FROM `notation` GROUP BY recette_note_id) as moyRecette; 
+     *
+     * SANS SOUS-REQUETE
+     * 
+     * SELECT recette_note_id, avg(note) as moyenne FROM `notation` GROUP BY recette_note_id ORDER by avg(note) DESC LIMIT 1; 
+     */
+
+
+    public function meilleureRecette(){
+        return $this->createQueryBuilder('n')
+        ->select('avg(n.note) , rn.id')
+        ->innerJoin('n.recetteNote','rn')
+        ->groupBy('n.recetteNote')
+        ->orderBy('avg(n.note)','DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getResult();
+    }
+
+    // public function meilleureRecette(){
+    //     return $this->createQueryBuilder('n')
+    //     ->select('rn.id')
+    //     ->innerJoin('n.recetteNote','rn')
+    //     ->getQuery()
+    //     ->getResult();
+    // }
 
     /***
      * Methode qui permet de recuperer la note moyenne d'une recette grace a son id

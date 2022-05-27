@@ -287,5 +287,11 @@ footer{
     .dont-show{
         display: none;
     }
+    .carousel-caption{
+        position: absolute;
+        top: 40%;
+        font-size: 25px;
+        
+    }
 
 }
