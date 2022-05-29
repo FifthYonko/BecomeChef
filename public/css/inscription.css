@@ -26,7 +26,7 @@
 
 .formulaire form .page {
     width: 25%;
-    margin: auto;
+    
     transition: margin-left 0.3s ease-in-out;
 
 }

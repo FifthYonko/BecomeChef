@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 /**
  * Formulaire d'ajout de recette
@@ -67,7 +68,7 @@ class RecetteFormType extends AbstractType
                 ],
                
             ])
-            ->add('preparation', TextareaType::class, [
+            ->add('preparation', CKEditorType::class, [
                 'attr' => [
                     'placeholder' => 'Veuillez bien detailler le processus de preparation de la recette',
                    

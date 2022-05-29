@@ -7,8 +7,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordStrength;
 
 /**
  * Formulaire de changement de mdp
@@ -27,6 +27,15 @@ class ResetPasswordType extends AbstractType
             'required'=>true,
             'first_options'=>['label'=>'Password','label_attr'=>['class'=>'titres fs-5']],
             'second_options'=>['label'=>'Repeat Password','label_attr'=>['class'=>'titres fs-5']],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Entrez un mot de passe',
+                ]),
+                new PasswordStrength([
+                    'minLength'=>8,
+                    'minStrength'=>4,
+                ]),
+            ],
         ]);
         ;
     }

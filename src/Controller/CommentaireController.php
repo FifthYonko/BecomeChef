@@ -32,11 +32,11 @@ class CommentaireController extends AbstractController
             $entityManager->remove($comment_aSupp) ;
             $entityManager->flush();
             $this->addFlash('success','Le commentaire a bien ete supprime');
-            return $this->redirectToRoute('show_recette',['id'=>$idR]);
+            return $this->redirectToRoute('show_recette',['id'=>$idR,'page' => 1]);
         }
         else{
             $this->addFlash('warning','Vous ne disposez pas de ces droits');
-            return $this->redirectToRoute('show_recette',['id'=>$idR]);
+            return $this->redirectToRoute('show_recette',['id'=>$idR,'page' => 1]);
         }
     }
 }

@@ -33,9 +33,9 @@ class RecetteController extends AbstractController
     {
 
         $recettes = $this->recetteRepository->findAll();
-        //  dd(  $recettes[8]->getNotations()[0]->getNote());
 
         $recettes =  $paginator->paginate($recettes, $page, 8);
+       
         return $this->render('recette/index.html.twig', [
             'recettes' => $recettes,
 
@@ -60,9 +60,10 @@ class RecetteController extends AbstractController
         $form_recette->handleRequest($request);
         if ($form_recette->isSubmitted() && $form_recette->isValid()) {
             $new_recette = $form_recette->getData();
-            $new_recette->setTitre(ucfirst($form_recette->get('titre')->getData()));
 
+            $new_recette->setTitre(ucfirst($form_recette->get('titre')->getData()));
             $new_recette->setPreparation(ucfirst($form_recette->get('preparation')->getData()));
+
             $imgFile = $form_recette->get('photo')->getData();
             if ($imgFile) {
                 $newFileName = $fileUploader->upload($imgFile);
@@ -97,8 +98,10 @@ class RecetteController extends AbstractController
         $recette = $this->recetteRepository->findOneBy(['id' => $id]);
         $commentaires = $recette->getCommentaires();
         $commentaires = $paginator->paginate($commentaires, $page, 2);
-
+        // moyenne de la note 
         $moy = round($notationRepository->moyenneNotation($id), 1);
+    
+        // on verifie si l'utilisateur a notee ou pas la recette car un utilisateur peut noter une seule fois une recette
         $notee = $notationRepository->verifierNotation($id, $this->getUser()) != null;
 
         if ($this->IsGranted('ROLE_USER') && $this->getUser()->getEtat() != 1) {
@@ -114,7 +117,7 @@ class RecetteController extends AbstractController
                 $this->entityManager->persist($new_comm);
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Le commentaire a ete ajoute');
-                return $this->redirectToRoute('show_recette', ['id' => $id]);
+                return $this->redirectToRoute('show_recette', ['id' => $id,'page' => 1]);
             }
 
             return $this->renderForm('recette/show_recette.html.twig', [
@@ -158,6 +161,7 @@ class RecetteController extends AbstractController
         if ($user->getId() === $recette_modifie->getAuthor()->getId()) {
             $update_recette = $this->createForm(RecetteFormType::class, $recette_modifie);
             $update_recette->handleRequest($request);
+            
             if ($update_recette->isSubmitted() && $update_recette->isValid()) {
 
                 $recette_modifie = $update_recette->getData();
@@ -197,7 +201,7 @@ class RecetteController extends AbstractController
     *  Elle prend en parametre un entier id qui represente l'id de la recette a supprimer
     */
     #[Route('/delete_recette/{id}', name: 'delete_recette')]
-    public function delete_recette(Request $request, int $id)
+    public function delete_recette(int $id)
     {
 
         $user = $this->getUser();
@@ -208,12 +212,14 @@ class RecetteController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        if ($user === $recette_aSupp->getAuthor()) {
-            $recette_aSupp = $this->recetteRepository->find($id);
-            if (!$recette_aSupp) {
+        $recette_aSupp = $this->recetteRepository->find($id);
+        if (!$recette_aSupp) {
 
-                $this->addFlash('warning', 'Aucune recette trouve');
-            }
+            $this->addFlash('warning', 'Aucune recette trouve');
+        }
+
+        if ($user === $recette_aSupp->getAuthor()) {
+           
 
             $imgFile = 'uploads/' . $recette_aSupp->getPhoto();
 
@@ -226,7 +232,8 @@ class RecetteController extends AbstractController
 
             $this->addFlash('success', "La recette a bien ete supprime!");
             return $this->redirectToRoute('recette', ['page' => 1]);
-        } elseif ($user === $recette_aSupp->getAuthor() || !$this->isGranted("ROLE_ADMIN")) {
+        } 
+        elseif ($user === $recette_aSupp->getAuthor() || !$this->isGranted("ROLE_ADMIN")) {
 
             $this->addFlash('warning', "Vous ne pouvez pas supprimer cette recette car vous n'etez ni admin, ni auteur");
             return $this->redirectToRoute('recette', ['page' => 1]);
@@ -288,13 +295,13 @@ class RecetteController extends AbstractController
 
         if (!$this->getUser()->getId() != $proprietaire) {
             $this->addFlash('warning', 'vous devez etre admin ou proprietaire de la recette pour effectuer cette tache');
-            return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId()]);
+            return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId(),'page' => 1]);
         }
         $this->entityManager->remove($relationaSupp);
         $this->entityManager->flush();
 
         $this->addFlash('success', 'Ingredient retire');
-        return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId()]);
+        return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId(),'page' => 1]);
     }
     /**
      * 
@@ -322,7 +329,7 @@ class RecetteController extends AbstractController
 
         if ($notationRepository->verifierNotation($idR, $this->getUser()) != null) {
             $this->addFlash('danger', 'Vous avez deja notee cette recette!');
-            return $this->redirectToRoute('show_recette', ['id' => $idR]);
+            return $this->redirectToRoute('show_recette', ['id' => $idR ,'page' => 1]);
         }
         $notation = new Notation();
         $notation->setNoteur($this->getUser());
@@ -332,6 +339,6 @@ class RecetteController extends AbstractController
         $this->entityManager->persist($notation);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('show_recette', ['id' => $idR]);
+        return $this->redirectToRoute('show_recette', ['id' => $idR ,'page' => 1]);
     }
 }

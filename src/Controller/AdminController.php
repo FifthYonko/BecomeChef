@@ -175,6 +175,10 @@ class AdminController extends AbstractController
         $form_recette->handleRequest($request);
         if ($form_recette->isSubmitted() && $form_recette->isValid()) {
             $new_recette = $form_recette->getData();
+
+            $new_recette->setTitre(ucfirst($form_recette->get('titre')->getData()));
+            $new_recette->setPreparation(ucfirst($form_recette->get('preparation')->getData()));
+
             $imgFile = $form_recette->get('photo')->getData();
             if ($imgFile) {
                 $newFileName = $fileUploader->upload($imgFile);
@@ -209,7 +213,10 @@ class AdminController extends AbstractController
         $commentaires = $recette->getCommentaires();
         $commentaires = $paginator->paginate($commentaires, $page, 2);
 
+         // moyenne de la note 
         $moy = round($notationRepository->moyenneNotation($id), 1);
+
+        // on verifie si l'utilisateur a notee ou pas la recette car un utilisateur peut noter une seule fois une recette
         $notee = $notationRepository->verifierNotation($id, $this->getUser()) != null;
 
         if ($this->IsGranted('ROLE_ADMIN')) {
@@ -252,6 +259,13 @@ class AdminController extends AbstractController
     #[Route('admin/update_recette/{id}', name: 'update_recette_admin')]
     public function update_recette(Request $request, int $id, FileUploader $fileUploader)
     {
+
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette fonctionnalité');
+            return $this->redirectToRoute('app_login');
+        }
+
         $recette_modifie = $this->recetteRepository->find($id);
 
         if (!$recette_modifie) {
@@ -346,13 +360,13 @@ class AdminController extends AbstractController
 
         if (!$this->isGranted('ROLE_ADMIN')) {
             $this->addFlash('warning', 'vous devez etre admin ou proprietaire de la recette pour effectuer cette tache');
-            return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId()]);
+            return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId(),'page' => 1]);
         }
         $this->entityManager->remove($relationaSupp);
         $this->entityManager->flush();
 
         $this->addFlash('success', 'Ingredient retire');
-        return $this->redirectToRoute('show_recette_admin', ['id' => $relationaSupp->getRecette()->getId()]);
+        return $this->redirectToRoute('show_recette_admin', ['id' => $relationaSupp->getRecette()->getId(),'page' => 1]);
     }
 
     /**
@@ -374,10 +388,10 @@ class AdminController extends AbstractController
             $entityManager->remove($comment_aSupp);
             $entityManager->flush();
             $this->addFlash('success', 'Le commentaire a bien ete supprime');
-            return $this->redirectToRoute('show_recette_admin', ['id' => $idR]);
+            return $this->redirectToRoute('show_recette_admin', ['id' => $idR,'page' => 1]);
         } else {
             $this->addFlash('warning', 'Vous ne disposez pas de ces droits');
-            return $this->redirectToRoute('show_recette', ['id' => $idR]);
+            return $this->redirectToRoute('show_recette', ['id' => $idR,'page' => 1]);
         }
     }
 

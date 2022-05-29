@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Ingredient;
 use App\Entity\Posseder;
-
+use App\Repository\IngredientRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
@@ -24,6 +24,10 @@ class PossederType extends AbstractType
     
             ->add('ingredients',EntityType::class,[
                 'class'=>Ingredient::class,
+                'query_builder' => function (IngredientRepository $ir) {
+                    return $ir->createQueryBuilder('i')
+                        ->orderBy('i.nom', 'ASC');
+                },
                 'choice_label'=>'nom',
                 'attr'=>['class'=>'formInput selector '],
                 'label'=>'Ingredients',

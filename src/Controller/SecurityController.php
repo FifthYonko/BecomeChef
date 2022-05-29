@@ -35,9 +35,8 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-      
-        return $this->redirectToRoute('home', ['last_username' => $lastUsername, 'error' => $error]);
 
+        return $this->redirectToRoute('home', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -57,49 +56,54 @@ class SecurityController extends AbstractController
     public function forget_password(Request $request, TokenGeneratorInterface $tokenGenerator, UserRepository $userRepository, EntityManagerInterface $entityManager, SendEmail $sendEmail)
     {
 
-        $forget_pass = $this->createForm(ForgotPassType::class);
-        $forget_pass->handleRequest($request);
+        $utilisateurConnecte = $this->getUser();
+        if ($utilisateurConnecte) {
+            $email = $utilisateurConnecte->getEmail();
+            $user = $utilisateurConnecte;
+        } 
+        elseif (!$utilisateurConnecte) {        
+            $forget_pass = $this->createForm(ForgotPassType::class);
+            $forget_pass->handleRequest($request);
 
-        if ($forget_pass->isSubmitted() && $forget_pass->isValid()) {
-            $email = $forget_pass->get('email')->getData();
-           
-            $user = $userRepository->findOneBy(['email' => $email]);
-            if (!$user) {
-                $this->addFlash('warning', 'Cette adresse n\'est lie a aucun compte.');
-                return $this->redirectToRoute('app_login');
+            if ($forget_pass->isSubmitted() && $forget_pass->isValid()) {
+                $email = $forget_pass->get('email')->getData();
+
+                $user = $userRepository->findOneBy(['email' => $email]);
+                if (!$user) {
+                    $this->addFlash('warning', 'Cette adresse n\'est lie a aucun compte.');
+                    return $this->redirectToRoute('app_login');
+                }
+               
             }
-            
-
+            return $this->renderForm('security/forgotPassword.html.twig', [
+                'form_reset' => $forget_pass,
+            ]);
+        }
+        
             $token = $tokenGenerator->generateToken();
             try {
                 $user->setPasswordTokken($token);
                 $entityManager->persist($user);
                 $entityManager->flush();
-
             } catch (FileException $e) {
                 $this->addFlash('danger', 'Une erreur est survenue : ' . $e->getMessage());
                 return $this->redirectToRoute('app_login');
             }
             $url = $this->generateUrl('app_reset_password', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
-           
+
             $urlCancel = $this->generateUrl('app_cancel_reset', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
-           
-            $sendEmail->ResetPassword('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url,'emails/passwordchange.html.twig',$urlCancel);
+
+            $sendEmail->ResetPassword('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url, 'emails/passwordchange.html.twig', $urlCancel);
             $this->addFlash('success', 'Un email vous à été envoyé, cliquez sur le lien pour changer votre mot de passe');
-            if(!$user){
-               
+            if (!$user) {
+
                 return $this->redirectToRoute('app_login');
+            } else {
 
+                return $this->redirectToRoute('profile', ['page' => 1]);
             }
-            else {
-                
-                return $this->redirectToRoute('profile');
-
-            }
-        }
-        return $this->renderForm('security/forgotPassword.html.twig', [
-            'form_reset' => $forget_pass,
-        ]);
+        
+      
     }
 
 
@@ -113,24 +117,22 @@ class SecurityController extends AbstractController
         $reset_form = $this->createForm(ResetPasswordType::class);
         $reset_form->handleRequest($request);
         $user = $userRepository->findOneBy(['passwordTokken' => $token_password]);
-        
+
         if (!$user) {
             $this->addFlash('danger', 'Aucun utilisateur trouve');
             return $this->redirectToRoute('home');
         }
         if ($reset_form->isSubmitted() && $reset_form->isValid()) {
-      
+
             $nvMdp = $reset_form->get('password')->getData();
             $user->setPasswordTokken(NULL);
-         
+
             $user->setPassword($passwordEncoder->hashPassword($user, $nvMdp));
             $entityManager->persist($user);
             $entityManager->flush();
-          
-                $this->addFlash('success', 'Le mot de passe a ete change avec success');
-                return $this->redirectToRoute('home');
 
-            
+            $this->addFlash('success', 'Le mot de passe a ete change avec success');
+            return $this->redirectToRoute('home');
         } else {
             return $this->renderForm('security/reset_password.html.twig', [
                 'form_reset' => $reset_form,
@@ -143,27 +145,27 @@ class SecurityController extends AbstractController
      * la suppression du token dans la base de donnees. 
      * Cette methode est accessible uniquement grace au lien qu'on envoi dans le mail
      */
-    public function cancel_reset($token_password, Request $request,UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function cancel_reset($token_password, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
         $user = $userRepository->findOneBy(['passwordTokken' => $token_password]);
-        
+
         if (!$user) {
             $this->addFlash('danger', 'Aucun utilisateur trouve');
             return $this->redirectToRoute('home');
         }
-       
-            $user->setPasswordTokken(NULL);
-            $entityManager->persist($user);
-            $entityManager->flush();
-          
-            return $this->redirectToRoute('home');
+
+        $user->setPasswordTokken(NULL);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
     }
 
 
 
     #[Route('/politique_de_conf', name: 'pdc')]
-    public function pdc(){
+    public function pdc()
+    {
         return $this->render('politiqueDC/pDC.html.twig');
     }
-    
 }
