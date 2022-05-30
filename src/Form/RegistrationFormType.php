@@ -58,7 +58,8 @@ class RegistrationFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new ConstraintsFile([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2048k',
+                        'maxSizeMessage' => 'La taille autorise est de {{ limit }}k  ',
                         'mimeTypes' => [
                             'image/*',
                         ],

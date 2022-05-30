@@ -60,8 +60,8 @@ class SecurityController extends AbstractController
         if ($utilisateurConnecte) {
             $email = $utilisateurConnecte->getEmail();
             $user = $utilisateurConnecte;
-        } 
-        elseif (!$utilisateurConnecte) {        
+        } elseif (!$utilisateurConnecte) {
+
             $forget_pass = $this->createForm(ForgotPassType::class);
             $forget_pass->handleRequest($request);
 
@@ -73,37 +73,34 @@ class SecurityController extends AbstractController
                     $this->addFlash('warning', 'Cette adresse n\'est lie a aucun compte.');
                     return $this->redirectToRoute('app_login');
                 }
-               
-            }
-            return $this->renderForm('security/forgotPassword.html.twig', [
-                'form_reset' => $forget_pass,
-            ]);
-        }
-        
-            $token = $tokenGenerator->generateToken();
-            try {
-                $user->setPasswordTokken($token);
-                $entityManager->persist($user);
-                $entityManager->flush();
-            } catch (FileException $e) {
-                $this->addFlash('danger', 'Une erreur est survenue : ' . $e->getMessage());
-                return $this->redirectToRoute('app_login');
-            }
-            $url = $this->generateUrl('app_reset_password', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
-
-            $urlCancel = $this->generateUrl('app_cancel_reset', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
-
-            $sendEmail->ResetPassword('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url, 'emails/passwordchange.html.twig', $urlCancel);
-            $this->addFlash('success', 'Un email vous à été envoyé, cliquez sur le lien pour changer votre mot de passe');
-            if (!$user) {
-
-                return $this->redirectToRoute('app_login');
             } else {
-
-                return $this->redirectToRoute('profile', ['page' => 1]);
+                return $this->renderForm('security/forgotPassword.html.twig', [
+                    'form_reset' => $forget_pass,
+                ]);
             }
-        
-      
+        }
+
+        $token = $tokenGenerator->generateToken();
+        try {
+            $user->setPasswordTokken($token);
+            $entityManager->persist($user);
+            $entityManager->flush();
+        } catch (FileException $e) {
+            $this->addFlash('danger', 'Une erreur est survenue : ' . $e->getMessage());
+            return $this->redirectToRoute('app_login');
+        }
+        $url = $this->generateUrl('app_reset_password', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
+
+        $urlCancel = $this->generateUrl('app_cancel_reset', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
+
+        $sendEmail->ResetPassword('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url, 'emails/passwordchange.html.twig', $urlCancel);
+        $this->addFlash('success', 'Un email vous à été envoyé, cliquez sur le lien pour changer votre mot de passe');
+        if (!$utilisateurConnecte) {
+            return $this->redirectToRoute('app_login');
+        } else {
+
+            return $this->redirectToRoute('profile', ['page' => 1]);
+        }
     }
 
 
