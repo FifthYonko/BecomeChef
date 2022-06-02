@@ -1,47 +1,10 @@
 
+/* Classes utilisees partout */
 *{
     box-sizing: border-box;
     font-family: Dejavu Sans;
     
 }
-
-.titres{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 18px;
-}
-
-.titreRecette{
-  
-    font-family: 'Lobster', cursive;
-    text-align: center;
-}
-
-.intro{
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.preparations {
-    font-family: Helvetica;
-}
-
-.nav-link,.dropdown-item{
-    text-decoration: none;
-    color: #442014;
-    font-size: 20px;
-}
-
-hr{
-    border: none;
-    height: 12px;
-    color: #2d3741;
-    width: 85%;
-    margin: 0 auto 10px auto;
-    
-  
-}
-
 
 html,body{
     background-color:#2d3741;
@@ -53,25 +16,28 @@ body{
     flex-direction: column;
     
 }
-.modal-body{
-    background-color:#98cef2 ;
+
+.titres{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
 }
+
 .bloc-profil,.bloc-info{
     display: none;
    
-}
-body a,p{
-    color: #2d3741;
-}
+} 
+
 .petitConteneur{
     background-color: #dfefff;
     border: solid #608299 1px;
     padding: 15px;    
 }
+
 .infos {
     align-items: center;
     padding: 12px;
 }
+
 .en-tete{
     width: 100%;
     margin: auto;
@@ -95,6 +61,17 @@ main{
     padding-bottom: 30px;
 }
 
+
+hr{
+    border: none;
+    height: 12px;
+    color: #2d3741;
+    width: 85%;
+    margin: 0 auto 10px auto;
+    
+  
+}
+
 .imgBox{
     width: 80%;
     
@@ -104,8 +81,7 @@ main{
     border:solid black px;
 }
 
-
-
+/* Les bouttons des formulaires  */
 .FormSub{
     display: block;
     background-color: #2d3741;
@@ -121,19 +97,58 @@ main{
     border: none;
     transition: 0.3s ease;
 }
+
+/* Pour les recettes */
+
+.titreRecette{
+  
+    font-family: 'Lobster', cursive;
+    text-align: center;
+}
+
+.intro{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.preparations {
+    font-family: Helvetica;
+}
+
+.nav-link,.dropdown-item{
+    text-decoration: none;
+    color: #442014;
+    font-size: 20px;
+}
+
+
+
+
+/* Caroussel */
+.modal-body{
+    background-color:#98cef2 ;
+}
+
+body a,p{
+    color: #2d3741;
+}
+
+/* Lien pour changer  la photo sur la page profil */
+
 .LabelBtn{
     cursor: pointer;
 }
-
+/* a enlever ptet */
 .coloredText{
     color: black;
 }
-
+/* Le formulaire sur la page profil */
 .profileForm{
     display: flex;
     flex-wrap: wrap;
 }
-/* notation  */
+/* notation (les etoiles sur la page d'une recette */
 .notation {
     direction: rtl;
 }
@@ -172,6 +187,7 @@ main{
     color: gold;
   }
 
+  /* Les champs input de tous les formulaires */
 .formInput{
     height: 100%;
     width: 95%;
@@ -192,34 +208,14 @@ main{
 }
 
 
-
+/* Le style des balises a */
 .anchorStyle{
     text-decoration: none;
-    
-
 }
 .anchorStyle:hover{
     color: #98cef2;
 }
 
-.banniere{
-    position: fixed;
-    bottom: 0;
-    left:0;
-    width: 100%;
-    color: #442014 ;
-    border:solid 2px #71C72B;
-    background-color: #FFF1D6;
-    display: flex;
-    justify-content: space-around;
-    padding: 5px;
-    font-family: 'Courier New', Courier, monospace;
-
-}
-
-.banniere p{
-    font-size: large;
-}
 
 
 
