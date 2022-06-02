@@ -208,8 +208,11 @@
 						<h5 class="titreRecette coloredText">Votre choix</h5>
 						<p>La recette prefere de notre communaute
 						{% set recette = app.session.get('Infos')[2] %}
-							
-								 <a href="{{path('show_recette', {'id': recette.id , 'page': 1})}}" class="">{{recette.titre}}</a>   
+								{% if recette is not null %}
+								<a href="{{path('show_recette', {'id': recette.id , 'page': 1})}}" class="">{{recette.titre}}</a>   
+								{% endif %}
+								
+								 
 						
 						</p>
 					</div>
