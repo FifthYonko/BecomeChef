@@ -2,10 +2,10 @@
 <html lang="fr">
 
 	<head>
-
+	<meta charset="UTF-8">
 		<script src="/tarteaucitron/tarteaucitron.js"></script>
 
-		<script type="text/javascript">
+		<script >
 			tarteaucitron.init({
 "privacyUrl": "",
 /* Privacy policy url */
@@ -71,7 +71,7 @@
 });
 		</script>
 
-		<meta charset="UTF-8">
+		
 		<title>
 			{% block title %}BecomeChef
 			{% endblock %}
@@ -86,6 +86,7 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{asset('css/BaseStyle.css')}}">
+			<link rel="stylesheet" href="{{asset('css/inscription.css')}}">
 		{% endblock %}
 
 
@@ -105,16 +106,7 @@
 		{% endfor %}
 		<main>
 
-			{# modal form pour la connexion #}
-			<div class="modal fade" id="connexionForm" tabindex="-1" aria-labelledby="connexion" aria-hidden="true">
-				<div class="modal-dialog modal-lg  modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-body ">
-							{% include "security/login.html.twig" %}
-						</div>
-					</div>
-				</div>
-			</div>
+		
 			<div class="one">
 				<div id="HomeSlider" class="carousel slide mt-1" data-bs-touch="false" data-bs-ride="carousel">
 

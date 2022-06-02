@@ -11,6 +11,10 @@ html,body{
     
     
 }
+.navLogo{
+    width: 70px;
+    height: 70px;
+}
 body{
     display: flex;
     flex-direction: column;

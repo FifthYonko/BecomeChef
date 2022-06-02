@@ -3,9 +3,11 @@
 	 #}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
-		<a class=" mb-0 text-center navbar-brand" href="{{path('home')}}"><img src="{{asset('img/BecomeChefLogo.png')}}" width="70px" height="70px" class="rounded-circle align-self-center" alt="logo"></a>
+		<a class=" mb-0 text-center navbar-brand" href="{{path('home')}}"><img src="{{asset('img/BecomeChefLogo.png')}}"
+				class="rounded-circle align-self-center navLogo " alt="logo"></a>
 
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -14,56 +16,61 @@
 					<a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
 				</li>
 				{% if app.user and "ROLE_ADMIN" in app.user.roles  %}
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							AdminMenu
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="adminMenu">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false">
+						AdminMenu
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="adminMenu">
 						<li>
-							<a class="dropdown-item " href="{{path('espaceAdmin',{'tableau': 'recettes', 'page': 1})}}">Espace Admin</a>
+							<a class="dropdown-item "
+								href="{{path('espaceAdmin',{'tableau': 'recettes', 'page': 1})}}">Espace Admin</a>
 						</li>
 						<li>
 							<a class="dropdown-item" href="{{path('ajoutIngredients')}}">Ajout d'ingredients</a>
 						</li>
 					</ul>
-						
-					</li>
+
+				</li>
 				{% endif %}
 
 				{% if app.user %}
-					<li class="nav-item">
-						<a class="nav-link " href="{{path('profile',{'page':1 })}}">Profil</a>
-					</li>
+				<li class="nav-item">
+					<a class="nav-link " href="{{path('profile',{'page':1 })}}">Profil</a>
+				</li>
 				{% endif %}
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="recetteMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<a class="nav-link dropdown-toggle" href="#" id="recetteMenu" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
 						Recettes
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="recetteMenu">
 						{% if app.user and "ROLE_ADMIN" in app.user.roles %}
-							<li>
-								<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
-							</li>
+						<li>
+							<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
+						</li>
 						{% else %}
+						<li>
 							<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
+						</li>
 						{% endif %}
 						<li>
 
 							{% if  app.user and "ROLE_ADMIN" in app.user.roles %}
-								<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
+							<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
 
 
 							{% endif %}
 						</li>
 						{% if app.user %}
 
-							<li>
-								<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
+						<li>
+							<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
 
-							</li>
+						</li>
 						{% endif %}
 
 					</ul>
@@ -74,21 +81,22 @@
 				</li>
 			</ul>
 			<form class="d-flex" action="{{path('search',{'page':1 })}}">
-				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_value">
+				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+					name="search_value">
 				<button class="btn  FormSub" type="submit">Search</button>
 			</form>
 			<div class="col-md-4 text-center text-md-end align-self-center my-3  dont-show ">
 				{% if app.user %}
 
-					<a href="{{path('app_logout')}}" class="btn FormSub ">Deconexion</a>
+				<a href="{{path('app_logout')}}" class="btn FormSub ">Deconexion</a>
 
 				{% else %}
 
-					<a href="{{path('app_register')}}" class="btn FormSub mb-2 w-50">S'inscrire</a>
+				<a href="{{path('app_register')}}" class="btn FormSub mb-2 w-50">S'inscrire</a>
 
 
-					<button type="button" class="btn w-50 FormSub" data-bs-toggle="modal" data-bs-target="#connexionForm">Se
-											connecter</button>
+				<button type="button" class="btn w-50 FormSub" data-bs-toggle="modal" data-bs-target="#connexionForm">Se
+					connecter</button>
 
 
 				{% endif %}
@@ -97,3 +105,15 @@
 		</div>
 	</div>
 </nav>
+
+
+{# modal form pour la connexion #}
+<div class="modal fade" id="connexionForm" tabindex="-1" aria-labelledby="connexion" aria-hidden="true">
+	<div class="modal-dialog modal-lg  modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body ">
+				{% include "security/login.html.twig" %}
+			</div>
+		</div>
+	</div>
+</div>
