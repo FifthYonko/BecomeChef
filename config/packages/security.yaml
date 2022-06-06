@@ -26,6 +26,7 @@ security:
                 - App\Security\GoogleAuthenticator
             logout:
                 path: app_logout
+                invalidate_session: false
             custom_authenticator: App\Security\LoginTestAuthenticator
                 # where to redirect after logout
                 # target: app_any_route

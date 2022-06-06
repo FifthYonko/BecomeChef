@@ -15,8 +15,6 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Form\ForgotPassType;
 use App\Form\ResetPasswordType;
-use App\Repository\RecetteRepository;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
@@ -33,6 +31,7 @@ class SecurityController extends AbstractController
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
+        
         $lastUsername = $authenticationUtils->getLastUsername();
 
 
