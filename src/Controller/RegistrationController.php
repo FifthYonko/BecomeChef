@@ -44,12 +44,5 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
-    /**
-     * Methode qui redirige un utilisateur vers une page ou il peut lire les conditions
-     * generales . Ce lien se trouve sur la page d'inscription
-     */
-    #[Route('/register_cgu', name: 'cgu')]
-    public function cgu(){
-        return $this->render('conditionsUtilisation/conditionUtilisation.html.twig');
-    }
+    
 }

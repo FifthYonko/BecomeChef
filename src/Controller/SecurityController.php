@@ -158,10 +158,27 @@ class SecurityController extends AbstractController
     }
 
 
-
+     /**
+     * Methode qui redirige un utilisateur vers une page ou il peut lire la politique de confidentialite
+     * . Ce lien se trouve sur la page d'inscription ou en footer
+     */
     #[Route('/politique_de_conf', name: 'pdc')]
     public function pdc()
     {
         return $this->render('politiqueDC/pDC.html.twig');
+    }
+
+    /**
+     * Methode qui redirige un utilisateur vers une page ou il peut lire les conditions
+     * generales . Ce lien se trouve sur la page d'inscription
+     */
+    #[Route('/register_cgu', name: 'cgu')]
+    public function cgu(){
+        return $this->render('conditionsUtilisation/conditionUtilisation.html.twig');
+    }
+
+    #[Route('/mentions_legales', name: 'ml')]
+    public function ml(){
+        return $this->render('politiqueDC//mentionsLegales.html.twig');
     }
 }
