@@ -8,6 +8,7 @@
 
 html,body{
     background-color:#2d3741;
+    height: 100%;
     
     
 }
@@ -216,9 +217,9 @@ body a,p{
 .anchorStyle{
     text-decoration: none;
 }
-.anchorStyle:hover{
+/* .anchorStyle:hover{
     color: #98cef2;
-}
+} */
 
 
 

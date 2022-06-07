@@ -11,23 +11,23 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+				<li class="nav-item ">
+					<a class="nav-link active text-center" aria-current="page" href="{{path('home')}}">Home</a>
 				</li>
 				{% if app.user and "ROLE_ADMIN" in app.user.roles  %}
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown"
+					<a class="nav-link dropdown-toggle text-center" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown"
 						aria-expanded="false">
 						AdminMenu
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="adminMenu">
 						<li>
-							<a class="dropdown-item "
+							<a class="dropdown-item text-center "
 								href="{{path('espaceAdmin',{'tableau': 'recettes', 'page': 1})}}">Espace Admin</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="{{path('ajoutIngredients')}}">Ajout d'ingredients</a>
+							<a class="dropdown-item text-center" href="{{path('ajoutIngredients')}}">Ajout d'ingredients</a>
 						</li>
 					</ul>
 
@@ -36,39 +36,38 @@
 
 				{% if app.user %}
 				<li class="nav-item">
-					<a class="nav-link " href="{{path('profile',{'page':1 })}}">Profil</a>
+					<a class="nav-link  text-center" href="{{path('profile',{'page':1 })}}">Profil</a>
 				</li>
 				{% endif %}
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="recetteMenu" role="button"
+					<a class="nav-link dropdown-toggle text-center" href="#" id="recetteMenu" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
 						Recettes
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="recetteMenu">
 						{% if app.user and "ROLE_ADMIN" in app.user.roles %}
 						<li>
-							<a class="dropdown-item" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
+							<a class="dropdown-item text-center" href="{{path('recette_admin',{'page':1 })}}">Catalogue Admin</a>
 						</li>
 						{% else %}
 						<li>
-							<a class="dropdown-item" href="{{path('recette',{'page':1 })}}">Catalogue</a>
+							<a class="dropdown-item text-center" href="{{path('recette',{'page':1 })}}">Catalogue</a>
 						</li>
 						{% endif %}
 						<li>
 
 							{% if  app.user and "ROLE_ADMIN" in app.user.roles %}
-							<a class="dropdown-item" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
-
-
+							<a class="dropdown-item text-center" href="{{path('new_recette_admin')}}">Ajouter Admin</a>
+		
 							{% endif %}
 						</li>
 						{% if app.user %}
 
 						<li>
-							<a class="dropdown-item" href="{{path('list')}}">Favoris</a>
+							<a class="dropdown-item text-center" href="{{path('list')}}">Favoris</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="{{path('new_recette')}}">Ajouter</a>
+							<a class="dropdown-item text-center" href="{{path('new_recette')}}">Ajouter</a>
 
 						</li>
 						{% endif %}
@@ -77,7 +76,7 @@
 				</li>
 
 				<li>
-					<a class="nav-link " href="{{path('contact')}}">Contact</a>
+					<a class="nav-link text-center " href="{{path('contact')}}">Contact</a>
 				</li>
 			</ul>
 			<form class="d-flex" action="{{path('search',{'page':1 })}}">
@@ -85,10 +84,10 @@
 					name="search_value">
 				<button class="btn  FormSub" type="submit">Search</button>
 			</form>
-			<div class="col-md-4 text-center text-md-end align-self-center my-3  dont-show ">
+			<div class="col-md-4 text-center text-md-end m-auto my-3  dont-show ">
 				{% if app.user %}
 
-				<a href="{{path('app_logout')}}" class="btn FormSub ">Deconexion</a>
+				<a href="{{path('app_logout')}}" class="btn FormSub align-self-center ">Deconexion</a>
 
 				{% else %}
 
