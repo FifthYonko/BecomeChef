@@ -16,7 +16,7 @@ use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksP
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 /**
- * Entite User 
+ * Entité User 
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

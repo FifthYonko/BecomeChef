@@ -10,7 +10,7 @@
 	
 
 	<div class="row  justify-content-center conteneurBox ">
-		<h1 class="titres text-center w-100 m-auto coloredText fs-1">Dernieres recettes ajoutes</h1>
+		<h1 class="titres text-center w-100 m-auto coloredText fs-1">Dernières recettes ajoutées</h1>
 		{% for recette in last  %}
 		{% if app.user and is_granted('ROLE_ADMIN') %}
 		{% include "components/_AdminRecetteSimple.html.twig" %}

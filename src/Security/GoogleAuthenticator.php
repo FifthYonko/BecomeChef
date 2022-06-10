@@ -49,7 +49,7 @@ class  GoogleAuthenticator extends OAuth2Authenticator
         return $request->attributes->get('_route') === 'connect_google_check';
     }
   /**
-     * Methode d'authentification via google
+     * Méthode d'authentification via google
      */
     public function authenticate(Request $request):Passport
     {
@@ -63,9 +63,7 @@ class  GoogleAuthenticator extends OAuth2Authenticator
             })
         );
     }
-/**
- * Si la authentification a reussi, on redirige vers la page d'accueil
- */
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         
@@ -73,9 +71,7 @@ class  GoogleAuthenticator extends OAuth2Authenticator
 
         return new RedirectResponse($targetUrl);
     }
-/**
- * Sinon on interdit l'access
- */
+
   
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {

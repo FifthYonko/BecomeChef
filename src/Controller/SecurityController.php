@@ -21,17 +21,17 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
-     * Methode qui permet a l'utilisateur de se connecter
+     * Méthode qui permet à l'utilisateur de se connecter
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            $this->addFlash("warning", 'Vous etes deja connecte');
+            $this->addFlash("warning", 'Vous êtes déjà connecté');
             return $this->redirectToRoute('home');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
-        
+
         $lastUsername = $authenticationUtils->getLastUsername();
 
 
@@ -40,18 +40,18 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/logout", name="app_logout")
-     * Methode de deconnexion
-     */
+    * Méthode de déconnexion
+    */
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route('/forgot_password', name: 'forgot_password')]
-    /**
-     * Methode qui permet d'initialiser la procedure de changement de mdp
-     * On utilise des composants symfony et le service SendEmail
+     /**
+     * Méthode qui permet d'initialiser la procédure de changement de Mdp
+     * On utilise des composants Symfony et le service Send Email
      */
+    #[Route('/forgot_password', name: 'forgot_password')]
     public function forget_password(Request $request, TokenGeneratorInterface $tokenGenerator, UserRepository $userRepository, EntityManagerInterface $entityManager, SendEmail $sendEmail)
     {
 
@@ -69,7 +69,7 @@ class SecurityController extends AbstractController
 
                 $user = $userRepository->findOneBy(['email' => $email]);
                 if (!$user) {
-                    $this->addFlash('warning', 'Cette adresse n\'est lie a aucun compte.');
+                    $this->addFlash('warning', 'Cette adresse n\'est liée à aucun compte.');
                     return $this->redirectToRoute('app_login');
                 }
             } else {
@@ -93,7 +93,7 @@ class SecurityController extends AbstractController
         $urlCancel = $this->generateUrl('app_cancel_reset', ['token_password' => $token], UrlGenerator::ABSOLUTE_URL);
 
         $sendEmail->ResetPassword('BecomeChef@admin.com', $email, 'Changement de Mot de passe', $url, 'emails/passwordchange.html.twig', $urlCancel);
-        $this->addFlash('success', 'Un email vous à été envoyé, cliquez sur le lien pour changer votre mot de passe');
+        $this->addFlash('success', 'Un email vous a été envoyé, cliquez sur le lien pour changer votre mot de passe');
         if (!$utilisateurConnecte) {
             return $this->redirectToRoute('app_login');
         } else {
@@ -105,8 +105,8 @@ class SecurityController extends AbstractController
 
     #[Route('/reset_password/{token_password}', name: 'app_reset_password')]
     /**
-     * Methode qui permet a l'utilisateur de changer le mdp
-     * Cette methode est accessible uniquement grace au lien qu'on envoi dans le mail
+     * Méthode qui permet à l'utilisateur de changer le Mdp
+     * Cette méthode est accessible uniquement grace au lien qu'on envoie dans le mail
      */
     public function reset_password($token_password, Request $request, UserPasswordHasherInterface $passwordEncoder, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
@@ -115,7 +115,7 @@ class SecurityController extends AbstractController
         $user = $userRepository->findOneBy(['passwordTokken' => $token_password]);
 
         if (!$user) {
-            $this->addFlash('danger', 'Aucun utilisateur trouve');
+            $this->addFlash('danger', 'Aucun utilisateur trouvé');
             return $this->redirectToRoute('home');
         }
         if ($reset_form->isSubmitted() && $reset_form->isValid()) {
@@ -127,7 +127,7 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le mot de passe a ete change avec success');
+            $this->addFlash('success', 'Le mot de passe a été change avec succès');
             return $this->redirectToRoute('home');
         } else {
             return $this->renderForm('security/reset_password.html.twig', [
@@ -137,16 +137,16 @@ class SecurityController extends AbstractController
     }
     #[Route('/cancel_reset/{token_password}', name: 'app_cancel_reset')]
     /**
-     * Methode qui permet a l'utilisateur d'annuler la demande de changement de mdp par 
-     * la suppression du token dans la base de donnees. 
-     * Cette methode est accessible uniquement grace au lien qu'on envoi dans le mail
+     * Méthode qui permet à l'utilisateur d'annuler la demande de changement de Mdp par 
+     * la suppression du token dans la base de données. 
+     * Cette méthode est accessible uniquement grace au lien qu'on envoie dans le mail
      */
     public function cancel_reset($token_password, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
         $user = $userRepository->findOneBy(['passwordTokken' => $token_password]);
 
         if (!$user) {
-            $this->addFlash('danger', 'Aucun utilisateur trouve');
+            $this->addFlash('danger', 'Aucun utilisateur trouvé');
             return $this->redirectToRoute('home');
         }
 
@@ -158,8 +158,8 @@ class SecurityController extends AbstractController
     }
 
 
-     /**
-     * Methode qui redirige un utilisateur vers une page ou il peut lire la politique de confidentialite
+    /**
+     * Méthode qui redirige un utilisateur vers une page ou il peut lire la politique de confidentialité
      * . Ce lien se trouve sur la page d'inscription ou en footer
      */
     #[Route('/politique_de_conf', name: 'pdc')]
@@ -169,16 +169,18 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * Methode qui redirige un utilisateur vers une page ou il peut lire les conditions
-     * generales . Ce lien se trouve sur la page d'inscription
+     * Méthode qui redirige un utilisateur vers une page ou il peut lire les conditions
+     * générales . Ce lien se trouve sur la page d'inscription et au niveau du footer
      */
     #[Route('/register_cgu', name: 'cgu')]
-    public function cgu(){
+    public function cgu()
+    {
         return $this->render('conditionsUtilisation/conditionUtilisation.html.twig');
     }
 
     #[Route('/mentions_legales', name: 'ml')]
-    public function ml(){
+    public function ml()
+    {
         return $this->render('politiqueDC//mentionsLegales.html.twig');
     }
 }

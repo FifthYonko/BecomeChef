@@ -40,15 +40,15 @@ class GithubAuthenticator extends OAuth2Authenticator
     }
     
     /**
-     * Si la route correspond à celle attendue, alors on déclenche cet authentication
+     * Si la route correspond à celle attendue, alors on déclenche l'authentification
     **/
     public function supports(Request $request): ?bool
     {
         return $request->attributes->get('_route') === 'github_check';
     }
 
-    /***
-     * Methode d'authentification via gitHub
+  /***
+     * Méthode d'authentification via git Hub
      */
     public function authenticate(Request $request): Passport
     {
@@ -68,8 +68,7 @@ class GithubAuthenticator extends OAuth2Authenticator
                 $githubUser = $client->fetchUserFromToken($accessToken);
                 
 
-                // on recupere l'email  de l'utilisateur
-
+                // on récupère l'email  de l'utilisateur
                 $respose = HttpClient::create()->request(
                     'GET',
                     'https://api.github.com/user/emails',
@@ -83,13 +82,13 @@ class GithubAuthenticator extends OAuth2Authenticator
                 
                 $emails = json_decode($respose->getContent(), true);
 
-            //   avec github on peut creer des public emails pour des raisons de securite ou donnees prives.
-            // donc on va verifier les emails du compte afin de recuperer celui qui a servi a la creation de compte
+             //   avec github on peut creer des publics emails pour des raisons de sécurité ou données privées.
+            // donc on va vérifier les emails du compte afin de récupérer celui qui a servi a la création du compte
                 foreach ($emails as $email) {
 
-                    // donc on verifie qu'il est primaire mais aussi que l'utilisateur a bien verifié son email 
-                    // car ca empeche un utilisateur de se connecter a notre application avec des comptes pas verifies et de faire 
-                    // qq chose qui peut nuir a notre site.
+                    // donc on vérifie qu'il est primaire mais aussi que l'utilisateur a bien vérifié son email 
+                    // car ça empeche un utilisateur de se connecter à notre application avec des comptes pas vérifie et de faire 
+                    // Quelque chose qui peut nuire à notre site.
 
                     if ( $email['primary'] === true && $email['verified'] === true) {
                         $data = $githubUser->toArray();
@@ -108,7 +107,7 @@ class GithubAuthenticator extends OAuth2Authenticator
         );
     }
 /**
- * Si la authentification a reussi, on redirige vers la page d'accueil
+ * Si l'authentification a réussi, on redirige vers la page d'accueil
  */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {

@@ -1,3 +1,6 @@
+
+// on défini les variables
+
 const slidePage = document.querySelector(".first-page");
 const nextBtnFirst = document.querySelector(".firstNext");
 
@@ -23,7 +26,7 @@ let current = 1;
 
 
 
-// next
+// Les modifs quand on appui sur  next
 nextBtnFirst.addEventListener("click",function(event){
       event.preventDefault();
     slidePage.style.marginLeft = "-25%";
@@ -52,6 +55,8 @@ progress.style.width = (colWidth*5).toString()+ "px";
 console.log(progress.style.width);
 current+=1;
 })
+
+// les modifs quand on appuie sur precedent
 
 prevBtnSec.addEventListener("click",function(event){
       event.preventDefault();

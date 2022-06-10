@@ -12,8 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'contact')]
-    /* Methode qui prend en parametre le composant request et le service SendMail et qui redirige vers diferentes routes en fonction des cas
-    Cette fonction sert contacter les responsables du site
+    /* Méthode qui prend en paramètre le composant request et le service SendMail et qui redirige vers différentes routes en fonction des cas
+    Cette fonction sert à contacter les responsables du site
      */
     public function index(Request $request,SendEmail $sendEmail)
     {

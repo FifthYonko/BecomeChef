@@ -22,7 +22,7 @@ class NotationRepository extends ServiceEntityRepository
     }
     
     /**
-     * methode qui permet de trouver la recette ayant la meilleure note parmis toutes les recettes
+     * Méthode qui permet de trouver la recette ayant la meilleure note parmi toutes les recettes
      *
      * 
      * AVEC SOUS-REQUETE
@@ -45,16 +45,8 @@ class NotationRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-    // public function meilleureRecette(){
-    //     return $this->createQueryBuilder('n')
-    //     ->select('rn.id')
-    //     ->innerJoin('n.recetteNote','rn')
-    //     ->getQuery()
-    //     ->getResult();
-    // }
-
-    /***
-     * Methode qui permet de recuperer la note moyenne d'une recette grace a son id
+  /***
+     * Méthode qui permet de récupérer la note moyenne d'une recette grâce à son id
      * 
      */
     public function moyenneNotation($idRecette){
@@ -66,8 +58,8 @@ class NotationRepository extends ServiceEntityRepository
         ->getSingleScalarResult();
     }
 
-      /***
-     * Methode qui permet de verifier si un utilisateur a deja notee une recette.
+     /***
+     * Méthode qui permet de vérifier si un utilisateur a déjà noté une recette.
      * 
      */
     public function verifierNotation($idRecette,$idUser){

@@ -22,7 +22,7 @@ class ResetPasswordType extends AbstractType
         $builder
         ->add('password',RepeatedType::class,[
             'type'=>PasswordType::class,
-            'invalid_message'=>'les mots de passes doivent etre identiques',
+            'invalid_message'=>'Les mots de passe doivent être identiques',
             'options'=>['attr'=>['class'=>'password-field']],
             'required'=>true,
             'first_options'=>['label'=>'Password','label_attr'=>['class'=>'titres fs-5']],

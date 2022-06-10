@@ -21,7 +21,7 @@ class CommentaireType extends AbstractType
                     new NotBlank(['message'=>'Veuillez remplir ce champ!']),
                     new Length([
                         'min'=>2,
-                        'minMessage' => 'Votre commentaire doit contenir minumum {{ limit }} characteres',
+                        'minMessage' => 'Votre commentaire doit contenir minumum {{ limit }} caractères',
                     ])
                 ]
             ])

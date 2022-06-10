@@ -22,8 +22,8 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\File as ConstraintsFile;
 
 /**
- * Formulaire d'inscription d'utilisateur, ce formulaire est lie a l'entite User
- * Il comporte les champs : email, pseudo, photo , agree terms, et password
+ * Formulaire d'inscription d'utilisateur, ce formulaire est lié à l'entité User
+ * Il comporte les champs : email, pseudo, photo,agree terms, et password
  */
 class RegistrationFormType extends AbstractType
 {
@@ -47,7 +47,7 @@ class RegistrationFormType extends AbstractType
                     new NotBlank(['message'=>'Entrez un pseudo valide']),
                     new Length([
                         'min'=>3,
-                        'minMessage' => 'Votre Pseudo doit contenir minumum {{ limit }} characteres',
+                        'minMessage' => 'Votre Pseudo doit contenir minumum {{ limit }} caractères',
                        
                     ])
                 ]
@@ -59,7 +59,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new ConstraintsFile([
                         'maxSize' => '2048k',
-                        'maxSizeMessage' => 'La taille autorise est de {{ limit }}k  ',
+                        'maxSizeMessage' => 'La taille autorisé est de {{ limit }}k  ',
                         'mimeTypes' => [
                             'image/*',
                         ],

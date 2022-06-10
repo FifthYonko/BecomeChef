@@ -35,28 +35,28 @@ class RecetteFormType extends AbstractType
                 'label_attr'=>['class'=>'titres'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez completer ce champ',
+                        'message' => 'Veuillez compléter ce champ',
                         
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Le titre doit contenir minumum {{ limit }} caracteres',
+                        'minMessage' => 'Le titre doit contenir minumum {{ limit }} caractères',
                     ])
                 ]
             ])
             ->add('temps', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Temps de preparation',
+                    'placeholder' => 'Temps de préparation',
                   
                 ],
                 'label_attr'=>['class'=>'titres'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez completer ce champ',
+                        'message' => 'Veuillez compléter ce champ',
                     ]),
                     new Length([
                         'min' => 1,
-                        'minMessage' => 'Ce champ doit contenir minimum {{ limit }} caracteres',
+                        'minMessage' => 'Ce champ doit contenir minimum {{ limit }} caractères',
                     ])
                 ]
             ])
@@ -70,15 +70,15 @@ class RecetteFormType extends AbstractType
             ])
             ->add('preparation', CKEditorType::class, [
                 'attr' => [
-                    'placeholder' => 'Veuillez bien detailler le processus de preparation de la recette',
+                    'placeholder' => 'Veuillez bien détailler le processus de préparation de la recette',
                    
                 ],
                 'label_attr'=>['class'=>'titres'],
                 'constraints' => [
-                    new NotBlank(['message' => 'Veuillez completer ce champ',]),
+                    new NotBlank(['message' => 'Veuillez compléter ce champ',]),
                     new Length([
                         'min' => 200,
-                        'minMessage' => 'Ce champ necessite minimum {{ limit }} caracteres'
+                        'minMessage' => 'Ce champ nécessite minimum {{ limit }} caractères'
                     ])
                 ]
             ])

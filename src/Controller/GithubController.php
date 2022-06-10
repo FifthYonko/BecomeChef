@@ -9,9 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GithubController extends AbstractController
 {
-    /**
-     * methode qui permet la connexion via son compte github
-     * parametres : $clientRegistry de type ClientRegistry qui est un type de l'api Oauth2 installé
+   /**
+     * Méthode qui permet la connexion via son compte github
+     * Paramètres : $clientregistry du type ClientRegistry qui est un type de l'api Oauth2 installé
      */
     #[Route(path: '/connect/github', name: 'github_connect')]
     public function connect(ClientRegistry $clientRegistry)

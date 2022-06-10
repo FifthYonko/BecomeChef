@@ -121,7 +121,7 @@
 							</video>
 							<div class="carousel-caption d-none d-md-block text-left">
 								<h5>BecomeChef</h5>
-								<p>“La cuisine est devenue un art, une science noble . les cuisiniers sont de gentilshommes.”</p>
+								<p>“La cuisine est devenue un art, une science noble . les cuisiniers sont des gentilshommes.”</p>
 							</div>
 						</div>
 					</div>
@@ -162,7 +162,7 @@
 								</h5>
 								<h4 class="coloredText titres">{{ app.user.pseudo }}</h4>
 								<br>
-								<a href="{{path('app_logout')}}" class="btn FormSub">Deconexion</a>
+								<a href="{{path('app_logout')}}" class="btn FormSub">Déconnexion</a>
 
 							</div>
 						</div>
@@ -184,21 +184,21 @@
 					<hr>
 					<div class="row text-center">
 						<h5 class="titreRecette coloredText">Nos recettes</h5>
-						<p>Grace a votre aide notre site possede
+						<p>Grâce à votre aide notre site possède
 							{{app.session.get('Infos')[0]}}
 							recettes ,merci de votre support!</p>
 					</div>
 					<hr>
 					<div class="row text-center">
 						<h5 class="titreRecette coloredText">Nous</h5>
-						<p>Notre communaute compte ajourd'hui
+						<p>Notre communauté compte ajourd'hui
 							{{app.session.get('Infos')[1]}}
 							utilisateurs ,merci de votre support!</p>
 					</div>
 					<hr>
 					<div class="row text-center">
 						<h5 class="titreRecette coloredText">Votre choix</h5>
-						<p>La recette prefere de notre communaute
+						<p>La recette préféré de notre communauté
 						{% set recette = app.session.get('Infos')[2] %}
 								{% if recette is not null %}
 								<a href="{{path('show_recette', {'id': recette.id , 'page': 1})}}" class="">{{recette.titre}}</a>   

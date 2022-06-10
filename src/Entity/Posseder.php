@@ -13,7 +13,6 @@ class Posseder
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    // colonne id 
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Recette::class, inversedBy: 'posseders')]

@@ -6,7 +6,7 @@ kernel:
     resource: ../src/Kernel.php
     type: annotation
 
-
+# les routes de redirection pour l'authentification avec Oauth2
 github_check:
     path: /github/check
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController 

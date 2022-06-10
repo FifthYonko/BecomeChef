@@ -27,7 +27,7 @@
 								href="{{path('espaceAdmin',{'tableau': 'recettes', 'page': 1})}}">Espace Admin</a>
 						</li>
 						<li>
-							<a class="dropdown-item text-center" href="{{path('ajoutIngredients')}}">Ajout d'ingredients</a>
+							<a class="dropdown-item text-center" href="{{path('ajoutIngredients')}}">Ajout d'ingrédients</a>
 						</li>
 					</ul>
 
@@ -82,7 +82,7 @@
 			<form class="d-flex" action="{{path('search',{'page':1 })}}">
 				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
 					name="search_value">
-				<button class="btn  FormSub" type="submit">Search</button>
+				<button class="btn  FormSub" type="submit">Recherche</button>
 			</form>
 			<div class="col-md-4 text-center text-md-end m-auto my-3  dont-show ">
 				{% if app.user %}
@@ -94,8 +94,7 @@
 				<a href="{{path('app_register')}}" class="btn FormSub mb-2 w-50">S'inscrire</a>
 
 
-				<button type="button" id="connexion" class="btn w-50 FormSub" data-bs-toggle="modal" data-bs-target="#connexionForm">Se
-					connecter</button>
+				<button type="button" id="connexion" class="btn w-50 FormSub" data-bs-toggle="modal" data-bs-target="#connexionForm">Se connecter</button>
 
 
 				{% endif %}

@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(
  *     fields={"noteur", "recetteNote"},
  *     errorPath="noteur",
- *     message="Vous avez deja donnee une note a cette recette"
+ *     message="Vous avez déjà donné une note à cette recette"
  * )
  */
 class Notation

@@ -11,9 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 
 
-/**
- *  * classe de lecture de donnes de la table User
- * 
+/** 
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
  * @method User[]    findAll()
@@ -55,9 +53,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Methode de recherche des utilisateurs bannis
-     * Elle ne prend pas de parametres
-     * elle renvoie un resultat
+     * Méthode de recherche des utilisateurs bannis
+     * Elle ne prend pas de paramètres
+     * elle renvoie un résultat
      */
     public function findBannedUsers()
     {
@@ -69,6 +67,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()
         ;
     }
+
+    /**
+     * Méthode d'authentifier un utilisateur. On cherche dans bdd un utilisateur avec l'identifiant pris en paramètres, s'il existe
+     * on renvoie l'utilisateur, sinon a cree un nouvel utilisateur dans la bdd 
+     */
 
     public function findorCreateFromOauth(ResourceOwnerInterface $owner)
     {
@@ -93,6 +96,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $user;
     }
+
+     /**
+     * Méthode d'authentifier un utilisateur. On cherche dans bdd un utilisateur avec l'identifiant pris en paramètres, s'il existe
+     * on renvoie l'utilisateur, sinon a cree un nouvel utilisateur dans la bdd 
+     */
     public function findOrCreateGoogleAuth($owner)
     {
         $user = $this->createQueryBuilder('u')

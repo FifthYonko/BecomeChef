@@ -1,14 +1,18 @@
+# les deux clients d'authentification, il faut declarer 1 par mode de connexion.
 knpu_oauth2_client:
     clients:
+        
         github:
-
+            # le type doit imperativement être le nom de l'application qu'on souhaite utiliser
             type: github
+            # client_id et secret se trouvent dans le fichier .env.local
             client_id: '%env(GITHUB_ID)%'
             client_secret: '%env(GITHUB_SECRET)%'
+            # la route de redirection en cas de success
             redirect_route: github_check
             redirect_params: {}
+            
         google:
-         
             type: google
             # les variables d'environement pour l'application
             client_id: '%env(OAUTH_GOOGLE_CLIENT_ID)%'

@@ -20,8 +20,8 @@ class HomeController extends AbstractController
     {
         $this->requestStack = $requestStack;
     }
-    /* methode qui permet d'afficher la landing page
-        on recupere le composant symfony Request
+    /* Méthode qui permet d'afficher le landing page
+        on récupère le composant Symfony Request
     */
     #[Route('/', name: 'home')]
     public function index(Request $request): Response

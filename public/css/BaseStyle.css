@@ -1,5 +1,5 @@
 
-/* Classes utilisees partout */
+/* Classes utilisées partout */
 *{
     box-sizing: border-box;
     font-family: Dejavu Sans;
@@ -12,6 +12,7 @@ html,body{
     
     
 }
+/* logo du site */
 .navLogo{
     width: 70px;
     height: 70px;

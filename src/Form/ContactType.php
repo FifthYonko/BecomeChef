@@ -25,27 +25,27 @@ class ContactType extends AbstractType
                     'placeholder'=>'Votre Adresse mail'
                 ],
                 'constraints'=>[
-                    new NotBlank(['message'=>'Veuillez completer ce champ']),
+                    new NotBlank(['message'=>'Veuillez compléter ce champ']),
                     new ConstraintsEmail(["message"=>"Votre mail n'est pas valide"]),
                 ]
             ])
             ->add('subject',TextType::class,[
                 'label_attr'=>['class'=>'titres'],
                 'constraints'=>[
-                    new NotBlank(['message'=>'Veuillez completer ce champ']),
+                    new NotBlank(['message'=>'Veuillez compléter ce champ']),
                     new Length([
                         'min'=>2,
-                        'minMessage' => 'Votre sujet doit contenir minumum {{ limit }} characteres',
+                        'minMessage' => 'Votre sujet doit contenir minumum {{ limit }} caractères',
                     ])
                 ]
             ])
             ->add('message',TextareaType::class,[
                 'label_attr'=>['class'=>'titres'],
                 'constraints'=>[
-                    new NotBlank(['message'=>'Veuillez completer ce champ']),
+                    new NotBlank(['message'=>'Veuillez compléter ce champ']),
                     new Length([
                         'min'=>5,
-                        'minMessage' => 'Votre sujet doit contenir minumum {{ limit }} characteres',
+                        'minMessage' => 'Votre sujet doit contenir minumum {{ limit }} caractères',
                     ])
                 ]
                 

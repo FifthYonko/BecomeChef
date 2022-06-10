@@ -16,8 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegistrationController extends AbstractController
 {
     /**
-     * Methode qui permet a un utilisateur de s'inscrire 
-     * Prend en parametre 3 composants symfony
+     * Méthode qui permet à un utilisateur de s'inscrire 
+     * Prends en paramètre 3 composants Symfony
      * 
      */
     #[Route('/register', name: 'app_register')]

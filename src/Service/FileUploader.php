@@ -21,7 +21,7 @@ class FileUploader{
     }
 /**
  * Methode d'upload d'une image
- * Elle prend en parametre une variable
+ *  Elle prend en paramètre une variable
  */
     public function upload($imgFile){
         $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);

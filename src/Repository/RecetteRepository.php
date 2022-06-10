@@ -65,8 +65,8 @@ class RecetteRepository extends ServiceEntityRepository
     }
 
     /**
-     * Methode qui permet de rechercher une recette par nom ou par ingredient
-     * elle prend en paramentre une chaine de caracteres $value
+     * Méthode qui permet de rechercher une recette par nom ou par ingrédient
+     * elle prend en paramètre une chaine de caractères $value
      */
     public function findByExampleField($value)
     {

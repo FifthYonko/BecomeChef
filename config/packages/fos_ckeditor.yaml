@@ -6,6 +6,7 @@ twig:
 fos_ck_editor:
     configs:
         main_config:
+            #barre d'outils du champ de texte
             toolbar:
                 - { name: "styles", items: ['Bold', 'Italic', 'Underline', 'Strike',
                  'Blockquote', '-', 'Link', '-', 'RemoveFormat', '-', 'NumberedList', 

@@ -53,14 +53,14 @@ class AdminController extends AbstractController
         }
     }
 
-    // fonction de ban reserve aux utilisateurs disposant du role Admin. 
-    // Cette fonction prend en parametres un entier qui est l'id de l'utilisateur a bannir et ne renvoie aucune donnee, juste une redirection vers une autre page, en fonction des conditions remplies.
+    // fonction de ban réservé aux utilisateurs disposant du rôle Admin. 
+    // Cette fonction prend en paramètres un entier qui est l'id de l'utilisateur à bannir et ne renvoie aucune donnée, juste une redirection vers une autre page, en fonction des conditions remplies.
     #[Route('admin/ban/{id}', name: 'ban')]
     public function ban(int $id)
     {
 
         if (!$this->isGranted('ROLE_ADMIN')) {
-            $this->addFlash('danger', 'Vous ne disposez pas des access necessaires');
+            $this->addFlash('danger', 'Vous ne disposez pas des privilèges nécessaires');
             return $this->redirectToRoute('home');
         }
         $user = $this->userRepository->find($id);
@@ -68,10 +68,10 @@ class AdminController extends AbstractController
             $this->addFlash('warning', 'L\'utilisateur n\'existe pas');
             return $this->redirectToRoute('home');
         } elseif ($user->getId() == $this->getUser()->getId()) {
-            $this->addFlash('warning', 'Vous ne pouvez pas vous bannir vous-meme');
+            $this->addFlash('warning', 'Vous ne pouvez pas vous bannir vous-même');
             return $this->redirectToRoute('home');
         } elseif (in_array('ROLE_SUPER_ADMIN', $user->getRoles()) || in_array('ROLE_ADMIN', $user->getRoles())) {
-            $this->addFlash('warning', 'Vous ne disposez pas des droits necessaires pour cette action');
+            $this->addFlash('warning', 'Vous ne disposez pas des droits nécessaires pour cette action');
             return $this->redirectToRoute('home');
         }
         $user->setEtat(1);
@@ -81,15 +81,15 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /* Fonction inverse a la fonction ban, elle permet de debannir
-        elle prend en parametre un entier, qui represente l'id de l'utilisateur sur qui on veut faire l'action
+  /* Fonction inverse a la fonction ban, elle permet de dé bannir
+        elle prend en paramètre un entier, qui représente l'id de l'utilisateur sur qui on veut faire l'action
 
     */
     #[Route('admin/unban/{id}', name: 'unban')]
     public function unban(int $id)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            $this->addFlash('danger', 'Vous ne disposez pas des access necessaires');
+            $this->addFlash('danger', 'Vous ne disposez pas des privilèges nécessaires');
             return $this->redirectToRoute('home');
         }
         $user = $this->userRepository->find($id);
@@ -98,7 +98,7 @@ class AdminController extends AbstractController
             $this->addFlash('warning', 'L\'utilisateur n\'existe pas');
             return $this->redirectToRoute('home');
         } elseif (array_search('ROLE_SUPER_ADMIN', $user->getRoles())) {
-            $this->addFlash('warning', 'Vous ne disposez pas des droits necessaires pour cette action');
+            $this->addFlash('warning', 'Vous ne disposez pas des droits nécessaires pour cette action');
             return $this->redirectToRoute('home');
         }
         $user->setEtat(0);
@@ -107,16 +107,16 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /* La methode inspecter_profil est une methode reserve aux ceux disposant du droit Admin
-        Cette fonction comme son nom l'indique , permet d'inspecter le profil d'un utilisateur autre que soi-meme
-        Elle prend en parametre un entier , l'id de l'utilisateur a qui on veut inspecter le profil
-        // cette methode ne renvoie rien, elle redirige vers une page
+/* La méthode inspecter profil est une méthode reserve aux ceux disposant du droit Admin
+        Cette fonction comme son nom l'indique,permet d'inspecter le profil d'un utilisateur autre que soi-même
+        Elle prend en paramètre un entier,l'id de l'utilisateur à qui on veut inspecter le profil
+        cette méthode ne renvoie rien, elle redirige vers une page
     */
     #[Route('admin/inspect_profil/{id}', name: 'inspect_profil')]
     public function inspect_profil(int $id)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            $this->addFlash('danger', 'Vous ne disposez pas des access necessaires');
+            $this->addFlash('danger', 'Vous ne disposez pas des privilèges nécessaires');
             return $this->redirectToRoute('home');
         }
         if ($this->getUser()->getId() === $id) {
@@ -129,8 +129,8 @@ class AdminController extends AbstractController
 
         ]);
     }
-    /* Cette methode redirige l'utilisateur disposant du droit admin vers la page catalogue ou on trouve l'ensemble des recettes disponibles
-        elle prend en parametre un entier page, qui represente le nr de page sur lequel on veut aller
+  /* Cette méthode redirige l'utilisateur disposant du droit admin vers la page catalogue ou on trouve l'ensemble des recettes disponibles
+        elle prend en paramètre un entier page, qui représente le nr de page sur lequel on veut aller
     */
     #[Route('/admin/recette/{page}', name: 'recette_admin')]
     public function recetteList(int $page, PaginatorInterface $paginator)
@@ -158,7 +158,7 @@ class AdminController extends AbstractController
     {
         if (!$this->isGranted('ROLE_USER') || !$this->isGranted('ROLE_ADMIN')) {
 
-            $this->addFlash('warning', 'Vous devez etre connecte ou etre admin pour acceder a cette page!');
+            $this->addFlash('warning', 'Vous devez être connecter ou être admin pour accéder à cette page!');
             return $this->redirectToRoute('app_login');
         }
         if (!$this->isGranted('ROLE_ADMIN')) {
@@ -166,7 +166,7 @@ class AdminController extends AbstractController
         }
 
         if ($this->getUser()->getEtat() === true) {
-            $this->addFlash('danger', 'Vous etes banni et donc vous ne pouvez plus acceder a cette fonctionnalite');
+            $this->addFlash('danger', 'Vous etes banni et donc vous ne pouvez plus acceder a cette fonctionnalité');
             return $this->redirectToRoute('home');
         }
 
@@ -195,16 +195,16 @@ class AdminController extends AbstractController
             }
             $this->entityManager->persist($new_recette);
             $this->entityManager->flush();
-            $this->addFlash('success', 'La recette a ete ajoute !');
+            $this->addFlash('success', 'La recette a été ajoutée!');
             return $this->redirectToRoute('recette_admin', ['page' => 1]);
         }
         return $this->render('admin/new_recetteAdmin.html.twig', [
             'form_recette' => $form_recette->createView(),
         ]);
     }
-    /*
-        Route admin pour l'affichage d'une recette , elle prend en parametre le composant symfony Request et un entier, cet entier est l'id de la recette a afficher
-        Cette methode renvoie sur une page d'affichage d'une seule recette    
+   /*
+        Route admin pour l'affichage d'une recette,elle prend en paramètre le composant Symfony Request et un entier, cet entier est l'id de la recette à afficher
+        Cette méthode renvoie sur une page d'affichage d'une seule recette    
     */
     #[Route('admin/show_recette/{id}/{page}', name: 'show_recette_admin')]
     public function show_recette(Request $request, int $id, int $page, NotationRepository $notationRepository, PaginatorInterface $paginator)
@@ -216,7 +216,7 @@ class AdminController extends AbstractController
          // moyenne de la note 
         $moy = round($notationRepository->moyenneNotation($id), 1);
 
-        // on verifie si l'utilisateur a notee ou pas la recette car un utilisateur peut noter une seule fois une recette
+        // on vérifie si l'utilisateur a noté ou pas la recette car un utilisateur peut noter une seule fois une recette
         $notee = $notationRepository->verifierNotation($id, $this->getUser()) != null;
 
         if ($this->IsGranted('ROLE_ADMIN')) {
@@ -230,7 +230,7 @@ class AdminController extends AbstractController
 
                 $this->entityManager->persist($new_comm);
                 $this->entityManager->flush();
-                $this->addFlash('success', 'Le commentaire a ete ajoute');
+                $this->addFlash('success', 'Le commentaire a été ajouté');
                 return $this->redirectToRoute('show_recette_admin', ['id' => $id, 'page' => 1]);
             }
             return $this->renderForm('admin/show_recetteAdmin.html.twig', [
@@ -252,8 +252,8 @@ class AdminController extends AbstractController
     }
 
     /*
-        methode admin pour modifier les recettes existantes.
-        Cette methode prend en parametres le composant symfony Request, un entier id qui represente l'id de la recette a modifier, et le service FileUploader
+        Méthode admin pour modifier les recettes existantes.
+        Cette méthode prend en paramètres le composant Symfony Request, un entier id qui représente l'id de la recette à modifier, et le service File Uploader
         Elle renvoie une redirection vers le catalogue des recettes si tout se passe bien
     */
     #[Route('admin/update_recette/{id}', name: 'update_recette_admin')]
@@ -269,7 +269,7 @@ class AdminController extends AbstractController
         $recette_modifie = $this->recetteRepository->find($id);
 
         if (!$recette_modifie) {
-            $this->addFlash('warning', 'Aucune recette trouve');
+            $this->addFlash('warning', 'Aucune recette trouvée');
         }
         $imageExistante = $recette_modifie->getPhoto();
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -294,15 +294,15 @@ class AdminController extends AbstractController
                 $this->entityManager->flush();
 
 
-                $this->addFlash('success', "La recette a bien ete modifie :)");
+                $this->addFlash('success', "La recette a bien été modifiée :)");
                 return $this->redirectToRoute('recette_admin', ['page' => 1]);
             }
         } else {
             if ($this->isGranted('ROLE_USER')) {
-                $this->addFlash("danger", "Vous devez etre Admin ou le proprietaire de la recette pour la modifier!");
+                $this->addFlash("danger", "Vous devez être Admin ou le propriétaire de la recette pour la modifier!");
                 return $this->redirectToRoute('recette', ['page' => 1]);
             } else {
-                $this->addFlash("danger", "Vous devez etre soit connecte soit Admin ou le proprietaire de la recette pour la modifier!");
+                $this->addFlash("danger", "Vous devez être soit connecter soit Admin ou le propriétaire de la recette pour la modifier!");
                 return $this->redirectToRoute('app_login');
             }
         }
@@ -311,22 +311,22 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /* Methode admin pour supprimer une recette 
-        Elle prend en parametre un entier id qui represente l'id de la recette a supprimer
+    /* Méthode admin pour supprimer une recette 
+        Elle prend en paramètre un entier id qui représente l'id de la recette à supprimer
     */
     #[Route('admin/delete_recette/{id}', name: 'delete_recette_admin')]
     public function delete_recette(int $id)
     {
         $user = $this->getUser();
         if (!$user) {
-            $this->addFlash('danger', 'Connectez-vous pour acceder a cette fonctionnalite');
+            $this->addFlash('danger', 'Connectez-vous pour accéder à cette fonctionnalité');
             return $this->redirectToRoute('app_login');
         }
 
         if ($this->isGranted('ROLE_ADMIN')) {
             $recette_aSupp = $this->recetteRepository->find($id);
             if (!$recette_aSupp) {
-                $this->addFlash('warning', 'Aucune recette trouve');
+                $this->addFlash('warning', 'Aucune recette trouvée');
                 return $this->redirectToRoute('recette_admin', ['page' => 1]);
             }
             $imgFile = 'uploads/' . $recette_aSupp->getPhoto();
@@ -335,17 +335,17 @@ class AdminController extends AbstractController
             }
             $this->entityManager->remove($recette_aSupp);
             $this->entityManager->flush();
-            $this->addFlash('success', "La recette a bien ete supprime!");
+            $this->addFlash('success', "La recette a bien été supprimée!");
             return $this->redirectToRoute('recette_admin', ['page' => 1]);
         } elseif (!$this->isGranted("ROLE_ADMIN")) {
-            $this->addFlash('warning', "Vous ne pouvez pas supprimer cette recette car vous n'etez ni admin, ni auteur");
+            $this->addFlash('warning', "Vous ne pouvez pas supprimer cette recette car vous n'êtes ni admin, ni l'auteur");
             return $this->redirectToRoute('recette', ['page' => 1]);
         }
     }
 
-    /* fonction qui supprime un ingredient de la liste d'ingredients d'une recette.
-        accessible a partir de la page d'affichage d'une recette
-        prend en parametre un entier qui represente l'id de l'enregistrement a supprimer
+   /* fonction qui supprime un ingrédient de la liste d'ingrédients d'une recette.
+        accessible à partir de la page d'affichage d'une recette
+        Prends en paramètre un entier qui représente l'id de l'enregistrement à supprimer
         Cette fonction redirige vers la vue d'une recette
     */
     #[Route('admin/delete_ingredient/{id}', name: 'delete_ingredient_admin')]
@@ -353,13 +353,13 @@ class AdminController extends AbstractController
     public function delete_ingredient(int $id)
     {
         if (!$this->IsGranted('ROLE_USER')) {
-            $this->addFlash('danger', 'vous devez vous connecter pour acceder a cette fonctionnalite');
+            $this->addFlash('danger', 'Vous devez vous connecter pour accéder à cette fonctionnalité');
             return $this->redirectToRoute('app_login');
         }
         $relationaSupp = $this->possederRepository->find($id);
 
         if (!$this->isGranted('ROLE_ADMIN')) {
-            $this->addFlash('warning', 'vous devez etre admin ou proprietaire de la recette pour effectuer cette tache');
+            $this->addFlash('warning', 'Vous devez être admin ou propriétaire de la recette pour effectuer cette tâche');
             return $this->redirectToRoute('show_recette', ['id' => $relationaSupp->getRecette()->getId(),'page' => 1]);
         }
         $this->entityManager->remove($relationaSupp);
@@ -370,24 +370,24 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Methode qui permet a un admin de supprimer un commentaire pour une recette donnée
+     * Méthode qui permet à un admin de supprimer un commentaire pour une recette donnée
      */
     #[Route('admin/delete_commentaire/{id}/{idR}', name: 'delete_commentaire_admin')]
     public function delete_commentaire(int $id, int $idR, CommentaireRepository $commentaireRepository, EntityManagerInterface $entityManager)
     {
         $user = $this->getUser();
         if (!$user) {
-            $this->addFlash('danger', 'Connectez-vous pour acceder a cette fonctionnalite');
+            $this->addFlash('danger', 'Connectez-vous pour accéder à cette fonctionnalité');
             return $this->redirectToRoute('app_login');
         }
         $comment_aSupp = $commentaireRepository->find($id);
         if (!$comment_aSupp) {
-            $this->addFlash('warning', 'Aucun commentaire trouve');
+            $this->addFlash('warning', 'Aucun commentaire trouvé');
         }
         if ($this->isGranted('ROLE_ADMIN')) {
             $entityManager->remove($comment_aSupp);
             $entityManager->flush();
-            $this->addFlash('success', 'Le commentaire a bien ete supprime');
+            $this->addFlash('success', 'Le commentaire a bien été supprimé');
             return $this->redirectToRoute('show_recette_admin', ['id' => $idR,'page' => 1]);
         } else {
             $this->addFlash('warning', 'Vous ne disposez pas de ces droits');
@@ -396,7 +396,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Methode reservee aux admins pour ajouter un nouveau ingredient a la liste d'ingredients du site
+     * Méthode réservée aux admins pour ajouter un nouvel ingrédient à la liste d'ingrédients du site
      */
 
     #[Route('admin/ajout_ingredient', name: 'ajoutIngredients')]
@@ -404,7 +404,7 @@ class AdminController extends AbstractController
     {
         if (!$this->isGranted('ROLE_USER') || !$this->isGranted('ROLE_ADMIN')) {
 
-            $this->addFlash('warning', 'Vous devez etre connecte ou etre admin pour acceder a cette page!');
+            $this->addFlash('warning', 'Vous devez être connecter ou être admin pour accéder à cette page!');
             return $this->redirectToRoute('app_login');
         }
         if (!$this->isGranted('ROLE_ADMIN')) {
@@ -417,7 +417,7 @@ class AdminController extends AbstractController
             $new_ingredient = $form_ingredient->getData();
            
             if(empty($ingredientRepository->findBy(['nom'=>$new_ingredient->getNom()])) == false){
-                $this->addFlash('warning','L\'ingredient existe deja !');
+                $this->addFlash('warning','L\'ingrédient existe déjà !');
                 return $this->render('admin/new_IngredientAdmin.html.twig', [
                     'form_ingredient' => $form_ingredient->createView(),
                     
@@ -432,7 +432,7 @@ class AdminController extends AbstractController
             }
             $this->entityManager->persist($new_ingredient);
             $this->entityManager->flush();
-            $this->addFlash('success', 'L\'ingredient a ete ajoute !');
+            $this->addFlash('success', 'L\'ingrédient a été ajouté !');
             return $this->redirectToRoute('recette_admin', ['page' => 1]);
           
         }

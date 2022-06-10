@@ -19,15 +19,15 @@ class ProfileController extends AbstractController
     public function __construct(private EntityManagerInterface $entityManager, private SluggerInterface $slugger, private UserRepository $userRepository)
     {
     }
-    /*
-        methode qui permet d'afficher la page profile de l'utilisateur
-        Cette methode ne prend pas de parametres, et redirige vers la page profil
+   /*
+        Méthode qui permet d'afficher la page profile de l'utilisateur
+        Cette méthode ne prend pas de paramètres, et redirige vers la page profil
     */
     #[Route('/profile/{page}', name: 'profile')]
     public function index(Request $request,int $page=1, FileUploader $fileUploader,PaginatorInterface $paginator): Response
     {   
         if (!$this->IsGranted('ROLE_USER')) {
-            $this->addFlash('danger', 'Cette action necessite une connexion');
+            $this->addFlash('danger', 'Cette action nécessite une connexion');
             return $this->redirectToRoute('app_login');
         }
 
@@ -53,7 +53,7 @@ class ProfileController extends AbstractController
             $this->entityManager->persist($modif_profil);
             $this->entityManager->flush();
 
-            $this->addFlash('success', "Le profil a bien ete modifie :)");
+            $this->addFlash('success', "Le profil a bien été modifié :)");
             return $this->redirectToRoute('profile',['page'=>1]);
         }
 
@@ -79,8 +79,8 @@ class ProfileController extends AbstractController
     }
  
     /*
-        Methode qui permet de supprimer une photo de profil
-        Cette methode ne prend pas d'arguments
+        Méthode qui permet de supprimer une photo de profil
+        Cette méthode ne prend pas d'arguments
     */
     #[Route('/delete_photo', name: 'delete_photo')]
     public function delete_image()
@@ -90,7 +90,7 @@ class ProfileController extends AbstractController
         $user->setPhoto(NULL);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-        $this->addFlash('success', 'photo supprime');
+        $this->addFlash('success', 'photo supprimée ');
         return $this->redirectToRoute('profile',['page'=>1]);
     }
 }

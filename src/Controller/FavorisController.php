@@ -16,13 +16,13 @@ class FavorisController extends AbstractController
     public function __construct(private RequestStack $requestStack, private RecetteRepository $recetteRepository)
     {
     }
-    // methode qui affiche la liste des recettes ajoutes au favoris
+    // Méthode qui affiche la liste des recettes ajoutées aux favoris
     #[Route('/list', name: 'list')]
     public function index()
     {
         $userPseudo = $this->getUser()->getPseudo();
         if(!$this->getUser()){
-            $this->addFlash('warning', 'Vous devez etre connecte pour acceder a cette fonctionnalitee');
+            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette fonctionnalité');
             
             return $this->redirectToRoute('app_login');
         }
@@ -38,7 +38,7 @@ class FavorisController extends AbstractController
         ]);
     }
 
-    // methode d'ajout des recettes au favoris
+// Méthode d'ajout des recettes aux favoris
     #[Route('/add/{id}', name: 'add_favori')]
     public function add(int $id): Response
     {
@@ -46,7 +46,7 @@ class FavorisController extends AbstractController
         $session = $this->requestStack->getSession();
         $favoris = $session->get('favoris'.$userPseudo , []);
         if (array_key_exists($id, $favoris)) {
-            $this->addFlash('warning', 'cette recette est deja aux favoris');
+            $this->addFlash('warning', 'Cette recette est déjà aux favoris');
             
             return $this->redirectToRoute('list');
         } else {
@@ -57,7 +57,7 @@ class FavorisController extends AbstractController
         return $this->redirectToRoute('list');
     }
 
-    // methode qui permet de retirer une recette des favoris , elle prend en parametre un id
+// Méthode qui permet de retirer une recette des favoris,elle prend en paramètre un id
     #[Route('/remove/{id}', name: 'remove_favoris')]
     public function remove(int $id): Response
     {
@@ -69,7 +69,7 @@ class FavorisController extends AbstractController
             }
         
         $session->set('favoris'.$userPseudo, $favoris);
-        $this->addFlash("success", "La recette a bien ete retire ");
+        $this->addFlash("success", "La recette a bien été retiré ");
 
         return $this->redirectToRoute('list');
     }

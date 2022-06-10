@@ -19,11 +19,11 @@ class IngredientFormType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Le nom de l\'ingredient'
+                    'placeholder' => 'Le nom de l\'ingrédient'
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez completer ce champ',
+                        'message' => 'Veuillez compléter ce champ',
                     ])
 
                 ]
@@ -35,7 +35,7 @@ class IngredientFormType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '2048k',
-                        'maxSizeMessage' => 'La taille autorise est de {{ limit }}k  ',
+                        'maxSizeMessage' => 'La taille autorisé est de {{ limit }}k  ',
                         'mimeTypes' => [
                             'image/*',
                         ],

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entite Recette
+ * Entité Recette
  */
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 class Recette
