@@ -29,31 +29,38 @@
 				<p class="preparations">{{recette.preparation|striptags('<h1>,<h2>,<h3>,<h4>,<h5>,<h6>,<strong>,<b>,<p>,<i>,<u>,<span>,<div>')|raw}}</p>
 			</div>
 
+			{% if comments is not empty %}
 
-			<div class="row conteneurBox">
-				{% for comment in comments %}
-					{% include "components/_commentaires.html.twig" %}
+				<div class="row conteneurBox">
+					{% for comment in comments %}
+						{% include "components/_commentaires.html.twig" %}
 
-				{% endfor %}
-				<div class="row justify-content-center ">
-					{{ knp_pagination_render(comments,'components/_pagination.html.twig') }}
+					{% endfor %}
+					<div class="row justify-content-center ">
+						{{ knp_pagination_render(comments,'components/_pagination.html.twig') }}
+					</div>
 				</div>
-			</div>
-			<div class="row conteneurBox">
-				{% if app.user and app.user.etat == 0 %}
-					<div class="petitConteneur">
-						{{ form_start(form_comm) }}
-					<div class="col-6 m-auto text-center">
 
-						{{form_widget(form_comm.commentaire,{'attr': {'class': 'formInput'}})}}
-						<button type="submit" class="btn FormSub w-50  fs-5">Ajouter commentaire</button>
-					</div>
+			{% endif %}
 
-					{{ form_end(form_comm) }}
-					</div>
-				{% endif %}
 
-			</div>
+			{% if  app.user  %}
+				<div class="row conteneurBox">
+					{% if app.user.etat == 0 %}
+						<div class="petitConteneur">
+							{{ form_start(form_comm) }}
+							<div class="col-6 m-auto text-center">
+
+								{{form_widget(form_comm.commentaire,{'attr': {'class': 'formInput'}})}}
+								<button type="submit" class="btn FormSub w-50  fs-5">Ajouter commentaire</button>
+							</div>
+
+							{{ form_end(form_comm) }}
+						</div>
+					{% endif %}
+
+				</div>
+			{% endif %}
 
 		</div>
 	{% endif %}
