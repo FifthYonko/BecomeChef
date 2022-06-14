@@ -26,7 +26,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request): Response
     {
-    
+      
         $lasts = $this->recetteRepository->findLast(3);
 
         $compterR = $this->recetteRepository->compterRecette();

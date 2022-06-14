@@ -8,9 +8,8 @@ fos_ck_editor:
         main_config:
             #barre d'outils du champ de texte
             toolbar:
-                - { name: "styles", items: ['Bold', 'Italic', 'Underline', 'Strike',
-                 'Blockquote', '-', 'Link', '-', 'RemoveFormat', '-', 'NumberedList', 
+                - { name: "styles", items: ['Bold', 'Italic', 'Underline',
+                  '-', 'RemoveFormat', '-', 'NumberedList', 
                  'BulletedList', '-', 'Outdent', 'Indent', '-', '-', 'JustifyLeft', 
-                 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',  
-                 'Table', '-', 'Styles', 'Format','Font','FontSize', '-', 'TextColor', 
+                 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Styles', 'Format','Font','FontSize', '-', 'TextColor', 
                  'BGColor'] }

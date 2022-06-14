@@ -277,6 +277,7 @@ class AdminController extends AbstractController
             $update_recette->handleRequest($request);
 
             if ($update_recette->isSubmitted() && $update_recette->isValid()) {
+     
                 $recette_modifie = $update_recette->getData();
                 foreach ($update_recette->get('posseders')->getData() as $ingredient) {
 
