@@ -23,7 +23,7 @@
 			<div class="col-12  w-75 m-auto my-5 ">
 				<h3 class="titreRecette coloredText text-center bold">Préparation</h3>
 			</div>
-			<p class="preparations">{{recette.preparation}}</p>
+			<p class="preparations">{{recette.preparation|striptags('<h1>,<h2>,<h3>,<h4>,<h5>,<h6>,<strong>,<b>,<p>,<i>,<u>,<span>,<div>')|raw}}</p>
 		</div>
 
 		<div class="row conteneurBox">
