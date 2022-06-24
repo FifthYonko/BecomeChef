@@ -10,13 +10,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class GithubController extends AbstractController
 {
    /**
-     * Méthode qui permet la connexion via son compte github
-     * Paramètres : $clientregistry du type ClientRegistry qui est un type de l'api Oauth2 installé
+     * Méthode qui permet la connexion via son compte github, cette methode redirige l'utilisateur vers une page d'autorisation de 
+     * d'access aux informations.On demande la permision d'acceder aux infos comme le nom ou l'email
+     * Paramètres :  clientRegistry inclus dans le bundle KnpOauth qui permet de recup tous les clients installees.
+     * 
      */
     #[Route(path: '/connect/github', name: 'github_connect')]
     public function connect(ClientRegistry $clientRegistry)
     {
-        /** @var GithubClient $client */
+       
         $client = $clientRegistry->getClient('github');
 
         return $client->redirect(['read:user', 'user:email']);

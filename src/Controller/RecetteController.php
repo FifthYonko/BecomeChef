@@ -48,7 +48,7 @@ class RecetteController extends AbstractController
     public function ajout_recette(Request $request, FileUploader $fileUploader): Response
     {
         if (!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'Vous devez être connecter pour accéder à cette page!');
+            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette page!');
             return $this->redirectToRoute('app_login');
         }
         if ($this->getUser()->getEtat() === true) {
@@ -57,6 +57,7 @@ class RecetteController extends AbstractController
         }
         $form_recette = $this->createForm(RecetteFormType::class);
         $form_recette->handleRequest($request);
+
         if ($form_recette->isSubmitted() && $form_recette->isValid()) {
             $new_recette = $form_recette->getData();
 

@@ -73,8 +73,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * on renvoie l'utilisateur, sinon a cree un nouvel utilisateur dans la bdd 
      */
 
-    public function findorCreateFromOauth(ResourceOwnerInterface $owner)
+    public function findorCreateFromGithub(ResourceOwnerInterface $owner): User
     {
+        // on verifie si l'user existe
         $user = $this->createQueryBuilder('u')
             ->where('u.githubId = :githubId')
             ->setParameters([
@@ -82,9 +83,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ])
             ->getQuery()
             ->getOneOrNullResult();
+        // si oui, on renvoie l'user
         if ($user) {
             return $user;
         }
+        // sinon on cree l'user et on renvoi l'user
         $user = (new User())
             ->setRoles(['ROLE_USER'])
             ->setGithubId($owner->getId())

@@ -52,23 +52,24 @@ class GithubAuthenticator extends OAuth2Authenticator
      */
     public function authenticate(Request $request): Passport
     {
+
+        // on recupere le client utilise pr l'auth
+        $client = $this->clientRegistry->getClient('github');
+        // Fetch methode offerte par le oauth grace a l'heritage 
+        $accessToken = $this->fetchAccessToken($client);
+        
     /**
      * Récupère l'utilisateur à partir du AccessToken
      * 
      */
-        $client = $this->clientRegistry->getClient('github');
-        $accessToken = $this->fetchAccessToken($client);
-        
-
 
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
 
-                /** @var GithubRessourceOwner $githubUser */
                 $githubUser = $client->fetchUserFromToken($accessToken);
                 
 
-                // on récupère l'email  de l'utilisateur
+                // on récupère l'email  de l'utilisateur car un compte github posede 2 emails.
                 $respose = HttpClient::create()->request(
                     'GET',
                     'https://api.github.com/user/emails',
@@ -83,7 +84,7 @@ class GithubAuthenticator extends OAuth2Authenticator
                 $emails = json_decode($respose->getContent(), true);
 
              //   avec github on peut creer des publics emails pour des raisons de sécurité ou données privées.
-            // donc on va vérifier les emails du compte afin de récupérer celui qui a servi a la création du compte
+             // donc on va vérifier les emails du compte afin de récupérer celui qui a servi a la création du compte
                 foreach ($emails as $email) {
 
                     // donc on vérifie qu'il est primaire mais aussi que l'utilisateur a bien vérifié son email 
@@ -100,7 +101,7 @@ class GithubAuthenticator extends OAuth2Authenticator
                     throw new NotVerifiedEmailException();
                 }
                 
-                return $this->userRepository->findorCreateFromOauth($githubUser);
+                return $this->userRepository->findorCreateFromGithub($githubUser);
 
                
             })
