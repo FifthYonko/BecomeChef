@@ -78,7 +78,7 @@
 
 			{% for recette in recettes %}
 			{% if app.user and is_granted('ROLE_ADMIN') %}
-			{% include "components/_AdminRecetteSimple.html.twig" %}
+			{% include "components/_adminRecetteSimple.html.twig" %}
 			{% else %}
 			{% include "components/_userRecetteSimple.html.twig" %}
 			{% endif %}
