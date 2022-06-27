@@ -32,9 +32,7 @@ class HomeController extends AbstractController
         $compterR = $this->recetteRepository->compterRecette();
         $compterU = $this->userRepository->compterUsers();
         $meilleureRecette = $this->notationRepository->meilleureRecette();
-        $truc =   $lasts[1]->getPosseders()[0]->getIngredients()->getNom();
-       
-        dd($truc);
+      
         $bestRecette = null;
       if($meilleureRecette){
         $bestRecette = $this->recetteRepository->find($meilleureRecette[0]['id']);

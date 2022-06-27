@@ -31,6 +31,7 @@ class SecurityController extends AbstractController
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
+        $this->addFlash('warning',$error->getMessage());
 
         $lastUsername = $authenticationUtils->getLastUsername();
 

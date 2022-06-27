@@ -2,10 +2,10 @@
 <html lang="fr">
 
 	<head>
-	<meta charset="UTF-8">
+		<meta charset="UTF-8">
 		<script src="/tarteaucitron/tarteaucitron.js"></script>
 
-		<script >
+		<script>
 			tarteaucitron.init({
 "privacyUrl": "",
 /* Privacy policy url */
@@ -71,7 +71,7 @@
 });
 		</script>
 
-		
+
 		<title>
 			{% block title %}BecomeChef
 			{% endblock %}
@@ -106,7 +106,7 @@
 		{% endfor %}
 		<main>
 
-		
+
 			<div class="one">
 				<div id="HomeSlider" class="carousel slide mt-1" data-bs-touch="false" data-bs-ride="carousel">
 
@@ -120,8 +120,8 @@
 								<source src="{{asset('img/cooking.mp4')}}" type="video/mp4">
 							</video>
 							<div class="carousel-caption d-none d-md-block text-left">
-								<h5>BecomeChef</h5>
-								<p>“La cuisine est devenue un art, une science noble . les cuisiniers sont des gentilshommes.”</p>
+								<h3>BecomeChef</h3>
+								<p class="text-success">“La cuisine est devenue un art, une science noble . les cuisiniers sont des gentilshommes.”</p>
 							</div>
 						</div>
 					</div>
@@ -139,10 +139,9 @@
 
 			{# le body #}
 
-			<div class="two"> 
-				{% block body %}{% endblock %}
-				
-			</div>
+			<div class="two"> {% block body %}{% endblock %}
+
+				</div>
 
 				<div class="bloc-profil text-light three">
 					{% if app.user %}
@@ -199,16 +198,15 @@
 					<div class="row text-center">
 						<h5 class="titreRecette coloredText">Votre choix</h5>
 						<p>La recette préféré de notre communauté
-						{% set recette = app.session.get('Infos')[2] %}
-								{% if recette is not null %}
-								<a href="{{path('show_recette', {'id': recette.id , 'page': 1})}}" class="">{{recette.titre}}</a>   
-								{% endif %}
-								
-								 
-						
+							{% set recette = app.session.get('Infos')[2] %}
+							{% if recette is not null %}
+								<a href="{{path('show_recette', {'id': recette.id , 'page': 1})}}" class="">{{recette.titre}}</a>
+							{% endif %}
+
+
 						</p>
 					</div>
-				
+
 				</div>
 
 			</main>
